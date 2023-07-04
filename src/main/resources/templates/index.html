@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset = "ISO-8859-1" />
+    <link th:href="@{/styles/style.css}" rel="stylesheet" />
+    <title>Spring Boot Application</title>
+    <script th:src="@{/scripts/index.js}" defer></script>
+</head>
+<body>
+<ul class="w-100 nav justify-content-end">
+    <li class="nav-item">
+        <a class="nav-link active" href="/createEmployee">Create Employee</a>
+    </li>
+</ul>
+<div class="card d-flex align-items-center justify-content-center h-100 w-100">
+        <table>
+            <tbody>
+                <tr th:each="employee: ${session.employees}">
+                    <td th:text="${employee.getFirstName()}"></td>
+                    <td th:text="${employee.getLastName()}"></td>
+                    <td th:text="${employee.getBirthDate()}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
