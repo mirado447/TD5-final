@@ -28,6 +28,9 @@ public class WebController {
 
     @PostMapping("/saveEmployee")
     public String saveStudent(@ModelAttribute("employee") Employee employee, HttpSession session) {
+        if(session.getAttribute("employees") == null){
+            session.setAttribute("employees", new ArrayList<>());
+        }
         List<Employee> employees = new ArrayList<>((List<Employee>) session.getAttribute("employees"));
 
         employee.setId(UUID.randomUUID().toString());
