@@ -5,6 +5,13 @@
     <link th:href="@{/styles/style.css}" rel="stylesheet"/>
     <title>Spring Boot Application</title>
     <script th:src="@{/scripts/index.js}" defer></script>
+    <style>
+        img {
+            object-fit: contain;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
 </head>
 <body>
 <ul class="w-100 nav justify-content-end">
@@ -16,13 +23,19 @@
     <table class="table">
         <thead>
         <tr>
+            <th>Image</th>
+            <th>Reference</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Birth Date</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="employee: ${session.employees}">
+        <tr th:each="employee: ${employees}">
+            <td>
+                <img th:src="'data:image/jpeg;base64,' + ${employee.getImage()}"  alt="image">
+            </td>
+            <td th:text="${employee.getRegistrationNumber()}"></td>
             <td th:text="${employee.getFirstName()}"></td>
             <td th:text="${employee.getLastName()}"></td>
             <td th:text="${employee.getBirthDate()}"></td>

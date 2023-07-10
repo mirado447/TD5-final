@@ -9,27 +9,31 @@
 </head>
 <body style="height: 100vh !important;">
 <div class="d-flex align-items-center justify-content-center h-100 w-100">
-    <form action="/saveEmployee" method="POST" th:object="${employee}"
-          class="card p-3 w-25 h-50 d-flex align-items-center justify-content-center flex-column">
+    <form action="/saveEmployee" method="POST" th:object="${employee}" enctype="multipart/form-data"
+          class="card p-3 w-25 h-75 d-flex align-items-center justify-content-center flex-column">
         <h4>Create Employee</h4>
         <div class="mb-3 mt-5">
-            <label for="firstName" class="form-label">FirstName</label>
+            <label for="firstName" class="form-label">First name</label>
             <input type="text" name="firstName" th:field="*{firstName}" class="form-control" id="firstName"
                    placeholder="John">
         </div>
         <div class="mb-3">
-            <label for="lastName" class="form-label">LastName</label>
+            <label for="lastName" class="form-label">Last name</label>
             <input type="text" name="lastName" th:field="*{lastName}" class="form-control" id="lastName"
                    placeholder="Doe">
         </div>
         <div class="mb-3">
-            <label for="birthDate" class="form-label">BirthDate</label>
+            <label for="birthDate" class="form-label">Birthdate</label>
             <input type="date" name="birthDate" th:field="*{birthDate}" class="form-control" id="birthDate"
                    placeholder="John Doe">
         </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Profile pic</label>
+            <input type="file" class="form-control" id="image" name="image" th:field="*{image}">
+        </div>
         <div class="button-container d-flex align-items-center justify-content-around">
-        <button class="btn btn-primary" type="submit">Save</button>
-        <button class="btn btn-danger" type="button"><a href="/">Cancel</a></button>
+            <button class="btn btn-primary" type="submit">Save</button>
+            <button class="btn btn-danger" type="button"><a href="/">Cancel</a></button>
         </div>
     </form>
 </div>
