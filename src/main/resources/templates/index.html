@@ -39,6 +39,7 @@
             <td th:text="${employee.getFirstName()}"></td>
             <td th:text="${employee.getLastName()}"></td>
             <td th:text="${employee.getBirthDate()}"></td>
+            <td><a th:href="'/employee/' + ${employee.getId()}">view</a></td>
         </tr>
         </tbody>
     </table>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="ISO-8859-1"/>
+    <link th:href="@{/styles/style.css}" rel="stylesheet"/>
+    <title>Spring Boot Application</title>
+    <script th:src="@{/scripts/index.js}" defer></script>
+    <style>
+        img {
+            object-fit: contain;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+<ul class="w-100 nav justify-content-end">
+    <li class="nav-item">
+        <a class="nav-link active" href="/">List</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="/createEmployee">Create Employee</a>
+    </li>
+</ul>
+<div class="d-flex align-items-center justify-content-center h-100 w-100">
+    <div>
+        <div>
+            <img th:src="'data:image/jpeg;base64,' + ${employee.getImage()}"  alt="image">
+        </div>
+        <p th:text="${employee.getRegistrationNumber()}"></p>
+        <p th:text="${employee.getFirstName()}"></p>
+        <p th:text="${employee.getLastName()}"></p>
+        <p th:text="${employee.getBirthDate()}"></p>
+    </div>
+</div>
+</body>
+</html>
