@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+    </tr>
+    <tr>
+        <th></th>
+    </tr>
+    </thead>
+    <th:block th:each="employee : ${employeeList}">
+        <img th:src="@{'/image?id='+${employee.id}}" alt="" width="100px" height="50px">
+        <td th:text="${employee.name}"></td>
+        <td><a th:href="@{/employee-details(id=${employee.id})}">details</a></td>
+    </th:block>
+</table>
+<a th:href="@{/employee-form}">Add new employee</a>
+</body>
+</html>
