@@ -33,7 +33,7 @@
         <tbody>
         <tr th:each="employee: ${employees}">
             <td>
-                <img th:src="'data:image/jpeg;base64,' + ${employee.getImage()}"  alt="image">
+                <img th:src="'data:image/jpeg;base64,' + ${employee.getImage()}"  alt="Aucune image">
             </td>
             <td th:text="${employee.getRegistrationNumber()}"></td>
             <td th:text="${employee.getFirstName()}"></td>
