@@ -4,7 +4,6 @@ package com.example.prog4.controller;
 import com.example.prog4.controller.mapper.EmployeeMapper;
 import com.example.prog4.controller.validator.EmployeeValidator;
 import com.example.prog4.model.Employee;
-import com.example.prog4.model.RestEmployee;
 import com.example.prog4.model.message.ErrorMessage;
 import com.example.prog4.service.EmployeeService;
 import jakarta.servlet.http.HttpSession;
@@ -29,28 +28,28 @@ public class EmployeeController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<Employee> employees = service.getAll();
+        List<com.example.prog4.repository.entity.Employee> employees = service.getAll();
         model.addAttribute("employees", employees);
         return "index";
     }
 
     @GetMapping("/createEmployee")
     public String createEmployee(Model model) {
-        model.addAttribute("employee", RestEmployee.builder().build());
+        model.addAttribute("employee", Employee.builder().build());
         return "createEmployee";
     }
 
     @GetMapping("/editEmployee/{eId}")
     public String editEmployee(@PathVariable(name = "eId") String eId, Model model, HttpSession session) {
-        Employee employee = service.getOne(eId);
+        com.example.prog4.repository.entity.Employee employee = service.getOne(eId);
         model.addAttribute("employee", employee);
         return "editEmployee";
     }
 
     @PostMapping("/saveEmployee")
-    public String saveEmployee(@ModelAttribute("employee") RestEmployee restEmployee, HttpSession session) {
+    public String saveEmployee(@ModelAttribute("employee") Employee restEmployee, HttpSession session) {
         validator.validate(restEmployee);
-        Employee employee = mapper.toDomain(restEmployee);
+        com.example.prog4.repository.entity.Employee employee = mapper.toDomain(restEmployee);
         service.saveOne(employee);
         return "redirect:/";
     }
@@ -68,7 +67,7 @@ public class EmployeeController {
 
     @GetMapping("/employee/{employeeId}")
     public String getEmployee(@PathVariable(name = "employeeId") String employeeId, Model model) {
-        Employee employee = service.getOne(employeeId);
+        com.example.prog4.repository.entity.Employee employee = service.getOne(employeeId);
         model.addAttribute("employee", employee);
         return "employee";
     }

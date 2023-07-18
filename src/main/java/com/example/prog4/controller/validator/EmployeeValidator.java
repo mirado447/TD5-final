@@ -1,6 +1,6 @@
 package com.example.prog4.controller.validator;
 
-import com.example.prog4.model.RestEmployee;
+import com.example.prog4.model.Employee;
 import com.example.prog4.model.exception.BadRequestException;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Component
 public class EmployeeValidator {
-    public void validate(RestEmployee employee){
+    public void validate(Employee employee){
         StringBuilder error = new StringBuilder();
 
         if(employee.getBirthDate() == null){

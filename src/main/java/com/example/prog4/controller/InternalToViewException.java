@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class InternalToRestException {
+public class InternalToViewException {
     @ExceptionHandler(value = {ApiException.class})
     String handleBadRequest(ApiException e) {
         String DEFAULT_ERROR_MESSAGE = "Unexpected error.";

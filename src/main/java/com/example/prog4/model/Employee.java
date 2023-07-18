@@ -1,31 +1,32 @@
 package com.example.prog4.model;
 
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-
-import static jakarta.persistence.GenerationType.IDENTITY;
+import java.util.List;
 
 @Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
-@Table(name = "\"employee\"")
-@EqualsAndHashCode
-@ToString
 public class Employee implements Serializable {
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
     private String id;
-
     private String firstName;
     private String lastName;
-    private LocalDate birthDate;
+    private MultipartFile image;
+    private String cin;
+    private String address;
+    private String cnaps;
+    private Integer childNumber;
+    private Email email;
+    private NameDescription socioeconomicGroup;
+    private List<NameDescription> position;
 
-    @Lob
-    private String image;
+    //dates 
+    private LocalDate birthDate;
+    private LocalDate entranceDate;
+    private LocalDate departureDate;
+
     private String registrationNumber;
 }
