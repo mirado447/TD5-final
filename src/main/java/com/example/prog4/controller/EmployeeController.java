@@ -40,22 +40,23 @@ public class EmployeeController {
         return "createEmployee";
     }
 
+    @GetMapping("/editEmployee/{eId}")
+    public String editEmployee(@PathVariable(name = "eId") String eId, Model model, HttpSession session) {
+        Employee employee = service.getOne(eId);
+        model.addAttribute("employee", employee);
+        return "editEmployee";
+    }
+
     @PostMapping("/saveEmployee")
     public String saveEmployee(@ModelAttribute("employee") RestEmployee restEmployee, HttpSession session) {
-        try {
-            validator.validate(restEmployee);
-        }
-        catch (Exception e){
-            session.setAttribute("errorMessage", e.getMessage());
-            return "redirect:/errors?code=400";
-        }
+        validator.validate(restEmployee);
         Employee employee = mapper.toDomain(restEmployee);
         service.saveOne(employee);
         return "redirect:/";
     }
 
     @GetMapping("/errors")
-    public String error(@RequestParam("code") Integer code, Model model, HttpSession session){
+    public String error(@RequestParam("code") Integer code, Model model, HttpSession session) {
         ErrorMessage errorMessage = ErrorMessage.builder()
                 .code(code)
                 .message((String) session.getAttribute("errorMessage"))

@@ -1,6 +1,7 @@
 package com.example.prog4.service;
 
 import com.example.prog4.model.Employee;
+import com.example.prog4.model.exception.NotFoundException;
 import com.example.prog4.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class EmployeeService {
         if(employee.isPresent()){
             return  employee.get();
         }
-        throw new RuntimeException("Not found id="+id);
+        throw new NotFoundException("Not found id="+id);
     }
 
     public List<Employee> getAll(){

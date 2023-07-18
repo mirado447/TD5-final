@@ -1,6 +1,7 @@
 package com.example.prog4.controller.validator;
 
 import com.example.prog4.model.RestEmployee;
+import com.example.prog4.model.exception.BadRequestException;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -22,7 +23,7 @@ public class EmployeeValidator {
             error.append("First name is mandatory. ");
         }
         if(!error.isEmpty()){
-            throw new RuntimeException(error.toString());
+            throw new BadRequestException(error.toString());
         }
     }
 }
