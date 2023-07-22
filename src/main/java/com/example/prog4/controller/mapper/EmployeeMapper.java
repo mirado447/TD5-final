@@ -1,6 +1,9 @@
 package com.example.prog4.controller.mapper;
 
+import com.example.prog4.model.Email;
 import com.example.prog4.model.Employee;
+import com.example.prog4.model.ViewEmployee;
+import com.example.prog4.model.exception.BadRequestException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -8,26 +11,67 @@ import java.util.Base64;
 
 @Component
 public class EmployeeMapper {
-    public com.example.prog4.repository.entity.Employee toDomain(Employee employee){
+    public com.example.prog4.repository.entity.Employee toDomain(Employee employee) {
         com.example.prog4.repository.entity.Employee domainEmployee = com.example.prog4.repository.entity.Employee.builder()
+                .id(employee.getId())
                 .firstName(employee.getFirstName())
                 .lastName(employee.getLastName())
+
+                .address(employee.getAddress())
+                .childNumber(employee.getChildNumber())
+                .cin(employee.getCin())
+                .cnaps(employee.getCnaps())
+                .positions(employee.getPositions())
+                .registrationNumber(employee.getRegistrationNumber())
+                .csp(employee.getCsp())
+                .sex(employee.getSex())
+                .professionalEmail(employee.getEmail().getProfessional())
+                .personalEmail(employee.getEmail().getPersonal())
+
+
                 .birthDate(employee.getBirthDate())
+                .departureDate(employee.getDepartureDate())
+                .entranceDate(employee.getEntranceDate())
+
                 .build();
         try {
             MultipartFile imageFile = employee.getImage();
             if (imageFile != null && !imageFile.isEmpty()) {
-                // Get the image file content as a byte array
                 byte[] imageBytes = imageFile.getBytes();
-
-                // Convert the byte array to a Base64 string
                 String base64Image = Base64.getEncoder().encodeToString(imageBytes);
                 domainEmployee.setImage(base64Image);
             }
             return domainEmployee;
+        } catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
         }
-        catch (Exception e){
-            throw new RuntimeException("Bad Request");
-        }
+    }
+
+    public ViewEmployee toView(com.example.prog4.repository.entity.Employee employee) {
+        Email email = Email.builder()
+                .personal(employee.getPersonalEmail())
+                .professional(employee.getProfessionalEmail())
+                .build();
+        return ViewEmployee.builder()
+                .id(employee.getId())
+                .firstName(employee.getFirstName())
+                .lastName(employee.getLastName())
+
+                .address(employee.getAddress())
+                .childNumber(employee.getChildNumber())
+                .cin(employee.getCin())
+                .cnaps(employee.getCnaps())
+                .positions(employee.getPositions())
+                .registrationNumber(employee.getRegistrationNumber())
+                .csp(employee.getCsp())
+                .sex(employee.getSex())
+                .email(email)
+
+                .birthDate(employee.getBirthDate())
+                .departureDate(employee.getDepartureDate())
+                .entranceDate(employee.getEntranceDate())
+
+                .image(employee.getImage())
+                .build();
     }
 }
