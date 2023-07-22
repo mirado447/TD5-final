@@ -59,7 +59,6 @@ public class EmployeeController {
         employee.setProfilePicture(file.getOriginalFilename());
         employee.setContent(file.getBytes());
         employee.setSize(file.getSize());
-        System.out.println(employee);
         service.save(employee);
         return "redirect:/";
     }
