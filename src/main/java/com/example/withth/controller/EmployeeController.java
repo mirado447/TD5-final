@@ -1,7 +1,6 @@
 package com.example.withth.controller;
 
 import com.example.withth.model.Employee;
-import com.example.withth.repository.EmployeeRepository;
 import com.example.withth.service.EmployeeService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -19,7 +18,6 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 public class EmployeeController {
-    private final EmployeeRepository employeeRepository;
     private final EmployeeService service;
 
     @ModelAttribute("employeeList")
@@ -57,6 +55,8 @@ public class EmployeeController {
         service.save(employee);
         return "redirect:/";
     }
+
+
 
     @GetMapping("/image")
     public void showImage(@Param("id") Long id, HttpServletResponse response, Employee employee) throws IOException {
