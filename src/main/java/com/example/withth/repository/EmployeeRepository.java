@@ -1,6 +1,6 @@
 package com.example.withth.repository;
 
-import com.example.withth.model.Employee;
+import com.example.withth.models.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

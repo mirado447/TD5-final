@@ -1,6 +1,6 @@
 package com.example.withth.controller;
 
-import com.example.withth.model.Employee;
+import com.example.withth.models.entity.Employee;
 import com.example.withth.service.EmployeeService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;

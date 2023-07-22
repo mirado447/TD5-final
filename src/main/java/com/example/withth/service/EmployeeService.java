@@ -1,6 +1,6 @@
 package com.example.withth.service;
 
-import com.example.withth.model.Employee;
+import com.example.withth.models.entity.Employee;
 import com.example.withth.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
