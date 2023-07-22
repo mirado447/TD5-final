@@ -10,6 +10,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -39,6 +40,10 @@ public class Employee implements Serializable {
     private String cin;
     private String function;
     private Integer childrens;
+    private Date entryDate = new Date();
+    private Date departureDate;
+    private String professionalCategory;
+    private String cnaps;
 
     private enum sex {H, F}
 
