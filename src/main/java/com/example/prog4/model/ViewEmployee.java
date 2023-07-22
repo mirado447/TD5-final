@@ -25,6 +25,7 @@ public class ViewEmployee implements Serializable {
     private Email email;
     private Csp csp;
     private Sex sex;
+    private String phone;
     private List<Position> positions;
 
     //dates 

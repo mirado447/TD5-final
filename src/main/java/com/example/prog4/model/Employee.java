@@ -23,6 +23,7 @@ public class Employee implements Serializable {
     private String cnaps;
     private Integer childNumber;
     private Email email;
+    private String phone;
     private Csp csp;
     private Sex sex;
     private List<Position> positions;

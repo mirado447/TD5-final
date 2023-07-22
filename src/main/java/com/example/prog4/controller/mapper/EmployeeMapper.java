@@ -25,9 +25,9 @@ public class EmployeeMapper {
                 .registrationNumber(employee.getRegistrationNumber())
                 .csp(employee.getCsp())
                 .sex(employee.getSex())
+                .phone(employee.getPhone())
                 .professionalEmail(employee.getEmail().getProfessional())
                 .personalEmail(employee.getEmail().getPersonal())
-
 
                 .birthDate(employee.getBirthDate())
                 .departureDate(employee.getDepartureDate())
@@ -65,6 +65,7 @@ public class EmployeeMapper {
                 .registrationNumber(employee.getRegistrationNumber())
                 .csp(employee.getCsp())
                 .sex(employee.getSex())
+                .phone(employee.getPhone())
                 .email(email)
 
                 .birthDate(employee.getBirthDate())

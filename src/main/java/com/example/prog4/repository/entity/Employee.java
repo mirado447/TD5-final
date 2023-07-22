@@ -39,6 +39,7 @@ public class Employee implements Serializable {
 
     private String  cin;
     private String  cnaps;
+    private String  phone;
     private String  address;
     private String  lastName;
     private String  firstName;
