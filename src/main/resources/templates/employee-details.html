@@ -9,7 +9,6 @@
             max-width: 400px;
             margin: 0 auto;
             padding: 20px;
-            text-align: center;
         }
 
         .details-row {
@@ -34,6 +33,10 @@
             display: block;
             margin-top: 10px;
         }
+
+        div > label {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -41,15 +44,53 @@
     <img th:src="@{'/image?id='+${employee.id}}" alt="" width="100px" height="50px" class="mb-3 rounded">
     <div class="d-flex align-items-center mb-3">
         <label for="employee-id" class="me-2 fw-bold">Id:</label>
-        <span th:text="${employee.id}" class="flex-grow-1 bg-light p-1 rounded"></span>
+        <span th:text="${employee.matriculate}" class="flex-grow-1 bg-light p-1 rounded"></span>
     </div>
     <div class="d-flex align-items-center mb-3">
         <label for="employee-name" class="me-2 fw-bold">Name:</label>
         <span th:text="${employee.name}" class="flex-grow-1 bg-light p-1 rounded"></span>
     </div>
     <div class="d-flex align-items-center mb-3">
+        <label for="employee-birthDate" class="me-2 fw-bold">Entry date:</label>
+        <span th:text="${employee.entryDate}" class="flex-grow-1 bg-light p-1 rounded">Unknow</span>
+    </div>
+    <div class="d-flex align-items-center mb-3">
+        <label for="employee-birthDate" class="me-2 fw-bold">Function:</label>
+        <span th:text="${employee.function}" class="flex-grow-1 bg-light p-1 rounded">Unknow</span>
+    </div>
+    <div class="d-flex align-items-center mb-3">
         <label for="employee-birthDate" class="me-2 fw-bold">Birth date:</label>
         <span th:text="${employee.birthDate}" class="flex-grow-1 bg-light p-1 rounded">Unknow</span>
+    </div>
+    <div class="d-flex align-items-center mb-3">
+        <label for="employee-birthDate" class="me-2 fw-bold">Children in charge:</label>
+        <span th:text="${employee.childrens}" class="flex-grow-1 bg-light p-1 rounded">0</span>
+    </div>
+    <div class="d-flex align-items-center mb-3">
+        <label for="employee-birthDate" class="me-2 fw-bold">Email:</label>
+        <span th:text="${employee.privateMail}" class="flex-grow-1 bg-light p-1 rounded">Unknow</span>
+    </div>
+    <div class="d-flex align-items-center mb-3">
+        <label for="employee-birthDate" class="me-2 fw-bold">CIN:</label>
+        <span th:text="${employee.cin}" class="flex-grow-1 bg-light p-1 rounded">Unknow</span>
+    </div>
+    <div>
+        <p>Phone numbers</p>
+        <ul class="d-flex align-items-center mb-3" th:each="phone :${employee.phoneNumbers}">
+            <li th:text="${phone.number}" class="flex-grow-1 bg-light p-1 rounded">Unknow</li>
+        </ul>
+    </div>
+    <div class="d-flex align-items-center mb-3">
+        <label for="employee-birthDate" class="me-2 fw-bold">Departure date:</label>
+        <span th:text="${employee.departureDate}" class="flex-grow-1 bg-light p-1 rounded">Unknow</span>
+    </div>
+    <div class="d-flex align-items-center mb-3">
+        <label for="employee-birthDate" class="me-2 fw-bold">Professional Category:</label>
+        <span th:text="${employee.professionalCategory}" class="flex-grow-1 bg-light p-1 rounded">Unknow</span>
+    </div>
+    <div class="d-flex align-items-center mb-3">
+        <label for="employee-birthDate" class="me-2 fw-bold">CNAPS:</label>
+        <span th:text="${employee.cnaps}" class="flex-grow-1 bg-light p-1 rounded">Unknow</span>
     </div>
     <a class="edit-link btn btn-primary" th:href="@{/edit(id=${employee.id})}">Edit</a>
 </div>
