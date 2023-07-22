@@ -1,5 +1,7 @@
 package com.example.prog4.repository.entity;
 
+import com.example.prog4.repository.entity.enums.Csp;
+import com.example.prog4.repository.entity.enums.Sex;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -43,32 +45,20 @@ public class Employee implements Serializable {
     private Integer childNumber;
     private String  personalEmail;
     private String  professionalEmail;
-
-    @Enumerated(EnumType.STRING)
-    private Sex sex;
-    @Enumerated(EnumType.STRING)
-    private Csp csp;
+    private String  registrationNumber;
 
     private LocalDate birthDate;
     private LocalDate entranceDate;
     private LocalDate departureDate;
 
-    private String registrationNumber;
+
+    @Enumerated(EnumType.STRING)
+    private Sex sex;
+    @Enumerated(EnumType.STRING)
+    private Csp csp;
     @ManyToMany
     @JoinTable(name = "have_position")
     private List<Position> positions;
     @Lob
     private String image;
-
-    enum Sex {
-        H, F
-    }
-
-    enum Csp {
-        AGRICULTURAL_WORKERS,
-        CRAFTSMEN_AND_ARTISANS,
-        TRADERS_AND_MERCHANTS,
-        CIVIL_SERVANTS_AND_PROFESSIONALS,
-        UNSKILLED_LABORERS
-    }
 }
