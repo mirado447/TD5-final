@@ -31,7 +31,15 @@ public class EmployeeController {
     }
 
     @GetMapping("/employee-details")
+    @Deprecated
     public ModelAndView getEmployeeDetails(@RequestParam(name = "employeeId") Long id) {
+        ModelAndView modelAndView = new ModelAndView("employee-details");
+        Employee employee = service.findById(id);
+        modelAndView.addObject("employee", employee);
+        return modelAndView;
+    }
+    @GetMapping("/employee/{employeeId}")
+    public ModelAndView getEmployeeDetails2(@PathVariable(name = "employeeId") Long id) {
         ModelAndView modelAndView = new ModelAndView("employee-details");
         Employee employee = service.findById(id);
         modelAndView.addObject("employee", employee);
