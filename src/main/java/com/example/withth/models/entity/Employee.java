@@ -1,9 +1,6 @@
 package com.example.withth.models.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +10,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,14 +30,15 @@ public class Employee implements Serializable {
     private byte[] content;
     private long size;
     // TODO an employee can have many phone number
-    private String phoneNumber;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Phone> phoneNumbers;
     private String address;
     private String privateMail;
     private String publicMail;
     //    number, date et lieu de deliverance,
     private String cin;
     private String function;
-    private Integer childrens = 0;
+    private Integer childrens;
 
     private enum sex {H, F}
 
