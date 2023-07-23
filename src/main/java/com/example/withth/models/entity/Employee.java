@@ -42,8 +42,8 @@ public class Employee implements Serializable {
     private String cin;
     private String function;
     private Integer childrens;
-    private Date entryDate = new Date();
-    private Date departureDate;
+    private LocalDate entryDate = LocalDate.now();
+    private LocalDate departureDate;
     private String professionalCategory;
     private String cnaps;
 
