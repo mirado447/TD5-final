@@ -24,4 +24,8 @@ public class EmployeeService {
         Optional<Employee> byId = repository.findById(id);
         return byId.orElseGet(Employee::new);
     }
+
+    public List<Employee> filter(String name, String function){
+        return repository.filterByNameOrFunction(name, function);
+    }
 }

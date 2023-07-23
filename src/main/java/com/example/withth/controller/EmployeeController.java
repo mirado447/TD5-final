@@ -7,12 +7,14 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @Slf4j
@@ -38,12 +40,31 @@ public class EmployeeController {
         modelAndView.addObject("employee", employee);
         return modelAndView;
     }
+
     @GetMapping("/employee/{employeeId}")
     public ModelAndView getEmployeeDetails2(@PathVariable(name = "employeeId") Long id) {
         ModelAndView modelAndView = new ModelAndView("employee-details");
         Employee employee = service.findById(id);
         modelAndView.addObject("employee", employee);
         return modelAndView;
+    }
+
+    @GetMapping("/filter")
+    public String filter(@RequestParam(required = false) String name,
+                         @RequestParam(required = false) String function,
+                         Model model) {
+        // when running a query like filter?name=&function=k
+        // the query params of name will be an empty string
+        if (Objects.equals(name, "")) {
+            name=null;
+        }
+        if (Objects.equals(function, "")) {
+            function=null;
+        }
+
+        List<Employee> listEmployees = service.filter(name, function);
+        model.addAttribute("employeeList", listEmployees);
+        return "index";
     }
 
     @PostMapping(value = "/save")
@@ -54,7 +75,8 @@ public class EmployeeController {
         service.save(employee);
         return "redirect:/";
     }
-    @PostMapping(value="/edit")
+
+    @PostMapping(value = "/edit")
     public String updateEmployee(@ModelAttribute Employee employee, @ModelAttribute("file") MultipartFile file) throws IOException {
         employee.setProfilePicture(file.getOriginalFilename());
         employee.setContent(file.getBytes());
@@ -62,7 +84,6 @@ public class EmployeeController {
         service.save(employee);
         return "redirect:/";
     }
-
 
 
     @GetMapping("/image")
