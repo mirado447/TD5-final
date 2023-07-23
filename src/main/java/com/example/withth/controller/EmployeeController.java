@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.List;
@@ -56,16 +57,34 @@ public class EmployeeController {
         // when running a query like filter?name=&function=k
         // the query params of name will be an empty string
         if (Objects.equals(name, "")) {
-            name=null;
+            name = null;
         }
         if (Objects.equals(function, "")) {
-            function=null;
+            function = null;
         }
 
         List<Employee> listEmployees = service.filter(name, function);
+        model.addAttribute("query_name", name);
+        model.addAttribute("query_function", function);
         model.addAttribute("employeeList", listEmployees);
         return "index";
     }
+
+    @PostMapping("/search")
+    public String searchByKeyWord(@RequestParam(required = false) String name,
+                                  @RequestParam(required = false) String function,
+                                  Model model, RedirectAttributes redirectAttributes) {
+        if (Objects.equals(name, "")) {
+            name = null;
+        }
+        if (Objects.equals(function, "")) {
+            function = null;
+        }
+        redirectAttributes.addAttribute("name", name);
+        redirectAttributes.addAttribute("function", function);
+        return "redirect:/filter";
+    }
+
     @GetMapping("/employee/export")
     public void exportToCSV(HttpServletResponse response) throws IOException{
         List<Employee> employees = service.getEmployees();
