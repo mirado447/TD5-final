@@ -1,48 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="ISO-8859-1"/>
-    <link th:href="@{/styles/style.css}" rel="stylesheet"/>
-    <title>Spring Boot Application</title>
-    <script th:src="@{/scripts/index.js}" defer></script>
-    <style>
-        img {
-            object-fit: contain;
-            width: 60px;
-            height: 60px;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
 <body>
-<ul class="w-100 nav justify-content-end">
-    <li class="nav-item">
-        <a class="nav-link active" href="/createEmployee">Create Employee</a>
-    </li>
-</ul>
-<div class="d-flex align-items-center justify-content-center h-100 w-100">
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Image</th>
-            <th>Reference</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Birth Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="employee: ${employees}">
-            <td>
-                <img th:src="'data:image/jpeg;base64,' + ${employee.getImage()}"  alt="Aucune image">
-            </td>
-            <td th:text="${employee.getRegistrationNumber()}"></td>
-            <td th:text="${employee.getFirstName()}"></td>
-            <td th:text="${employee.getLastName()}"></td>
-            <td th:text="${employee.getBirthDate()}"></td>
-            <td><a th:href="'/employee/' + ${employee.getId()}">view</a></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+    hi
 </body>
 </html>
