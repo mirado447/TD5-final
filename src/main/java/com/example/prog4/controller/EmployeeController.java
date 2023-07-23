@@ -2,18 +2,20 @@ package com.example.prog4.controller;
 
 
 import com.example.prog4.controller.mapper.EmployeeMapper;
+import com.example.prog4.controller.mapper.SexMapper;
 import com.example.prog4.controller.validator.EmployeeValidator;
 import com.example.prog4.model.Employee;
-import com.example.prog4.model.message.ErrorMessage;
+import com.example.prog4.model.ViewEmployee;
+import com.example.prog4.model.enums.EmployeeSortField;
+import com.example.prog4.model.utilities.Page;
+import com.example.prog4.model.utilities.PerPage;
 import com.example.prog4.service.EmployeeService;
-import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -24,52 +26,41 @@ import java.util.List;
 public class EmployeeController {
     private EmployeeService service;
     private EmployeeMapper mapper;
+    private SexMapper sexMapper;
     private EmployeeValidator validator;
 
-    @GetMapping("/")
-    public String index(Model model) {
-        List<com.example.prog4.repository.entity.Employee> employees = service.getAll();
-        model.addAttribute("employees", employees);
-        return "index";
+    @GetMapping("/employees")
+    public List<ViewEmployee> getAll(
+            @RequestParam(required = false, defaultValue = "") String firstName,
+            @RequestParam(required = false, defaultValue = "") String lastName,
+            @RequestParam(required = false, defaultValue = "") String sex,
+            @RequestParam(required = false, defaultValue = "") String position,
+            @RequestParam(required = false, defaultValue = "lastName") EmployeeSortField orderBy,
+            @RequestParam(required = false, defaultValue = "ASC") Direction orderDirection,
+            @RequestParam(required = false, defaultValue = "1") Page page,
+            @RequestParam(required = false, defaultValue = "10") PerPage perPage
+    ) {
+        return service.getAll(
+                lastName,
+                firstName,
+                sexMapper.toDomain(sex),
+                position,
+                page,
+                perPage,
+                orderBy,
+                orderDirection
+        ).stream().map(mapper::toView).toList();
     }
 
-    @GetMapping("/createEmployee")
-    public String createEmployee(Model model) {
-        model.addAttribute("employee", Employee.builder().build());
-        return "createEmployee";
+    @PutMapping("/employee")
+    public ViewEmployee saveOne(@RequestBody Employee employee) {
+        validator.validate(employee);
+        com.example.prog4.repository.entity.Employee domain = mapper.toDomain(employee);
+        return mapper.toView(service.saveOne(domain));
     }
 
-    @GetMapping("/editEmployee/{eId}")
-    public String editEmployee(@PathVariable(name = "eId") String eId, Model model, HttpSession session) {
-        com.example.prog4.repository.entity.Employee employee = service.getOne(eId);
-        model.addAttribute("employee", employee);
-        return "editEmployee";
+    @GetMapping("/employee")
+    public ViewEmployee getOne(@RequestParam String eId) {
+        return mapper.toView(service.getOne(eId));
     }
-
-    @PostMapping("/saveEmployee")
-    public String saveEmployee(@ModelAttribute("employee") Employee restEmployee, HttpSession session) {
-        validator.validate(restEmployee);
-        com.example.prog4.repository.entity.Employee employee = mapper.toDomain(restEmployee);
-        service.saveOne(employee);
-        return "redirect:/";
-    }
-
-    @GetMapping("/errors")
-    public String error(@RequestParam("code") Integer code, Model model, HttpSession session) {
-        ErrorMessage errorMessage = ErrorMessage.builder()
-                .code(code)
-                .message((String) session.getAttribute("errorMessage"))
-                .build();
-        model.addAttribute("error", errorMessage);
-        return "errors";
-    }
-
-
-    @GetMapping("/employee/{employeeId}")
-    public String getEmployee(@PathVariable(name = "employeeId") String employeeId, Model model) {
-        com.example.prog4.repository.entity.Employee employee = service.getOne(employeeId);
-        model.addAttribute("employee", employee);
-        return "employee";
-    }
-
 }

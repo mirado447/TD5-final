@@ -21,22 +21,22 @@ public class EmployeeValidator {
         } else if (employee.getBirthDate().isAfter(LocalDate.now())) {
             error.append("Birthdate could not be after today. ");
         }
-        if (isNotNullAndNotBlank(employee.getLastName())) {
+        if (!isNotNullAndNotBlank(employee.getLastName())) {
             error.append("Last name is mandatory. ");
         }
-        if (isNotNullAndNotBlank(employee.getFirstName())) {
+        if (!isNotNullAndNotBlank(employee.getFirstName())) {
             error.append("First name is mandatory. ");
         }
-        if (isNotNullAndNotBlank(employee.getPhone())) {
+        if (!isNotNullAndNotBlank(employee.getPhone())) {
             error.append("Phone number is mandatory is mandatory. ");
         }
-        if (isNotNullAndNotBlank(employee.getAddress())) {
+        if (!isNotNullAndNotBlank(employee.getAddress())) {
             error.append("Address is mandatory. ");
         }
         if (employee.getSex() == null) {
             error.append("Sex is mandatory. ");
         }
-        if (isNotNullAndNotBlank(employee.getCin())) {
+        if (!isNotNullAndNotBlank(employee.getCin())) {
             error.append("CIN is mandatory. ");
         }
         if (employee.getCsp() == null) {
@@ -53,13 +53,13 @@ public class EmployeeValidator {
         if (employee.getEntranceDate() != null && employee.getDepartureDate() != null && employee.getDepartureDate().isBefore(employee.getEntranceDate())) {
             error.append("Departure date can't be before entrance date. ");
         }
-        if (isNotNullAndNotBlank(employee.getEmail().getProfessional())) {
+        if (!isNotNullAndNotBlank(employee.getEmail().getProfessional())) {
             error.append("Professional email is mandatory. ");
         }
-        if (isNotNullAndNotBlank(employee.getEmail().getPersonal())) {
+        if (!isNotNullAndNotBlank(employee.getEmail().getPersonal())) {
             error.append("Personal email is mandatory. ");
         }
-        if (isNotNullAndNotBlank(employee.getCnaps())) {
+        if (!isNotNullAndNotBlank(employee.getCnaps())) {
             error.append("Cnaps is mandatory. ");
         }
         if (!error.isEmpty()) {
