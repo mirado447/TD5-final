@@ -1,43 +1,75 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout}" >
 <head>
-    <title>Index Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-            crossorigin="anonymous"></script>
+    <title>Edit employee infos</title>
 </head>
 <body>
-<form th:action="@{/edit}" method="post" th:object="${employee}" enctype="multipart/form-data" class="container mt-5">
-    <div class="mb-3">
-        <label for="employee-id" id="employee-id" class="form-label">
-            Id
-            <input type="text" name="id" th:field="*{id}" placeholder="id" class="form-control" readonly>
-        </label>
-    </div>
-    <div class="mb-3">
-        <label for="employee-name" id="employee-name" class="form-label">
-            User Name
-            <input type="text" name="name" th:field="*{name}" placeholder="employee name" class="form-control">
-        </label>
-    </div>
-    <div class="mb-3">
-        <label for="birthDate" class="form-label">
-            Date of Birth
-            <input type="date" id="birthDate" th:field="*{birthDate}" th:value="${employee.birthDate}"
-                   class="form-control">
-        </label>
-    </div>
-    <div class="mb-3">
-        <label for="input-file" class="form-label">
-            Upload File
-            <input id="input-file" type="file" name="file" class="form-control">
-        </label>
-    </div>
-    <div>
+<div class="container" layout:fragment="content">
+    <h2>Edit Employee Details</h2>
+    <form th:action="@{/edit}" th:object="${employee}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" th:field="*{id}">
+
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}">
+        </div>
+
+        <div class="form-group">
+            <label for="entryDate">Entry Date:</label>
+            <input type="date" class="form-control datepicker" id="entryDate" th:field="*{entryDate}">
+        </div>
+
+        <div class="form-group">
+            <label for="function">Function:</label>
+            <input type="text" class="form-control" id="function" th:field="*{function}">
+        </div>
+
+        <div class="form-group">
+            <label for="birthDate">Birth Date:</label>
+            <input type="text" class="form-control" id="birthDate" th:field="*{birthDate}">
+        </div>
+
+        <div class="form-group">
+            <label for="childrens">Children in Charge:</label>
+            <input type="text" class="form-control" id="childrens" th:field="*{childrens}">
+        </div>
+
+        <div class="form-group">
+            <label for="privateMail">Email:</label>
+            <input type="text" class="form-control" id="privateMail" th:field="*{privateMail}">
+        </div>
+
+        <div class="form-group">
+            <label for="cin">CIN:</label>
+            <input type="text" class="form-control" id="cin" th:field="*{cin}">
+        </div>
+
+        <div class="form-group">
+            <label for="phoneNumbers">Phone Numbers:</label>
+            <ul>
+                <li th:each="phone : ${employee.phoneNumbers}">
+                    <input type="text" class="form-control" th:field="*{phoneNumbers[__${phoneStat.index}__].number}">
+                </li>
+            </ul>
+        </div>
+
+        <div class="form-group">
+            <label for="departureDate">Departure Date:</label>
+            <input type="text" class="form-control" id="departureDate" th:field="*{departureDate}">
+        </div>
+
+        <div class="form-group">
+            <label for="professionalCategory">Professional Category:</label>
+            <input type="text" class="form-control" id="professionalCategory" th:field="*{professionalCategory}">
+        </div>
+
+        <div class="form-group">
+            <label for="cnaps">CNAPS:</label>
+            <input type="text" class="form-control" id="cnaps" th:field="*{cnaps}">
+        </div>
+
         <button type="submit" class="btn btn-primary">Save</button>
-        <a href="/" class="btn btn-secondary">Cancel</a>
-    </div>
-</form>
+    </form>
+</div>
 </body>
 </html>
