@@ -66,7 +66,11 @@ public class EmployeeController {
         model.addAttribute("employeeList", listEmployees);
         return "index";
     }
-
+    @GetMapping("/employee/export")
+    public void exportToCSV(HttpServletResponse response) throws IOException{
+        List<Employee> employees = service.getEmployees();
+        service.exportToCSV(response,employees);
+    }
     @PostMapping(value = "/save")
     public String save(@ModelAttribute Employee employee, @ModelAttribute("file") MultipartFile file) throws IOException {
         employee.setProfilePicture(file.getOriginalFilename());
