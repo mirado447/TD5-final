@@ -30,13 +30,13 @@ public class EmployeeController {
 
     @RequestMapping("/")
     public String getEmployee() {
-        return "index";
+        return "employee/index";
     }
 
     @GetMapping("/employee-details")
     @Deprecated
     public ModelAndView getEmployeeDetails(@RequestParam(name = "employeeId") Long id) {
-        ModelAndView modelAndView = new ModelAndView("employee-details");
+        ModelAndView modelAndView = new ModelAndView("employee/employee-details");
         Employee employee = service.findById(id);
         modelAndView.addObject("employee", employee);
         return modelAndView;
@@ -44,7 +44,7 @@ public class EmployeeController {
 
     @GetMapping("/employee/{employeeId}")
     public ModelAndView getEmployeeDetails2(@PathVariable(name = "employeeId") Long id) {
-        ModelAndView modelAndView = new ModelAndView("employee-details");
+        ModelAndView modelAndView = new ModelAndView("employee/employee-details");
         Employee employee = service.findById(id);
         modelAndView.addObject("employee", employee);
         return modelAndView;
@@ -67,13 +67,13 @@ public class EmployeeController {
         model.addAttribute("query_name", name);
         model.addAttribute("query_function", function);
         model.addAttribute("employeeList", listEmployees);
-        return "index";
+        return "employee/index";
     }
 
     @PostMapping("/search")
     public String searchByKeyWord(@RequestParam(required = false) String name,
                                   @RequestParam(required = false) String function,
-                                  Model model, RedirectAttributes redirectAttributes) {
+                                  RedirectAttributes redirectAttributes) {
         if (Objects.equals(name, "")) {
             name = null;
         }
@@ -132,7 +132,7 @@ public class EmployeeController {
 
     @GetMapping("/employee-form")
     public ModelAndView addEmployeeForm() {
-        ModelAndView modelAndView = new ModelAndView("employee-form");
+        ModelAndView modelAndView = new ModelAndView("employee/employee-form");
         modelAndView.addObject("employee", new Employee());
         return modelAndView;
     }
@@ -140,7 +140,7 @@ public class EmployeeController {
     @GetMapping("/edit")
     public ModelAndView editEmployeeForm(@Param("id") Long id) {
         Employee employee = service.findById(id);
-        ModelAndView modelAndView = new ModelAndView("edit");
+        ModelAndView modelAndView = new ModelAndView("employee/edit");
         modelAndView.addObject("employee", employee);
         return modelAndView;
     }
