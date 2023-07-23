@@ -1,4 +1,4 @@
-package com.example.prog4.controller.config;
+package com.example.prog4.controller.converter;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
