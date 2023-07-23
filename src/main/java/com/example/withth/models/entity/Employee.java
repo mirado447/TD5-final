@@ -27,6 +27,8 @@ public class Employee implements Serializable {
     private String matriculate;
     private String name;
     private LocalDate birthDate;
+    @Enumerated(EnumType.STRING)
+    private Sex sex;
     private String profilePicture;
     private byte[] content;
     private long size;
@@ -45,7 +47,7 @@ public class Employee implements Serializable {
     private String professionalCategory;
     private String cnaps;
 
-    private enum sex {H, F}
+    private enum Sex {H, F}
 
     public String getMatriculate() {
         return "EMP" + this.id;
