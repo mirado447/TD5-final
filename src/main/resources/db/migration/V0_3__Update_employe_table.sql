@@ -3,7 +3,7 @@ $$
     begin
         if
             not exists(select from pg_type where typname = 'sex') then
-            create type sex as enum ('M', 'F');
+            create type sex as enum ('H', 'F');
         end if;
         if
             not exists(select from pg_type where typname = 'csp') then
