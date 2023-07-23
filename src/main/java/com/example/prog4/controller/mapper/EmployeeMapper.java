@@ -4,14 +4,32 @@ import com.example.prog4.model.Email;
 import com.example.prog4.model.Employee;
 import com.example.prog4.model.ViewEmployee;
 import com.example.prog4.model.exception.BadRequestException;
+import com.example.prog4.repository.EmployeeRepository;
+import com.example.prog4.repository.PositionRepository;
+import com.example.prog4.repository.entity.Position;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
+import java.util.Optional;
 
 @Component
+@AllArgsConstructor
 public class EmployeeMapper {
+    private PositionRepository positionRepository;
     public com.example.prog4.repository.entity.Employee toDomain(Employee employee) {
+        List<Position> positions = new ArrayList<>();
+        employee.getPositions().forEach(position-> {
+            Optional<Position> dbPosition = positionRepository.findPositionByNameEquals(position.getName());
+            if(dbPosition.isPresent()){
+                positions.add(dbPosition.get());
+            } else {
+                positions.add(positionRepository.save(position));
+            }
+        });
         com.example.prog4.repository.entity.Employee domainEmployee = com.example.prog4.repository.entity.Employee.builder()
                 .id(employee.getId())
                 .firstName(employee.getFirstName())
@@ -21,7 +39,7 @@ public class EmployeeMapper {
                 .childNumber(employee.getChildNumber())
                 .cin(employee.getCin())
                 .cnaps(employee.getCnaps())
-                .positions(employee.getPositions())
+                .positions(positions)
                 .registrationNumber(employee.getRegistrationNumber())
                 .csp(employee.getCsp())
                 .sex(employee.getSex())
