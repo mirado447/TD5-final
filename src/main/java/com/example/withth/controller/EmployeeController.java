@@ -93,18 +93,27 @@ public class EmployeeController {
 
     @PostMapping(value = "/save")
     public String save(@ModelAttribute Employee employee, @ModelAttribute("file") MultipartFile file) throws IOException {
-        employee.setProfilePicture(file.getOriginalFilename());
-        employee.setContent(file.getBytes());
-        employee.setSize(file.getSize());
+        if (file != null) {
+            employee.setProfilePicture(file.getOriginalFilename());
+            employee.setContent(file.getBytes());
+            employee.setSize(file.getSize());
+        }
         service.save(employee);
         return "redirect:/";
     }
 
     @PostMapping(value = "/edit")
     public String updateEmployee(@ModelAttribute Employee employee, @ModelAttribute("file") MultipartFile file) throws IOException {
-        employee.setProfilePicture(file.getOriginalFilename());
-        employee.setContent(file.getBytes());
-        employee.setSize(file.getSize());
+        byte[] content;
+        if (file == null) {
+            Employee oldEmployee = service.findById(employee.getId());
+            content = oldEmployee.getContent();
+        } else {
+            employee.setSize(file.getSize());
+            employee.setProfilePicture(file.getOriginalFilename());
+            content = file.getBytes();
+        }
+        employee.setContent(content);
         service.save(employee);
         return "redirect:/";
     }
@@ -114,8 +123,11 @@ public class EmployeeController {
     public void showImage(@Param("id") Long id, HttpServletResponse response, Employee employee) throws IOException {
         employee = service.findById(id);
         response.setContentType("image/jpeg, image/jpg, image/png, image/gif, image/pdf");
-        response.getOutputStream().write(employee.getContent());
-        response.getOutputStream().close();
+        byte[] content = employee.getContent();
+        if (content != null) {
+            response.getOutputStream().write(employee.getContent());
+            response.getOutputStream().close();
+        }
     }
 
     @GetMapping("/employee-form")
