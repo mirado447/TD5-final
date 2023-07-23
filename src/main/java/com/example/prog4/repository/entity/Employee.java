@@ -2,11 +2,13 @@ package com.example.prog4.repository.entity;
 
 import com.example.prog4.repository.entity.enums.Csp;
 import com.example.prog4.repository.entity.enums.Sex;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
@@ -17,6 +19,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnTransformer;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -37,16 +40,17 @@ public class Employee implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     private String id;
 
-    private String  cin;
-    private String  cnaps;
-    private String  phone;
-    private String  address;
-    private String  lastName;
-    private String  firstName;
+    private String cin;
+    private String cnaps;
+    private String phone;
+    private String address;
+    private String lastName;
+    private String firstName;
+    @Column(name = "children_number")
     private Integer childNumber;
-    private String  personalEmail;
-    private String  professionalEmail;
-    private String  registrationNumber;
+    private String personalEmail;
+    private String professionalEmail;
+    private String registrationNumber;
 
     private LocalDate birthDate;
     private LocalDate entranceDate;
@@ -54,11 +58,18 @@ public class Employee implements Serializable {
 
 
     @Enumerated(EnumType.STRING)
+    @ColumnTransformer(read = "CAST(sex AS varchar)", write = "CAST(? AS sex)")
     private Sex sex;
     @Enumerated(EnumType.STRING)
+    @ColumnTransformer(read = "CAST(csp AS varchar)", write = "CAST(? AS csp)")
     private Csp csp;
     @ManyToMany
-    @JoinTable(name = "have_position")
+    @JoinTable(
+            name = "have_position",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "position_id")
+    )
+    @JoinColumn(name = "id")
     private List<Position> positions;
     @Lob
     private String image;
