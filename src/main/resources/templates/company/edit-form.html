@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout.html}">
+<head>
+    <title>Index Page</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-radius: 4px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5" layout:fragment="content">
+    <form th:action="@{/company/save}" method="post" th:object="${company}" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="company-name">Company Name</label>
+            <input type="text" name="name" th:field="*{name}" placeholder="Company Name" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" id="address" th:field="*{address}" th:value="${company.address}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="address">email</label>
+            <input type="text" id="email" th:field="*{emailContact}" th:value="${company.emailContact}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            Phone numbers
+            <ul th:each="telephone:${company.telephones}">
+                <li th:value="${telephone}"></li>
+            </ul>
+        </div>
+        <div class="form-group">
+            <label for="input-file">Logo</label>
+            <input id="input-file" type="file" name="file" class="form-control" accept="image/*">
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+</body>
+</html>

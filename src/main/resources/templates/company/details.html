@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .details-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .details-row label {
+            flex-basis: 120px;
+            font-weight: bold;
+        }
+
+        .details-row span {
+            flex-grow: 1;
+            padding: 5px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .edit-link {
+            display: block;
+            margin-top: 10px;
+        }
+
+        div > label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <img th:src="'data:image/*;base64,'+${company.logo}" width="100px" height="50px" class="mb-3 rounded" alt="log">
+    <div class="d-flex align-items-center mb-3">
+        <label for="name" class="me-2 fw-bold">name:</label>
+        <span id="name" th:text="${company.name}" class="flex-grow-1 bg-light p-1 rounded"></span>
+    </div>
+    <a class="edit-link btn btn-primary" th:href="@{/company/{id}/edit(id=${company.id})}">Edit</a>
+</div>
+</body>
+</html>
