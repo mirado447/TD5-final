@@ -2,7 +2,6 @@ package com.example.prog4.repository.entity;
 
 import com.example.prog4.repository.entity.enums.Csp;
 import com.example.prog4.repository.entity.enums.Sex;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -10,8 +9,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,15 +38,12 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private String id;
-
     private String cin;
     private String cnaps;
-    private String phone;
+    private String image;
     private String address;
     private String lastName;
     private String firstName;
-    @Column(name = "children_number")
-    private Integer childNumber;
     private String personalEmail;
     private String professionalEmail;
     private String registrationNumber;
@@ -56,6 +52,7 @@ public class Employee implements Serializable {
     private LocalDate entranceDate;
     private LocalDate departureDate;
 
+    private Integer childrenNumber;
 
     @Enumerated(EnumType.STRING)
     @ColumnTransformer(read = "CAST(sex AS varchar)", write = "CAST(? AS sex)")
@@ -63,14 +60,14 @@ public class Employee implements Serializable {
     @Enumerated(EnumType.STRING)
     @ColumnTransformer(read = "CAST(csp AS varchar)", write = "CAST(? AS csp)")
     private Csp csp;
+
     @ManyToMany
     @JoinTable(
             name = "have_position",
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "position_id")
     )
-    @JoinColumn(name = "id")
     private List<Position> positions;
-    @Lob
-    private String image;
+    @OneToMany
+    private List<Phone> phones;
 }
