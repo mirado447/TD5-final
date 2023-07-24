@@ -1,36 +1,45 @@
 package com.example.withth.models.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.example.withth.models.entity.Phone;
+import jakarta.persistence.*;
+import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-@Data
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@ToString
 @Builder
-public class Employee {
+public class EmployeeModel implements Serializable {
     private Long id;
     private String matriculate;
     private String name;
-    private LocalDate birthDate;
+    private String birthDate;
+    private Sex sex;
     private String profilePicture;
     private byte[] content;
     private long size;
-    // TODO an employee can have many phone number
-    private String phoneNumber;
+    private List<Phone> phoneNumbers;
     private String address;
     private String privateMail;
     private String publicMail;
     //    number, date et lieu de deliverance,
     private String cin;
     private String function;
-    private Integer childrens = 0;
+    private Integer childrens;
+    private String entryDate;
+    private String departureDate;
+    private String professionalCategory;
+    private String cnaps;
 
-    private enum sex {H, F}
+    public enum Sex {H, F}
 
     public String getMatriculate() {
         return "EMP" + this.id;
     }
 }
+

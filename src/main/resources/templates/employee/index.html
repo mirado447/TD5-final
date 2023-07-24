@@ -20,6 +20,12 @@
         <label>
             <input type="text" th:name="function" placeholder="Function" th:value="${query_function}">
         </label>
+        <label>
+            <select th:name="sex">
+                <option value="H">Man</option>
+                <option value="F">Women</option>
+            </select>
+        </label>
         <input type="submit" value="Filter">
     </form>
     <a th:href="@{/}">Clear filter</a>

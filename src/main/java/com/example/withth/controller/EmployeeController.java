@@ -1,10 +1,10 @@
 package com.example.withth.controller;
 
 import com.example.withth.models.entity.Employee;
+import com.example.withth.models.entity.Sex;
 import com.example.withth.service.EmployeeService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,6 +52,7 @@ public class EmployeeController {
     @GetMapping("/filter")
     public String filter(@RequestParam(required = false) String name,
                          @RequestParam(required = false) String function,
+                         @RequestParam(required = false) String sex,
                          Model model) {
         // when running a query like filter?name=&function=k
         // the query params of name will be an empty string
@@ -62,7 +63,7 @@ public class EmployeeController {
             function = null;
         }
 
-        List<Employee> listEmployees = service.filter(name, function);
+        List<Employee> listEmployees = service.filter(name, function, Sex.valueOf(sex));
         model.addAttribute("query_name", name);
         model.addAttribute("query_function", function);
         model.addAttribute("employeeList", listEmployees);
@@ -72,6 +73,7 @@ public class EmployeeController {
     @PostMapping("/search")
     public String searchByKeyWord(@RequestParam(required = false) String name,
                                   @RequestParam(required = false) String function,
+                                  @RequestParam(required = false) String sex,
                                   RedirectAttributes redirectAttributes) {
         if (Objects.equals(name, "")) {
             name = null;
@@ -81,6 +83,7 @@ public class EmployeeController {
         }
         redirectAttributes.addAttribute("name", name);
         redirectAttributes.addAttribute("function", function);
+        redirectAttributes.addAttribute("sex", sex);
         return "redirect:/filter";
     }
 

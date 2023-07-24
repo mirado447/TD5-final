@@ -1,6 +1,7 @@
 package com.example.withth.service;
 
 import com.example.withth.models.entity.Employee;
+import com.example.withth.models.entity.Sex;
 import com.example.withth.repository.EmployeeRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -30,8 +31,8 @@ public class EmployeeService {
         return byId.orElseGet(Employee::new);
     }
 
-    public List<Employee> filter(String name, String function){
-        return repository.filterByNameOrFunction(name, function);
+    public List<Employee> filter(String name, String function, Sex sex){
+        return repository.filterByNameOrFunction(name, function, sex.toString());
     }
 
     public void exportToCSV(HttpServletResponse response, List<Employee> employees) throws IOException {

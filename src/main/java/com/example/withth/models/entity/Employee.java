@@ -10,7 +10,6 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -46,8 +45,6 @@ public class Employee implements Serializable {
     private LocalDate departureDate;
     private String professionalCategory;
     private String cnaps;
-
-    private enum Sex {H, F}
 
     public String getMatriculate() {
         return "EMP" + this.id;
