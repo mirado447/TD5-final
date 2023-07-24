@@ -2,31 +2,34 @@ package com.example.withth.models.entity;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.List;
 
-@Entity
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Company {
+@Getter
+@Setter
+@ToString
+@Entity
+@Builder
+public class Company implements Serializable {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    // only 1 company for now
+    private Long id= 1L;
 
-    private String nom;
+    private String name;
     private String description;
     private String slogan;
-    private String adresse;
+    private String address;
     private String emailContact;
     @ElementCollection
     private List<String> telephones;
@@ -34,5 +37,6 @@ public class Company {
     private String stat;
     private String rcs;
     @Lob
-    private Byte[] logo;
+    private String logo;
+    private byte[] logoB;
 }
