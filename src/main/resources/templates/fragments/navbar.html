@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<ul th:fragment="nav_content">
-    <li><a th:href="@{/}">Home</a></li>
-</ul>
+    <nav class="navbar bg-light" th:fragment="nav_content">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img th:src="@{'/company/image?id=1'}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+            </a>
+        </div>
+        <a th:href="@{/company/1/edit}" class="nav-link">Edit company infos</a>
+    </nav>
 </body>
 </html>
