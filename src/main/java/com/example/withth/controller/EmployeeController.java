@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Objects;
 
 @Controller
-@Slf4j
 @AllArgsConstructor
 public class EmployeeController {
     private final EmployeeService service;
