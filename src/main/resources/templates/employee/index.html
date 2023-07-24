@@ -23,7 +23,9 @@
         <input type="submit" value="Filter">
     </form>
     <a th:href="@{/}">Clear filter</a>
-
+    <form th:action="@{/employee/export}">
+        <button class="btn btn-secondary">Export to csv</button>
+    </form>
     <table class="table">
         <thead class="table-dark">
         <tr>
