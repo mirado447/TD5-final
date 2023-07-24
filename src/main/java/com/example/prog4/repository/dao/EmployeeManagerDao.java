@@ -1,6 +1,7 @@
 package com.example.prog4.repository.dao;
 
 import com.example.prog4.model.exception.InternalServerErrorException;
+import com.example.prog4.model.utilities.DateRange;
 import com.example.prog4.repository.entity.Employee;
 import com.example.prog4.repository.entity.enums.Sex;
 import jakarta.persistence.EntityManager;
@@ -21,7 +22,7 @@ import java.util.List;
 public class EmployeeManagerDao {
     private EntityManager entityManager;
 
-    public List<Employee> findByCriteria(String lastName, String firstName, Sex sex, String position, Pageable pageable) {
+    public List<Employee> findByCriteria(String lastName, String firstName, Sex sex, String position, DateRange entranceRange, DateRange departureRange, Pageable pageable) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Employee> query = builder.createQuery(Employee.class);
         Root<Employee> root = query.from(Employee.class);
@@ -36,9 +37,41 @@ public class EmployeeManagerDao {
                 builder.like(builder.lower(root.get("firstName")), "%" + firstName.toLowerCase() + "%")
         ));
 
-        if(sex != null){
+        if (sex != null) {
             predicates.add(builder.or(
                     builder.equal(root.get("sex"), sex)
+            ));
+        }
+
+        // date rages
+        // departure
+        if (departureRange.getEnd() != null && departureRange.getBegin() != null) {
+            predicates.add(builder.or(
+                    builder.between(root.get("departure_date"), departureRange.getBegin(), departureRange.getEnd())
+            ));
+        } else if (departureRange.getEnd() == null && departureRange.getBegin() != null) {
+            predicates.add(builder.or(
+                    builder.equal(root.get("departure_date"), departureRange.getBegin())
+            ));
+        } else if (departureRange.getEnd() != null) {
+            predicates.add(builder.or(
+                    builder.equal(root.get("departure_date"), departureRange.getEnd())
+            ));
+        }
+
+        // date rages
+        // entrance
+        if (entranceRange.getEnd() != null && entranceRange.getBegin() != null) {
+            predicates.add(builder.or(
+                    builder.between(root.get("entrance_date"), entranceRange.getBegin(), entranceRange.getEnd())
+            ));
+        } else if (entranceRange.getEnd() == null && entranceRange.getBegin() != null) {
+            predicates.add(builder.or(
+                    builder.equal(root.get("entrance_date"), entranceRange.getBegin())
+            ));
+        } else if (entranceRange.getEnd() != null) {
+            predicates.add(builder.or(
+                    builder.equal(root.get("entrance_date"), entranceRange.getEnd())
             ));
         }
 
@@ -55,7 +88,6 @@ public class EmployeeManagerDao {
                     .setMaxResults(pageable.getPageSize())
                     .getResultList();
         } catch (Exception e) {
-            System.out.println(e);
             throw new InternalServerErrorException(e.getMessage());
         }
     }
