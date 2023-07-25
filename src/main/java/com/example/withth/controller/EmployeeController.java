@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -48,7 +49,28 @@ public class EmployeeController {
         modelAndView.addObject("employee", employee);
         return modelAndView;
     }
+    @PostMapping("/search")
+    public String searchByKeyWord(@RequestParam(required = false) String name,
+                                  @RequestParam(required = false) String function,
+                                  @RequestParam(required = false) String sex,
+                                  RedirectAttributes redirectAttributes) {
+        if (name.equals("")) {
+            name = null;
+        }
+        if (function.equals("")) {
+            function = null;
+        }
+        List<String> sexList = Arrays.stream(Sex.values()).map(Enum::toString).toList();
+        if (!sexList.contains(sex)) {
+            sex = null;
+        }
 
+
+        redirectAttributes.addAttribute("name", name);
+        redirectAttributes.addAttribute("function", function);
+        redirectAttributes.addAttribute("sex", sex);
+        return "redirect:/filter";
+    }
     @GetMapping("/filter")
     public String filter(@RequestParam(required = false) String name,
                          @RequestParam(required = false) String function,
@@ -63,29 +85,23 @@ public class EmployeeController {
             function = null;
         }
 
-        List<Employee> listEmployees = service.filter(name, function, Sex.valueOf(sex));
+        Sex sexQuery;
+        List<String> sexList = Arrays.stream(Sex.values()).map(Enum::toString).toList();
+        if (!sexList.contains(sex) || sex==null) {
+            sexQuery = null;
+        }else {
+            sexQuery = Sex.valueOf(sex);
+        }
+
+        List<Employee> listEmployees = service.filter(name, function, sexQuery);
         model.addAttribute("query_name", name);
         model.addAttribute("query_function", function);
+        model.addAttribute("query_sex", sexQuery);
         model.addAttribute("employeeList", listEmployees);
         return "employee/index";
     }
 
-    @PostMapping("/search")
-    public String searchByKeyWord(@RequestParam(required = false) String name,
-                                  @RequestParam(required = false) String function,
-                                  @RequestParam(required = false) String sex,
-                                  RedirectAttributes redirectAttributes) {
-        if (Objects.equals(name, "")) {
-            name = null;
-        }
-        if (Objects.equals(function, "")) {
-            function = null;
-        }
-        redirectAttributes.addAttribute("name", name);
-        redirectAttributes.addAttribute("function", function);
-        redirectAttributes.addAttribute("sex", sex);
-        return "redirect:/filter";
-    }
+
 
     @GetMapping("/employee/export")
     public void exportToCSV(HttpServletResponse response) throws IOException {

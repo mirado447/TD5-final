@@ -32,7 +32,8 @@ public class EmployeeService {
     }
 
     public List<Employee> filter(String name, String function, Sex sex){
-        return repository.filterByNameOrFunction(name, function, sex.toString());
+        String sexQuery = (sex != null) ? sex.toString():null;
+        return repository.filterByNameOrFunction(name, function, sexQuery);
     }
 
     public void exportToCSV(HttpServletResponse response, List<Employee> employees) throws IOException {
