@@ -12,49 +12,59 @@
 
 </head>
 <body>
-<div class="container mt-5 d-inline-block" layout:fragment="content">
-    <form th:action="@{/search}" method="post">
-        <label>
-            <input type="search" th:name="name" placeholder="name" th:value="${query_name}">
-        </label>
-        <label>
-            <input type="search" th:name="function" placeholder="Function" th:value="${query_function}">
-        </label>
-        <label>
-            <select th:name="sex" class="dropdown" type="search">
-                <option value="">All</option>
-                <option value="H" >Man</option>
-                <option value="F">Women</option>
-            </select>
-        </label>
-        <input type="submit" class="btn btn-sm btn-secondary" value="Filter">
-    </form>
-    <a th:href="@{/}">Clear filter</a>
-    <form th:action="@{/employee/export}">
-        <button class="btn btn-secondary">Export to csv</button>
-    </form>
-    <table class="table">
-        <thead class="table-dark">
-        <tr>
-            <th>Matriculate</th>
-            <th>Profile pic</th>
-            <th>name</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="employee : ${employeeList}">
-            <td th:text="${employee.matriculate}"></td>
-            <td><img th:src="@{'/image?id='+${employee.id}}" alt="" width="100px" height="50px"></td>
-            <td th:text="${employee.name}"></td>
-            <td>
-                <a th:href="@{/employee/{employeeId}(employeeId=${employee.id})}" class="btn btn-success">Details</a>
-                <a th:href="@{/edit(id=${employee.id})}" class="btn btn-warning">Edit</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <a th:href="@{/employee-form}" class="btn btn-success">Add new employee</a>
+<div class="container d-inline-block" layout:fragment="content">
+    <div class="d-flex flex-row justify-content-between">
+        <div>
+            <form th:action="@{/search}" method="post">
+                <label>
+                    <input type="search" th:name="name" placeholder="name" th:value="${query_name}">
+                </label>
+                <label>
+                    <input type="search" th:name="function" placeholder="Function" th:value="${query_function}">
+                </label>
+                <label>
+                    <select th:name="sex" class="dropdown" type="search">
+                        <option value="">All</option>
+                        <option value="H">Man</option>
+                        <option value="F">Women</option>
+                    </select>
+                </label>
+                <input type="submit" class="btn btn-sm btn-secondary" value="Filter">
+            </form>
+            <a th:href="@{/}">Clear filter</a>
+        </div>
+        <form th:action="@{/employee/export}" class="block">
+            <button class="btn btn-light">Export to csv 📜</button>
+        </form>
+    </div>
+    <div class="table-responsive-md">
+        <table class="table table-light table-hover">
+            <caption>List of employees</caption>
+            <thead>
+            <tr>
+                <th scope="col">Matriculate</th>
+                <th scope="col">Profile pic</th>
+                <th scope="col">name</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="employee : ${employeeList}">
+                <td th:text="${employee.matriculate}"></td>
+                <td><img th:src="@{'/image?id='+${employee.id}}" alt="" width="100px" height="50px"></td>
+                <td th:text="${employee.name}"></td>
+                <td>
+                    <a th:href="@{/employee/{employeeId}(employeeId=${employee.id})}"
+                       class="btn btn-success">Details</a>
+                    <a th:href="@{/edit(id=${employee.id})}" class="btn btn-warning">Edit</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-end">
+        <a th:href="@{/employee-form}" class="btn btn-success" >Add new employee</a>
+    </div>
 </div>
 </body>
 
