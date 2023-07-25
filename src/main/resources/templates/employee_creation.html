@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Employee List</title>
+    <script type="text/javascript" th:src="@{/scripts/tailwindcss.js}"></script>
+    <script type="text/javascript" src="../static/scripts/tailwindcss.js"></script>
+    <link rel="stylesheet" th:href="@{/styles/index.css}">
+    <link rel="stylesheet" href="../static/styles/index.css">
+</head>
+
+<body>
+<nav class="w-100 py-4 bg-primary flex justify-start fixed align-center">
+    <h1 class="text-2xl text-white font-bold mx-2">Create employee</h1>
+</nav>
+<form class="max-w-md mx-auto" method="post" enctype="multipart/form-data" action="/employee/create">
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="firstName">
+            First Name:
+        </label>
+        <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="text" id="firstName" name="firstName" th:value="${employee.firstName}" required>
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="lastName">
+            Last Name:
+        </label>
+        <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="text" id="lastName" name="lastName" th:value="${employee.lastName}" required>
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="image">
+            Image:
+        </label>
+        <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="file" id="image" name="image" th:field="${employee.image}" th:value="*{employee.image}">
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="cin">
+            CIN:
+        </label>
+        <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="text" id="cin" name="cin" th:value="${employee.cin}">
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="address">
+            Address:
+        </label>
+        <input type="text"
+               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+               id="address" name="address" th:value="${employee.address}"/>
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="cnaps">
+            CNAPS:
+        </label>
+        <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="text" id="cnaps" name="cnaps" th:value="${employee.cnaps}">
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="childNumber">
+            Child Number:
+        </label>
+        <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="number" id="childNumber" name="childNumber" min="0" th:value="${employee.childNumber}">
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="personalEmail">
+            Personal Email:
+        </label>
+        <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="email" id="personalEmail" name="email.personalEmail" th:value="${employee.personalEmail}">
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="professionalEmail">
+            Professional Email:
+        </label>
+        <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="email" id="professionalEmail" name="email.professionalEmail"
+                th:value="${employee.professionalEmail}">
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="phone">
+            Phone:
+        </label>
+        <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="tel" id="phone" name="phone" th:value="${employee.phone}">
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="csp">
+            CSP:
+        </label>
+        <select
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="csp" name="csp" th:value="${employee.csp}">
+            <option value="">-- Select CSP --</option>
+            <option th:each="csp : ${T(com.example.prog4.repository.entity.enums.Csp).values()}" th:value="${csp}"
+                    th:text="${csp}"></option>
+        </select>
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="sex">
+            Sex:
+        </label>
+        <select
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="sex" name="sex" th:value="${employee.sex}">
+            <option value="">-- Select Sex --</option>
+            <option th:each="sex : ${T(com.example.prog4.repository.entity.enums.Sex).values()}" th:value="${sex}"
+                    th:text="${sex}"></option>
+        </select>
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="positions">
+            Positions:
+        </label>
+        <select th:value="${employee.positions}"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                multiple id="positions" name="positions">
+            <option th:each="position : ${positionList}" th:value="${{position}}" value=""
+                    th:text="${position.name}"></option>
+        </select>
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="birthDate">
+            Birth Date:
+        </label>
+        <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="date" id="birthDate" name="birthDate" th:value="${employee.birthDate}">
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="entranceDate">
+            Entrance Date:
+        </label>
+        <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="date" id="entranceDate" name="entranceDate" th:value="${employee.entranceDate}">
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="departureDate">
+            Departure Date:
+        </label>
+        <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="date" id="departureDate" name="departureDate" th:value="${employee.departureDate}">
+    </div>
+    <div class="flex items-center justify-center">
+        <input
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit" value="Create">
+    </div>
+</form>
+</body>
+
+</html>

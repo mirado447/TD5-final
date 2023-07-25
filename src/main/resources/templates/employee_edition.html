@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee List</title>
+    <script type="text/javascript" th:src="@{/scripts/tailwindcss.js}"></script>
+    <script type="text/javascript" src="../static/scripts/tailwindcss.js"></script>
+    <link rel="stylesheet" th:href="@{/styles/index.css}">
+    <link rel="stylesheet" href="../static/styles/index.css">
+</head>
+<body>
+<div class="w-100 h-100 mx-auto">
+    <nav class="w-100 py-4 bg-primary flex justifyContent-flexStart">
+        <h1 class="text-2xl text-white font-bold mx-2">Create employee</h1>
+    </nav>
+    <main>
+        <div class="card">
+            <form action="/saveEmployee" method="POST" th:object="${employee}" enctype="multipart/form-data">
+                <div class="w-100">
+
+                </div>
+                <div class="mb-3 mt-5">
+                    <label for="firstName" class="form-label">First name</label>
+                    <input type="text" name="firstName" th:field="*{firstName}" class="form-control" id="firstName"
+                           placeholder="John">
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Last name</label>
+                    <input type="text" name="lastName" th:field="*{lastName}" class="form-control" id="lastName"
+                           placeholder="Doe">
+                </div>
+                <div class="mb-3">
+                    <label for="birthDate" class="form-label">Birthdate</label>
+                    <input type="date" name="birthDate" th:field="*{birthDate}" class="form-control" id="birthDate"
+                           placeholder="John Doe">
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Profile pic</label>
+                    <input type="file" class="form-control" id="image" name="image" th:field="*{image}">
+                </div>
+                <div class="button-container d-flex align-items-center justify-content-around">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-danger" type="button"><a href="/">Cancel</a></button>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

@@ -27,8 +27,8 @@ public class EmployeeValidator {
         if (!isNotNullAndNotBlank(employee.getFirstName())) {
             error.append("First name is mandatory. ");
         }
-        if (!isNotNullAndNotBlank(employee.getPhone())) {
-            error.append("Phone number is mandatory is mandatory. ");
+        if (employee.getPhones().isEmpty()) {
+            error.append("At least one phone number is expected. ");
         }
         if (!isNotNullAndNotBlank(employee.getAddress())) {
             error.append("Address is mandatory. ");
@@ -47,16 +47,18 @@ public class EmployeeValidator {
         }
         if (employee.getEntranceDate() == null) {
             error.append("Entrance date is mandatory. ");
+        } else if (employee.getEntranceDate().isBefore(employee.getBirthDate())) {
+            error.append("Entrance date can't be before birthDate. ");
         } else if (employee.getEntranceDate().isAfter(LocalDate.now())) {
             error.append("Entrance date can't be after today. ");
         }
         if (employee.getEntranceDate() != null && employee.getDepartureDate() != null && employee.getDepartureDate().isBefore(employee.getEntranceDate())) {
             error.append("Departure date can't be before entrance date. ");
         }
-        if (!isNotNullAndNotBlank(employee.getEmail().getProfessional())) {
+        if (!isNotNullAndNotBlank(employee.getProfessionalEmail())) {
             error.append("Professional email is mandatory. ");
         }
-        if (!isNotNullAndNotBlank(employee.getEmail().getPersonal())) {
+        if (!isNotNullAndNotBlank(employee.getPersonalEmail())) {
             error.append("Personal email is mandatory. ");
         }
         if (!isNotNullAndNotBlank(employee.getCnaps())) {

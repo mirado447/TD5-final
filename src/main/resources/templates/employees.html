@@ -1,13 +1,52 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Employee List</title>
+    <script type="text/javascript" th:src="@{/scripts/tailwindcss.js}"></script>
+    <script type="text/javascript" src="../static/scripts/tailwindcss.js"></script>
+    <link rel="stylesheet" th:href="@{/styles/index.css}">
+    <link rel="stylesheet" href="../static/styles/index.css">
 </head>
 <body>
-    hi
+<div class="w-100 h-100 mx-auto">
+    <main>
+        <div class="table-container">
+            <div class="toolbar">
+                <a href="/employee/create">
+                    <button class="btn btn-primary">
+                        create
+                    </button>
+                </a>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="px-4 py-2">Ref</th>
+                    <th class="px-4 py-2">First Name</th>
+                    <th class="px-4 py-2">Last Name</th>
+                    <th class="px-4 py-2">Professional Email</th>
+                    <th class="px-4 py-2">Personal Email</th>
+                    <th class="px-4 py-2">Phone</th>
+                    <th class="px-4 py-2">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="employee : ${employees}" class="hover:bg-gray-100 hover:cursor-pointer">
+                    <td class="px-4 py-2" th:text="${employee.getRegistrationNumber()}"></td>
+                    <td class="px-4 py-2" th:text="${employee.getFirstName()}"></td>
+                    <td class="px-4 py-2" th:text="${employee.getLastName()}"></td>
+                    <td class="px-4 py-2" th:text="${employee.getEmail().getProfessional()}"></td>
+                    <td class="px-4 py-2" th:text="${employee.getEmail().getPersonal()}"></td>
+                    <td class="px-4 py-2" th:text="${employee.getPhone()}"></td>
+                    <td class="px-4 py-2">
+                        <button class="btn btn-primary"><a th:href="'/employee/show/'+${employee.id}">Show</a></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
 </body>
 </html>

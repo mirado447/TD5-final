@@ -1,12 +1,12 @@
 package com.example.prog4.controller.mapper;
 
-import com.example.prog4.model.Email;
 import com.example.prog4.model.Employee;
-import com.example.prog4.model.ViewEmployee;
 import com.example.prog4.model.exception.BadRequestException;
-import com.example.prog4.repository.EmployeeRepository;
+import com.example.prog4.repository.PhoneRepository;
 import com.example.prog4.repository.PositionRepository;
+import com.example.prog4.repository.entity.Phone;
 import com.example.prog4.repository.entity.Position;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,41 +18,39 @@ import java.util.Optional;
 
 @Component
 @AllArgsConstructor
+@Transactional
 public class EmployeeMapper {
+    private PhoneRepository phoneRepository;
     private PositionRepository positionRepository;
+
     public com.example.prog4.repository.entity.Employee toDomain(Employee employee) {
-        List<Position> positions = new ArrayList<>();
-        employee.getPositions().forEach(position-> {
-            Optional<Position> dbPosition = positionRepository.findPositionByNameEquals(position.getName());
-            if(dbPosition.isPresent()){
-                positions.add(dbPosition.get());
-            } else {
-                positions.add(positionRepository.save(position));
-            }
-        });
-        com.example.prog4.repository.entity.Employee domainEmployee = com.example.prog4.repository.entity.Employee.builder()
-                .id(employee.getId())
-                .firstName(employee.getFirstName())
-                .lastName(employee.getLastName())
-
-                .address(employee.getAddress())
-                .childNumber(employee.getChildNumber())
-                .cin(employee.getCin())
-                .cnaps(employee.getCnaps())
-                .positions(positions)
-                .registrationNumber(employee.getRegistrationNumber())
-                .csp(employee.getCsp())
-                .sex(employee.getSex())
-                .phone(employee.getPhone())
-                .professionalEmail(employee.getEmail().getProfessional())
-                .personalEmail(employee.getEmail().getPersonal())
-
-                .birthDate(employee.getBirthDate())
-                .departureDate(employee.getDepartureDate())
-                .entranceDate(employee.getEntranceDate())
-
-                .build();
         try {
+            List<Position> positions = positionRepository.saveAll(employee.getPositions());
+            List<Phone> phones = phoneRepository.saveAll(employee.getPhones());
+
+            com.example.prog4.repository.entity.Employee domainEmployee = com.example.prog4.repository.entity.Employee.builder()
+                    .id(employee.getId())
+                    .firstName(employee.getFirstName())
+                    .lastName(employee.getLastName())
+                    .address(employee.getAddress())
+                    .cin(employee.getCin())
+                    .cnaps(employee.getCnaps())
+                    .registrationNumber(employee.getRegistrationNumber())
+                    .childrenNumber(employee.getChildrenNumber())
+                    // enums
+                    .csp(employee.getCsp())
+                    .sex(employee.getSex())
+                    // emails
+                    .professionalEmail(employee.getProfessionalEmail())
+                    .personalEmail(employee.getPersonalEmail())
+                    // dates
+                    .birthDate(employee.getBirthDate())
+                    .departureDate(employee.getDepartureDate())
+                    .entranceDate(employee.getEntranceDate())
+                    // lists
+                    .phones(phones)
+                    .positions(positions)
+                    .build();
             MultipartFile imageFile = employee.getImage();
             if (imageFile != null && !imageFile.isEmpty()) {
                 byte[] imageBytes = imageFile.getBytes();
@@ -65,32 +63,30 @@ public class EmployeeMapper {
         }
     }
 
-    public ViewEmployee toView(com.example.prog4.repository.entity.Employee employee) {
-        Email email = Email.builder()
-                .personal(employee.getPersonalEmail())
-                .professional(employee.getProfessionalEmail())
-                .build();
-        return ViewEmployee.builder()
+    public Employee toView(com.example.prog4.repository.entity.Employee employee) {
+        return Employee.builder()
                 .id(employee.getId())
                 .firstName(employee.getFirstName())
                 .lastName(employee.getLastName())
-
                 .address(employee.getAddress())
-                .childNumber(employee.getChildNumber())
                 .cin(employee.getCin())
                 .cnaps(employee.getCnaps())
-                .positions(employee.getPositions())
                 .registrationNumber(employee.getRegistrationNumber())
+                .childrenNumber(employee.getChildrenNumber())
+                // enums
                 .csp(employee.getCsp())
                 .sex(employee.getSex())
-                .phone(employee.getPhone())
-                .email(email)
-
+                .stringImage(employee.getImage())
+                // emails
+                .professionalEmail(employee.getProfessionalEmail())
+                .personalEmail(employee.getPersonalEmail())
+                // dates
                 .birthDate(employee.getBirthDate())
                 .departureDate(employee.getDepartureDate())
                 .entranceDate(employee.getEntranceDate())
-
-                .image(employee.getImage())
+                // lists
+                .phones(employee.getPhones())
+                .positions(employee.getPositions())
                 .build();
     }
 }

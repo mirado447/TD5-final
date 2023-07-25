@@ -23,10 +23,10 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "\"enterprise\"")
+@Table(name = "\"company_conf\"")
 @EqualsAndHashCode
 @ToString
-public class Enterprise {
+public class CompanyConf {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private String id;
