@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    css -->
+    <script type="text/javascript" th:src="@{/scripts/tailwindcss.js}"></script>
+    <link rel="stylesheet" th:href="@{/styles/index.css}">
+    <style>
+        .error-container {
+            height: 90vh;
+            width: 90vw;
+            margin: 0;
+            padding: 0;
+        }
+        .error-message-container {
+            min-width: 500px;
+        }
+    </style>
+    <!--    css -->
+    <title>Document</title>
+</head>
+<body>
+<div class="w-100 flex justify-center items-center error-container flex-wrap">
+    <div class="w-fit h-fit py-4 pr-2 mr-2">
+        <h1 class="text-6xl" th:text="${status}"></h1>
+    </div>
+    <div class="w-1/2 h-fit error-message-container">
+        <h4 class="block" th:text="${error}"></h4>
+        <h4 class="block" th:text="${message}"></h4>
+    </div>
+</div>
+</body>
+</html>
