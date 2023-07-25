@@ -28,6 +28,11 @@ public class EmployeeController {
         return service.getEmployees();
     }
 
+    @ModelAttribute("sexList")
+    public List<String> getSex(){
+        return Arrays.stream(Sex.values()).map(Sex::toString).toList();
+    }
+
     @RequestMapping("/")
     public String getEmployee() {
         return "employee/index";
