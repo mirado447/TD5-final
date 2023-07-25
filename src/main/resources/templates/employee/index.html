@@ -15,18 +15,19 @@
 <div class="container mt-5 d-inline-block" layout:fragment="content">
     <form th:action="@{/search}" method="post">
         <label>
-            <input type="text" th:name="name" placeholder="name" th:value="${query_name}">
+            <input type="search" th:name="name" placeholder="name" th:value="${query_name}">
         </label>
         <label>
-            <input type="text" th:name="function" placeholder="Function" th:value="${query_function}">
+            <input type="search" th:name="function" placeholder="Function" th:value="${query_function}">
         </label>
         <label>
-            <select th:name="sex">
-                <option value="H">Man</option>
+            <select th:name="sex" class="dropdown" type="search">
+                <option value="">All</option>
+                <option value="H" >Man</option>
                 <option value="F">Women</option>
             </select>
         </label>
-        <input type="submit" value="Filter">
+        <input type="submit" class="btn btn-sm btn-secondary" value="Filter">
     </form>
     <a th:href="@{/}">Clear filter</a>
     <form th:action="@{/employee/export}">
