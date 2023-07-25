@@ -12,7 +12,10 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Query("""
             select e from Employee e
-            where ((upper(e.name) like upper(concat('%', ?1, '%'))) or e.name=null) and
-             (upper(e.function) like upper(?2) or e.function=null ) and upper(e.sex) like ?3""")
+            where
+             (upper(e.name) ilike concat('%', ?1, '%') or ?1 is null) and
+             (upper(e.function) like concat('%',?2,'%') or ?2 is null) and
+              (upper(e.sex) like ?3 or ?3 is null )
+              """)
     List<Employee> filterByNameOrFunction(String name, String function, String sex);
 }
