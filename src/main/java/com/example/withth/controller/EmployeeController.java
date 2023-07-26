@@ -1,5 +1,6 @@
 package com.example.withth.controller;
 
+import com.example.withth.controller.request.EmployeeFilter;
 import com.example.withth.models.entity.Employee;
 import com.example.withth.models.entity.Sex;
 import com.example.withth.service.EmployeeService;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -32,10 +34,17 @@ public class EmployeeController {
     public List<String> getSex(){
         return Arrays.stream(Sex.values()).map(Sex::toString).toList();
     }
+//
+//    @ModelAttribute("filter")
+//    public EmployeeFilter employeeFilter(){
+//        return new EmployeeFilter();
+//    }
 
     @RequestMapping("/")
-    public String getEmployee() {
-        return "employee/index";
+    public ModelAndView getEmployee() {
+        ModelAndView modelAndView = new ModelAndView("employee/index");
+        modelAndView.addObject("filter", new EmployeeFilter());
+        return modelAndView;
     }
 
     @GetMapping("/employee-details")
@@ -54,54 +63,28 @@ public class EmployeeController {
         modelAndView.addObject("employee", employee);
         return modelAndView;
     }
-    @PostMapping("/search")
-    public String searchByKeyWord(@RequestParam(required = false) String name,
-                                  @RequestParam(required = false) String function,
-                                  @RequestParam(required = false) String sex,
-                                  RedirectAttributes redirectAttributes) {
-        if (name.equals("")) {
-            name = null;
-        }
-        if (function.equals("")) {
-            function = null;
-        }
-        List<String> sexList = Arrays.stream(Sex.values()).map(Enum::toString).toList();
-        if (!sexList.contains(sex)) {
-            sex = null;
-        }
 
-
-        redirectAttributes.addAttribute("name", name);
-        redirectAttributes.addAttribute("function", function);
-        redirectAttributes.addAttribute("sex", sex);
-        return "redirect:/filter";
-    }
-    @GetMapping("/filter")
-    public String filter(@RequestParam(required = false) String name,
-                         @RequestParam(required = false) String function,
-                         @RequestParam(required = false) String sex,
-                         Model model) {
+    @PostMapping("/filter")
+    public String filter(@ModelAttribute EmployeeFilter filter, Model model) {
         // when running a query like filter?name=&function=k
         // the query params of name will be an empty string
-        if (Objects.equals(name, "")) {
-            name = null;
+        if (Objects.equals(filter.getName(), "")) {
+            filter.setName(null);
         }
-        if (Objects.equals(function, "")) {
-            function = null;
+        if (Objects.equals(filter.getSex(), "")) {
+            filter.setSex(null);
         }
 
         Sex sexQuery;
         List<String> sexList = Arrays.stream(Sex.values()).map(Enum::toString).toList();
-        if (!sexList.contains(sex) || sex==null) {
+        if (!sexList.contains(filter.getSex()) || filter.getSex()==null) {
             sexQuery = null;
         }else {
-            sexQuery = Sex.valueOf(sex);
+            sexQuery = Sex.valueOf(filter.getSex());
         }
 
-        List<Employee> listEmployees = service.filter(name, function, sexQuery);
-        model.addAttribute("query_name", name);
-        model.addAttribute("query_function", function);
-        model.addAttribute("query_sex", sexQuery);
+        model.addAttribute("filter", filter);
+        List<Employee> listEmployees = service.filter(filter.getName(), filter.getFunction(), sexQuery);
         model.addAttribute("employeeList", listEmployees);
         return "employee/index";
     }

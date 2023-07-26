@@ -15,20 +15,25 @@
 <div class="container d-inline-block" layout:fragment="content">
     <div class="d-flex flex-row justify-content-between">
         <div>
-            <form th:action="@{/search}" method="post">
+            <form th:action="@{/filter}" method="post" th:objext="${filter}">
                 <label>
-                    <input type="search" th:name="name" placeholder="name" th:value="${query_name}">
+                    <input type="text"  placeholder="name" th:field="*{filter.name}">
                 </label>
                 <label>
-                    <input type="search" th:name="function" placeholder="Function" th:value="${query_function}">
+                    <input type="text" placeholder="Function" th:field="*{filter.function}">
                 </label>
                 <label>
-                    <select th:name="sex" class="dropdown" type="search">
-                        <option value="">All</option>
-                        <option value="H">Man</option>
-                        <option value="F">Women</option>
+                    Entry date
+                    <input type="date" th:name="entryDate" th:field="${filter.entryDate}">
+                </label>
+                <div class="form-group">
+                    <label for="sex">Sex:</label>
+                    <select class="form-control-sm" id="sex"  th:field="*{filter.sex}">
+                        <option value="" selected></option>
+                        <option th:each="sex: ${sexList}" th:value="${sex}" th:text="${sex}" ></option>
                     </select>
-                </label>
+                </div>
+
                 <input type="submit" class="btn btn-sm btn-secondary" value="Filter">
             </form>
             <a th:href="@{/}">Clear filter</a>
