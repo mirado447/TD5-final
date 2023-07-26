@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +32,10 @@ public class EmployeeService {
         return byId.orElseGet(Employee::new);
     }
 
-    public List<Employee> filter(String name, String function, Sex sex){
+    public List<Employee> filter(String name, String function, Sex sex, String orderBy, String direction){
         String sexQuery = (sex != null) ? sex.toString():null;
-        return repository.filterByNameOrFunction(name, function, sexQuery);
+        Sort sort = Sort.by(Sort.Direction.fromString(direction), orderBy);
+        return repository.filterByNameOrFunction(name, function, sexQuery, sort);
     }
 
     public void exportToCSV(HttpServletResponse response, List<Employee> employees) throws IOException {

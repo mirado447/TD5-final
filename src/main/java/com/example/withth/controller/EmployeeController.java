@@ -34,11 +34,7 @@ public class EmployeeController {
     public List<String> getSex(){
         return Arrays.stream(Sex.values()).map(Sex::toString).toList();
     }
-//
-//    @ModelAttribute("filter")
-//    public EmployeeFilter employeeFilter(){
-//        return new EmployeeFilter();
-//    }
+
 
     @RequestMapping("/")
     public ModelAndView getEmployee() {
@@ -84,7 +80,7 @@ public class EmployeeController {
         }
 
         model.addAttribute("filter", filter);
-        List<Employee> listEmployees = service.filter(filter.getName(), filter.getFunction(), sexQuery);
+        List<Employee> listEmployees = service.filter(filter.getName(), filter.getFunction(), sexQuery, filter.getOrderBy(), filter.getDirection());
         model.addAttribute("employeeList", listEmployees);
         return "employee/index";
     }

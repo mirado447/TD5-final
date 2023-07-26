@@ -10,6 +10,22 @@
         }
     </style>
 
+    <script >
+        function submitFormWithOrder(orderBy) {
+            let directionInput = document.querySelector('input[name="direction"]');
+            let orderByInput = document.querySelector('input[name="orderBy"]');
+
+            if (orderByInput.value === orderBy && directionInput.value === 'asc') {
+                directionInput.value = 'desc';
+            } else {
+                directionInput.value = 'asc';
+            }
+
+            orderByInput.value = orderBy;
+
+            document.querySelector('form').submit();
+        }
+    </script>
 </head>
 <body>
 <div class="container d-inline-block" layout:fragment="content">
@@ -33,7 +49,8 @@
                         <option th:each="sex: ${sexList}" th:value="${sex}" th:text="${sex}" ></option>
                     </select>
                 </div>
-
+                <input type="hidden" name="orderBy" th:field="*{filter.orderBy}">
+                <input type="hidden" name="direction" th:field="*{filter.direction}">
                 <input type="submit" class="btn btn-sm btn-secondary" value="Filter">
             </form>
             <a th:href="@{/}">Clear filter</a>
@@ -47,9 +64,9 @@
             <caption>List of employees</caption>
             <thead>
             <tr>
-                <th scope="col">Matriculate</th>
+                <th scope="col"><a href="#" th:onclick="submitFormWithOrder('matriculate')">Matriculate</a></th>
                 <th scope="col">Profile pic</th>
-                <th scope="col">name</th>
+                <th scope="col"><a href="#" th:onclick="submitFormWithOrder('name')">name</a></th>
                 <th scope="col">Actions</th>
             </tr>
             </thead>
@@ -71,6 +88,8 @@
         <a th:href="@{/employee-form}" class="btn btn-success" >Add new employee</a>
     </div>
 </div>
+
+
 </body>
 
 </html>
