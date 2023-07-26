@@ -1,5 +1,6 @@
 package com.example.prog4.controller.view;
 
+import com.example.prog4.controller.PopulateController;
 import com.example.prog4.controller.mapper.EmployeeMapper;
 import com.example.prog4.controller.mapper.SexMapper;
 import com.example.prog4.model.Employee;
@@ -7,7 +8,6 @@ import com.example.prog4.model.enums.EmployeeSortField;
 import com.example.prog4.model.utilities.DateRange;
 import com.example.prog4.model.utilities.Page;
 import com.example.prog4.model.utilities.PerPage;
-import com.example.prog4.repository.entity.enums.Sex;
 import com.example.prog4.service.CSVUtils;
 import com.example.prog4.service.EmployeeService;
 import jakarta.servlet.http.HttpSession;
@@ -27,13 +27,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.example.prog4.model.enums.EmployeeSortField.firstName;
-import static com.example.prog4.model.enums.EmployeeSortField.lastName;
-
 @Controller
 @RequestMapping("/employee")
 @AllArgsConstructor
-public class EmployeeViewController {
+public class EmployeeViewController extends PopulateController {
     private EmployeeService employeeService;
     private EmployeeMapper employeeMapper;
     private SexMapper sexMapper;
@@ -150,7 +147,9 @@ public class EmployeeViewController {
     }
 
     @GetMapping("/show/{eId}")
-    public String showEmployee(@PathVariable String eId) {
+    public String showEmployee(@PathVariable String eId, Model model) {
+        Employee toEdit = employeeMapper.toView(employeeService.getOne(eId));
+        model.addAttribute("employee", toEdit);
         return "employee_show";
     }
 

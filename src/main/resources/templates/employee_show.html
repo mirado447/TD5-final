@@ -8,6 +8,84 @@
     <script th:src="@{/scripts/bootstrap.bundle.min.js}" defer></script>
 </head>
 <body>
+<header th:replace="~{components/navbar.html :: navbar('List of employees')}"></header>
+<div class="row text-center my-5">
+    <div class="col-12 d-flex justify-content-start align-items-center">
+        <img th:src="${employee.stringImage}" alt="no image">
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <label for="lastName" class="form-label">Last name</label>
+        <p id="lastName" th:text="*{employee.lastName}" type="text" class="form-control"></p>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <label for="firstName" class="form-label">First name</label>
+        <p id="firstName" th:text="*{employee.firstName}" type="text"
+           class="form-control"></p>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <label for="inputAddress" class="form-label">Address</label>
+        <p th:text="*{employee.address}" class="form-control" id="inputAddress"></p>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <label for="personalEmail" class="form-label">Personal email</label>
+        <p id="personalEmail" th:text="*{employee.personalEmail}" type="text"
+           class="form-control"></p>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <label for="professionalEmail" class="form-label">Professional email</label>
+        <p id="professionalEmail" th:text="*{employee.professionalEmail}" type="text"
+           class="form-control"></p>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <label for="cin" class="form-label">CIN</label>
+        <p id="cin" th:text="*{employee.cin}" type="text" class="form-control"></p>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <label for="cnaps" class="form-label">CNAPS</label>
+        <p id="cnaps" th:text="*{employee.cnaps}" type="text" class="form-control">
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <label for="childrenNumber" class="form-label">Children number</label>
+        <p id="childrenNumber" type="number" th:text="*{employee.childrenNumber}"
+           class="form-control"></p>
+    </div>
 
+    <div class="col-lg-4 col-md-6">
+        <label for="birthDate" class="form-label">Birthdate</label>
+        <p id="birthDate" th:text="*{employee.birthDate}" type="date" class="form-control"></p>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <label for="entranceDate" class="form-label">Entrance date</label>
+        <p id="entranceDate" th:text="*{employee.entranceDate}" type="date"
+           class="form-control"></p>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <label for="departureDate" class="form-label">Departure date</label>
+        <p id="departureDate" th:text="*{employee.departureDate}" type="date"
+           class="form-control"></p>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <label for="sex" class="form-label">Sex</label>
+        <p id="sex" class="form-control" th:text="${employee.sex}"></p>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <label for="csp" class="form-label">CSP</label>
+        <p id="csp" class="form-control" th:text="${employee.csp}"></p>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <label for="phones" class="form-label">Phone</label>
+        <div id="phones" th:each="phone : ${employee.phones}">
+            <p th:text="${phone.value}" class="p-2 text-white rounded-circle "></p>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <label for="position" class="form-label">Position</label>
+        <div id="position" th:each="position : ${employee.positions}">
+            <p th:text="${position.name}" class="p-2 text-white rounded-circle "></p>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{components/navbar.html :: footer}"></footer>
 </body>
 </html>

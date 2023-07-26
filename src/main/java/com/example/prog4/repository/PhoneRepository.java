@@ -14,6 +14,6 @@ public interface PhoneRepository extends JpaRepository<Phone, String> {
     @Query(value = "select * from \"phone\" p where p.value = :value", nativeQuery = true)
     Optional<Phone> findOneByValue(@Param("value") String value);
 
-    @Query(value = "select * from \"phone\" p where p.professional_entity_id IS NULL", nativeQuery = true)
+    @Query(value = "select * from \"phone\" p where p.employee_id IS NULL", nativeQuery = true)
     List<Phone> findAllPhoneAvailable();
 }

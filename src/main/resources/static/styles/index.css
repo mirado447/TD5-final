@@ -12,3 +12,9 @@ img.img-list {
     border-radius: 50%;
     object-fit: cover;
 }
+
+.company-logo {
+    height: 70px;
+    width: 70px;
+    object-fit: cover;
+}

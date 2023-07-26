@@ -116,6 +116,8 @@
                 <button type="submit" class="btn btn-danger">Cancel</button>
             </a>
         </div>
+
+        <footer th:replace="~{components/navbar.html :: footer}"></footer>
         <script th:inline="javascript">
             function addPhone() {
                 const phonesList = document.querySelector("#phonesList");

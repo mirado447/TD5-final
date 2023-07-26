@@ -26,11 +26,13 @@
         <form action="/employee/list" class="row g-3" method="get">
             <div class="col-4">
                 <label for="firstName" class="form-label">First name</label>
-                <input type="text" th:value="*{session.firstNameFilter}" class="form-control" name="firstName" id="firstName">
+                <input type="text" th:value="*{session.firstNameFilter}" class="form-control" name="firstName"
+                       id="firstName">
             </div>
             <div class="col-4">
                 <label for="lastName" class="form-label">Last name</label>
-                <input type="text" th:value="*{session.lastNameFilter}" name="lastName" class="form-control" id="lastName">
+                <input type="text" th:value="*{session.lastNameFilter}" name="lastName" class="form-control"
+                       id="lastName">
             </div>
             <div class="col-4">
                 <label for="sex" class="form-label">Sex</label>
@@ -58,16 +60,19 @@
             </div>
             <div class="col-4">
                 <label for="endingDeparture" class="form-label">Begin Entrance</label>
-                <input type="date" th:value="*{session.endingDepartureFilter}" name="endingDeparture" class="form-control"
+                <input type="date" th:value="*{session.endingDepartureFilter}" name="endingDeparture"
+                       class="form-control"
                        id="endingDeparture">
             </div>
             <div class="col-4">
                 <label for="page" class="form-label">Page</label>
-                <input type="number" th:value="*{session.pageFilter}" min="1" name="page" class="form-control" id="page">
+                <input type="number" th:value="*{session.pageFilter}" min="1" name="page" class="form-control"
+                       id="page">
             </div>
             <div class="col-4">
                 <label for="perPage" class="form-label">Per page</label>
-                <input type="number" th:value="*{session.perPageFilter}" min="1" name="perPage" class="form-control" id="perPage">
+                <input type="number" th:value="*{session.perPageFilter}" min="1" name="perPage" class="form-control"
+                       id="perPage">
             </div>
             <div class="col-4">
                 <label for="orderBy" class="form-label">OrderBy</label>
@@ -79,7 +84,8 @@
             </div>
             <div class="col-4">
                 <label for="orderDirection" class="form-label">orderDirection</label>
-                <select id="orderDirection" th:value="${session.orderDirectionFilter}" name="orderBy" class="form-select">
+                <select id="orderDirection" th:value="${session.orderDirectionFilter}" name="orderBy"
+                        class="form-select">
                     <option value="ASC">ASC</option>
                     <option value="DESC">DESC</option>
                 </select>
@@ -126,5 +132,6 @@
         </table>
     </div>
 </div>
+<footer th:replace="~{components/navbar.html :: footer}"></footer>
 </body>
 </html>
