@@ -30,8 +30,11 @@ create table if not exists "employee"
     entrance_date       date    not null,
     departure_date      date,
     sex                 sex     not null,
-    csp                 csp     not null
-) inherits ("professional_entity");
+    csp                 csp     not null,
+    image               text,
+    professional_email  varchar not null unique,
+    address             varchar not null
+);
 
 CREATE SEQUENCE if not exists employ_ref_sequence
     START WITH 1

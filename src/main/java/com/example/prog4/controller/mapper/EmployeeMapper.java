@@ -25,8 +25,27 @@ public class EmployeeMapper {
 
     public com.example.prog4.repository.entity.Employee toDomain(Employee employee) {
         try {
-            List<Position> positions = positionRepository.saveAll(employee.getPositions());
-            List<Phone> phones = phoneRepository.saveAll(employee.getPhones());
+            List<Position> positions = new ArrayList<>();
+
+            employee.getPositions().forEach(position -> {
+                Optional<Position> position1 = positionRepository.findPositionByNameEquals(position.getName());
+                if (position1.isEmpty()) {
+                    positions.add(positionRepository.save(position));
+                } else {
+                    positions.add(position1.get());
+                }
+            });
+
+            List<Phone> phones = new ArrayList<>();
+
+            employee.getPhones().forEach(phone -> {
+                Optional<Phone> phone1 = phoneRepository.findOneByValue(phone.getValue());
+                if (phone1.isEmpty()) {
+                    phones.add(phoneRepository.save(phone));
+                } else {
+                    phones.add(phone1.get());
+                }
+            });
 
             com.example.prog4.repository.entity.Employee domainEmployee = com.example.prog4.repository.entity.Employee.builder()
                     .id(employee.getId())
@@ -55,7 +74,7 @@ public class EmployeeMapper {
             if (imageFile != null && !imageFile.isEmpty()) {
                 byte[] imageBytes = imageFile.getBytes();
                 String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-                domainEmployee.setImage(base64Image);
+                domainEmployee.setImage("data:image/jpeg;base64," + base64Image);
             }
             return domainEmployee;
         } catch (Exception e) {

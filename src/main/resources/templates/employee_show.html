@@ -1,93 +1,12 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Employee List</title>
-    <script type="text/javascript" th:src="@{/scripts/tailwindcss.js}"></script>
-    <script type="text/javascript" src="../static/scripts/tailwindcss.js"></script>
-    <link rel="stylesheet" th:href="@{/styles/index.css}">
-    <link rel="stylesheet" href="../static/styles/index.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/styles/bootstrap.min.css}">
+    <script th:src="@{/scripts/bootstrap.bundle.min.js}" defer></script>
 </head>
 <body>
-<div class="w-100 h-100 mx-auto">
-    <nav class="w-100 py-4 bg-primary flex justifyContent-flexStart">
-        <h1 class="text-2xl text-white font-bold mx-2">Show employee</h1>
-    </nav>
-    <main>
-        <div class="flex flex-row">
-            <div class="flex items-center justify-center">
-                <img class="w-32 h-32 rounded-full object-cover"
-                     th:src="'data:image/jpeg;base64,' + ${employee.stringImage}" alt="image">
-            </div>
-            <div class="mt-4">
-                <div class="mb-4">
-                    <p class="label block text-gray-700 font-bold mb-2">First Name:</p>
-                    <p class="content text-gray-500 mt-2" th:text="${employee.firstName}" id="firstName"></p>
-                </div>
-                <div class="mb-4">
-                    <p class="label block text-gray-700 font-bold mb-2">Last Name:</p>
-                    <p class="content text-gray-500 mt-2" th:text="${employee.lastName}" id="lastName"></p>
-                </div>
-                <div class="mb-4">
-                    <p class="label block text-gray-700 font-bold mb-2">Birth Date:</p>
-                    <p class="content text-gray-500 mt-2" th:text="${employee.birthDate}" id="birthDate"></p>
-                </div>
-                <div class="mb-4">
-                    <p class="label block text-gray-700 font-bold mb-2">Entrance Date:</p>
-                    <p class="content text-gray-500 mt-2" th:text="${employee.entranceDate}" id="entranceDate"></p>
-                </div>
-                <div class="mb-4">
-                    <p class="label block text-gray-700 font-bold mb-2">Departure Date:</p>
-                    <p class="content text-gray-500 mt-2" th:text="${employee.departureDate}" id="departureDate"></p>
-                </div>
-                <div class="mb-4">
-                    <p class="label block text-gray-700 font-bold mb-2">Child Number:</p>
-                    <p class="content text-gray-500 mt-2" th:text="${employee.childNumber}" id="childNumber"></p>
-                </div>
-                <div class="mb-4">
-                    <p class="label block text-gray-700 font-bold mb-2">Personal Email:</p>
-                    <p class="content text-gray-500 mt-2" th:text="${employee.personalEmail}" id="personalEmail"></p>
-                </div>
-                <div class="mb-4">
-                    <p class="label block text-gray-700 font-bold mb-2">Professional Email:</p>
-                    <p class="content text-gray-500 mt-2" th:text="${employee.professionalEmail}"
-                       id="professionalEmail"></p>
-                </div>
-                <div class="mb-4">
-                    <p class="label block text-gray-700 font-bold mb-2">Registration
-                        Number:</p>
-                    <p class="content text-gray-500 mt-2" th:text="${employee.registrationNumber}"
-                       id="registrationNumber"></p>
-                </div>
-                <div class="mb-4">
-                    <p class="label block text-gray-700 font-bold mb-2">Sex:</p>
-                    <p class="content text-gray-500 mt-2" th:text="${employee.sex}" id="sex"></p>
-                </div>
-                <div class="mb-4">
-                    <p class="label block text-gray-700 font-bold mb-2">Phone:</p>
-                    <p class="content text-gray-500 mt-2" th:text="${employee.phone}" id="phone"></p>
-                </div>
-                <div class="mb-4">
-                    <p class="label block text-gray-700 font-bold mb-2">CNAPS:</p>
-                    <p class="content text-gray-500 mt-2" th:text="${employee.cnaps}" id="cnaps"></p>
-                </div>
-                <div class="mb-4">
-                    <p class="label block text-gray-700 font-bold mb-2">CIN:</p>
-                    <p class="content text-gray-500 mt-2" th:text="${employee.cin}" id="cin"></p>
-                </div>
-                <div class="mb-4">
-                    <p class="label block text-gray-700 font-bold mb-2">CSP:</p>
-                    <p class="content text-gray-500 mt-2" th:text="${employee.csp}" id="csp"></p>
-                </div>
-                <div class="mb-4">
-                    <p class="label block text-gray-700 font-bold mb-2">Positions:</p>
-                    <div id="positions" th:each="position : ${employee.positions}">
-                        <p class="content text-gray-500 mt-2" th:text="${position.name}"></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-</div>
+
 </body>
 </html>
