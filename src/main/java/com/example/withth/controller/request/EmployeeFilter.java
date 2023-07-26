@@ -15,6 +15,6 @@ public class EmployeeFilter {
     private String sex;
     private LocalDate entryDate;
     private LocalDate departureDate;
-    private String orderBy;
-    private String direction;
+    private String orderBy="name";
+    private String direction="asc";
 }

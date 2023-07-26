@@ -89,8 +89,9 @@ public class EmployeeController {
 
     @GetMapping("/employee/export")
     public void exportToCSV(HttpServletResponse response) throws IOException {
-        List<Employee> employees = service.getEmployees();
-        service.exportToCSV(response, employees);
+        EmployeeFilter lastFilterUsed = service.getLastFilterUsed();
+        List<Employee> filteredEmployee = service.filter(lastFilterUsed.getName(), lastFilterUsed.getFunction(), Sex.valueOf(lastFilterUsed.getSex()), lastFilterUsed.getOrderBy(), lastFilterUsed.getDirection());
+        service.exportToCSV(response, filteredEmployee);
     }
 
     @PostMapping(value = "/save")

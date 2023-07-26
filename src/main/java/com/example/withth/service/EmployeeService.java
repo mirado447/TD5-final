@@ -1,10 +1,10 @@
 package com.example.withth.service;
 
+import com.example.withth.controller.request.EmployeeFilter;
 import com.example.withth.models.entity.Employee;
 import com.example.withth.models.entity.Sex;
 import com.example.withth.repository.EmployeeRepository;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.springframework.data.domain.Sort;
@@ -16,9 +16,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
 public class EmployeeService {
     private final EmployeeRepository repository;
+    private EmployeeFilter lastFilterUsed = new EmployeeFilter();
+
+    public EmployeeService(EmployeeRepository repository) {
+        this.repository = repository;
+    }
+
+    public EmployeeFilter getLastFilterUsed() {
+        return lastFilterUsed;
+    }
+
     public List<Employee> getEmployees(){
         return repository.findAll();
     }
@@ -34,6 +43,11 @@ public class EmployeeService {
 
     public List<Employee> filter(String name, String function, Sex sex, String orderBy, String direction){
         String sexQuery = (sex != null) ? sex.toString():null;
+        lastFilterUsed.setName(name);
+        lastFilterUsed.setFunction(function);
+        lastFilterUsed.setSex(sexQuery);
+        lastFilterUsed.setOrderBy(orderBy);
+        lastFilterUsed.setDirection(direction);
         Sort sort = Sort.by(Sort.Direction.fromString(direction), orderBy);
         return repository.filterByNameOrFunction(name, function, sexQuery, sort);
     }
