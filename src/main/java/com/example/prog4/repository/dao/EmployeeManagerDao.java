@@ -47,15 +47,15 @@ public class EmployeeManagerDao {
         // departure
         if (departureRange.getEnd() != null && departureRange.getBegin() != null) {
             predicates.add(builder.or(
-                    builder.between(root.get("departure_date"), departureRange.getBegin(), departureRange.getEnd())
+                    builder.between(root.get("departureDate"), departureRange.getBegin(), departureRange.getEnd())
             ));
         } else if (departureRange.getEnd() == null && departureRange.getBegin() != null) {
             predicates.add(builder.or(
-                    builder.equal(root.get("departure_date"), departureRange.getBegin())
+                    builder.equal(root.get("departureDate"), departureRange.getBegin())
             ));
         } else if (departureRange.getEnd() != null) {
             predicates.add(builder.or(
-                    builder.equal(root.get("departure_date"), departureRange.getEnd())
+                    builder.equal(root.get("departureDate"), departureRange.getEnd())
             ));
         }
 
@@ -63,15 +63,15 @@ public class EmployeeManagerDao {
         // entrance
         if (entranceRange.getEnd() != null && entranceRange.getBegin() != null) {
             predicates.add(builder.or(
-                    builder.between(root.get("entrance_date"), entranceRange.getBegin(), entranceRange.getEnd())
+                    builder.between(root.get("entranceDate"), entranceRange.getBegin(), entranceRange.getEnd())
             ));
         } else if (entranceRange.getEnd() == null && entranceRange.getBegin() != null) {
             predicates.add(builder.or(
-                    builder.equal(root.get("entrance_date"), entranceRange.getBegin())
+                    builder.equal(root.get("entranceDate"), entranceRange.getBegin())
             ));
         } else if (entranceRange.getEnd() != null) {
             predicates.add(builder.or(
-                    builder.equal(root.get("entrance_date"), entranceRange.getEnd())
+                    builder.equal(root.get("entranceDate"), entranceRange.getEnd())
             ));
         }
 

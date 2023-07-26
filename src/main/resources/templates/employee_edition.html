@@ -4,16 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{/styles/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/styles/index.css}">
     <script th:src="@{/scripts/bootstrap.bundle.min.js}" defer></script>
     <title>Create employee</title>
-    <style>
-        img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-    </style>
 </head>
 <body>
 <header th:replace="~{components/navbar.html :: navbar('Edit employee')}"></header>
@@ -64,16 +57,16 @@
 
         <div class="col-lg-4 col-md-6">
             <label for="birthDate" class="form-label">Birthdate</label>
-            <input required id="birthDate" name="birthDate" th:field="*{birthDate}" type="date" class="form-control">
+            <input id="birthDate" name="birthDate" th:field="*{birthDate}"  type="date" class="form-control">
         </div>
         <div class="col-lg-4 col-md-6">
             <label for="entranceDate" class="form-label">Entrance date</label>
-            <input required id="entranceDate" name="entranceDate" th:field="*{entranceDate}" type="date"
+            <input id="entranceDate" name="entranceDate" th:field="*{entranceDate}" type="date"
                    class="form-control">
         </div>
         <div class="col-lg-4 col-md-6">
             <label for="departureDate" class="form-label">Departure date</label>
-            <input required id="departureDate" name="departureDate" th:field="*{departureDate}" type="date"
+            <input id="departureDate" name="departureDate" th:field="*{departureDate}" type="date"
                    class="form-control">
         </div>
         <div class="col-md-6">
