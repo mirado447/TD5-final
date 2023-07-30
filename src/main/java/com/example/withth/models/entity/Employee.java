@@ -10,6 +10,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -33,6 +34,7 @@ public class Employee implements Serializable {
     private long size;
     // TODO an employee can have many phone number
     @OneToMany(cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Phone> phoneNumbers;
     private String address;
     private String privateMail;
@@ -41,10 +43,13 @@ public class Employee implements Serializable {
     private String cin;
     private String function;
     private Integer childrens;
-    private LocalDate entryDate = LocalDate.now();
-    private LocalDate departureDate;
+    @Temporal(TemporalType.DATE)
+    private Date entryDate = new Date();
+    @Temporal(TemporalType.DATE)
+    private Date departureDate;
     private String professionalCategory;
     private String cnaps;
+    private String password;
 
     public String getMatriculate() {
         return "EMP" + this.id;

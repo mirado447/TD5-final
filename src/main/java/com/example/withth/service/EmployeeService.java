@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +42,7 @@ public class EmployeeService {
         return byId.orElseGet(Employee::new);
     }
 
-    public List<Employee> filter(String name, String function, Sex sex, String orderBy, String direction){
+    public List<Employee> filter(String name, String function, Sex sex, String orderBy, Date entryDate, String direction){
         String sexQuery = (sex != null) ? sex.toString():null;
         lastFilterUsed.setName(name);
         lastFilterUsed.setFunction(function);
@@ -49,7 +50,10 @@ public class EmployeeService {
         lastFilterUsed.setOrderBy(orderBy);
         lastFilterUsed.setDirection(direction);
         Sort sort = Sort.by(Sort.Direction.fromString(direction), orderBy);
-        return repository.filterByNameOrFunction(name, function, sexQuery, sort);
+
+
+
+        return repository.filterByNameOrFunction(name, function, sexQuery, entryDate,sort);
     }
 
     public void exportToCSV(HttpServletResponse response, List<Employee> employees) throws IOException {

@@ -1,8 +1,12 @@
 package com.example.withth.controller.request;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,8 +17,8 @@ public class EmployeeFilter {
     private String name;
     private String function;
     private String sex;
-    private LocalDate entryDate;
-    private LocalDate departureDate;
+    private Date entryDate;
+    private Date departureDate;
     private String orderBy="name";
     private String direction="asc";
 }
