@@ -12,10 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -31,7 +29,7 @@ public class EmployeeController {
     }
 
     @ModelAttribute("sexList")
-    public List<String> getSex(){
+    public List<String> getSex() {
         return Arrays.stream(Sex.values()).map(Sex::toString).toList();
     }
 
@@ -70,27 +68,35 @@ public class EmployeeController {
         if (Objects.equals(filter.getSex(), "")) {
             filter.setSex(null);
         }
+        if (filter.getFunction().equals("")) {
+            filter.setFunction(null);
+        }
 
         Sex sexQuery;
         List<String> sexList = Arrays.stream(Sex.values()).map(Enum::toString).toList();
-        if (!sexList.contains(filter.getSex()) || filter.getSex()==null) {
+        if (!sexList.contains(filter.getSex()) || filter.getSex() == null) {
             sexQuery = null;
-        }else {
+        } else {
             sexQuery = Sex.valueOf(filter.getSex());
         }
 
         model.addAttribute("filter", filter);
-        List<Employee> listEmployees = service.filter(filter.getName(), filter.getFunction(), sexQuery, filter.getOrderBy(), filter.getDirection());
+        List<Employee> listEmployees = service.filter(
+                filter.getName(), filter.getFunction(), sexQuery,
+                filter.getOrderBy(), filter.getEntryDate(), filter.getDirection()
+        );
         model.addAttribute("employeeList", listEmployees);
         return "employee/index";
     }
 
 
-
     @GetMapping("/employee/export")
     public void exportToCSV(HttpServletResponse response) throws IOException {
         EmployeeFilter lastFilterUsed = service.getLastFilterUsed();
-        List<Employee> filteredEmployee = service.filter(lastFilterUsed.getName(), lastFilterUsed.getFunction(), Sex.valueOf(lastFilterUsed.getSex()), lastFilterUsed.getOrderBy(), lastFilterUsed.getDirection());
+        List<Employee> filteredEmployee = service.filter(
+                lastFilterUsed.getName(), lastFilterUsed.getFunction(), Sex.valueOf(lastFilterUsed.getSex()),
+                lastFilterUsed.getOrderBy(), lastFilterUsed.getEntryDate(),lastFilterUsed.getDirection()
+        );
         service.exportToCSV(response, filteredEmployee);
     }
 
