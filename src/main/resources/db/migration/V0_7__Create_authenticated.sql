@@ -1,9 +1,9 @@
-CREATE TABLE IF NOT EXISTS "authenticated"
+CREATE TABLE IF NOT EXISTS "session"
 (
     id         varchar
-        constraint authenticated_pk primary key default uuid_generate_v4(),
+        constraint session_pk primary key default uuid_generate_v4(),
     session_id varchar not null unique,
-    timeout    date,
+    timeout    TIMESTAMP,
     user_id    varchar,
-    constraint authenticated_user foreign key (user_id) references "user_list_conf" (id)
+    constraint session_user_fk foreign key (user_id) references "user" (id)
 );
