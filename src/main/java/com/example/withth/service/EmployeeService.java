@@ -60,16 +60,23 @@ public class EmployeeService {
         String csvFileName = "employees.csv";
         response.setContentType("text/csv");
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + csvFileName + "\"");
-
         //create a csv writer
-        CSVPrinter csvPrinter = new CSVPrinter(response.getWriter(), CSVFormat.DEFAULT.withHeader("Matricule", "Nom", "Prenom", "DateNaissance", "Mail"));
-
-        //write each employee to the csv file
-        for (Employee employee : employees) {
-            csvPrinter.printRecord(employee.getMatriculate(), employee.getName(), employee.getBirthDate(), employee.getPrivateMail());
+        String[] headers = {"Matricule", "Nom", "DateDeNaissance",
+                "E-mail", "ChildrenInCharges", "EntryDate",
+                "CIN", "Address", "PhoneNumbers",
+                "CNAPS", "Position", "ProfessionalCategory",
+                "Sex"};
+        try (CSVPrinter csvPrinter = new CSVPrinter(response.getWriter(), CSVFormat.DEFAULT.withHeader(headers))) {
+            //write each employee to the csv file
+            for (Employee employee : employees) {
+                csvPrinter.printRecord(
+                        employee.getMatriculate(), employee.getName(), employee.getBirthDate(),
+                        employee.getPrivateMail(), employee.getChildrens(), employee.getEntryDate(),
+                        employee.getCin(), employee.getAddress(), employee.getPhoneNumbers(),
+                        employee.getCnaps(), employee.getFunction(),employee.getProfessionalCategory(),
+                        employee.getSex());
+            }
         }
-
-        csvPrinter.close();
     }
 
 }
