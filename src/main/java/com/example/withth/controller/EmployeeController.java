@@ -62,13 +62,13 @@ public class EmployeeController extends AuthBaseController{
     public String filter(@ModelAttribute EmployeeFilter filter, Model model) {
         // when running a query like filter?name=&function=k
         // the query params of name will be an empty string
-        if (Objects.equals(filter.getName(), "")) {
-            filter.setName(null);
+        if (Objects.equals(filter.getFirstName(), "")) {
+            filter.setFirstName(null);
         }
         if (Objects.equals(filter.getSex(), "")) {
             filter.setSex(null);
         }
-        if (filter.getFunction().equals("")) {
+        if (filter.getFunction().isEmpty()) {
             filter.setFunction(null);
         }
 
@@ -82,9 +82,9 @@ public class EmployeeController extends AuthBaseController{
 
         model.addAttribute("filter", filter);
         List<Employee> listEmployees = service.filter(
-                filter.getName(), filter.getFunction(), sexQuery,
-                filter.getOrderBy(), filter.getEntryDate(), filter.getDirection()
-        );
+                filter.getFirstName(), filter.getFunction(), sexQuery,
+                filter.getOrderBy(), filter.getEntryDate(), filter.getDirection(),
+                filter.getEntryDateEnd(), filter.getDepartureDateStart(), filter.getDepartureDateEnd());
         model.addAttribute("employeeList", listEmployees);
         return "employee/index";
     }
@@ -99,9 +99,9 @@ public class EmployeeController extends AuthBaseController{
         else sex = Sex.valueOf(lastFilterUsed.getSex());
 
         List<Employee> filteredEmployee = service.filter(
-                lastFilterUsed.getName(), lastFilterUsed.getFunction(), sex,
-                lastFilterUsed.getOrderBy(), lastFilterUsed.getEntryDate(),lastFilterUsed.getDirection()
-        );
+                lastFilterUsed.getFirstName(), lastFilterUsed.getFunction(), sex,
+                lastFilterUsed.getOrderBy(), lastFilterUsed.getEntryDate(),lastFilterUsed.getDirection(),
+                lastFilterUsed.getEntryDateEnd(), lastFilterUsed.getDepartureDateStart(), lastFilterUsed.getDepartureDateEnd());
         service.exportToCSV(response, filteredEmployee);
     }
 

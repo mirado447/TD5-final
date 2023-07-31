@@ -42,9 +42,9 @@ public class EmployeeService {
         return byId.orElseGet(Employee::new);
     }
 
-    public List<Employee> filter(String name, String function, Sex sex, String orderBy, Date entryDate, String direction){
+    public List<Employee> filter(String name, String function, Sex sex, String orderBy, Date entryDateStart, String direction, Date entryDateEnd, Date departureDateStart, Date departureDateEnd){
         String sexQuery = (sex != null) ? sex.toString():null;
-        lastFilterUsed.setName(name);
+        lastFilterUsed.setFirstName(name);
         lastFilterUsed.setFunction(function);
         lastFilterUsed.setSex(sexQuery);
         lastFilterUsed.setOrderBy(orderBy);
@@ -53,7 +53,7 @@ public class EmployeeService {
 
 
 
-        return repository.filterByNameOrFunction(name, function, sex, entryDate,sort);
+        return repository.filterByNameOrFunction(name, function, sex, entryDateStart,entryDateEnd,departureDateStart, departureDateEnd,sort);
     }
 
     public void exportToCSV(HttpServletResponse response, List<Employee> employees) throws IOException {
@@ -70,7 +70,7 @@ public class EmployeeService {
             //write each employee to the csv file
             for (Employee employee : employees) {
                 csvPrinter.printRecord(
-                        employee.getMatriculate(), employee.getName(), employee.getBirthDate(),
+                        employee.getMatriculate(), employee.getFirstName(), employee.getBirthDate(),
                         employee.getPrivateMail(), employee.getChildrens(), employee.getEntryDate(),
                         employee.getCin(), employee.getAddress(), employee.getPhones(),
                         employee.getCnaps(), employee.getFunction(),employee.getProfessionalCategory(),

@@ -19,14 +19,22 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Query("""
             select e from Employee e
             where
-            (:name is null or e.name ilike concat('%', :name, '%'))
+            (:name is null or e.firstName ilike concat('%', :name, '%'))
             and (:function is null or e.function ilike concat('%', :function, '%'))
             and (:sex is null or e.sex = :sex)
-            and (cast(:entryDate as date) is null or e.entryDate = cast(:entryDate as date))
+            and (
+                    (cast(:entryDateStart as date) is null and cast(:entryDateEnd as date) is null)
+                    or (e.entryDate between cast(:entryDateStart as date)  and cast(:entryDateEnd as date))
+                 )
+            and (
+                    (cast(:departureDateStart as date) is null and cast(:departureDateEnd as date) is null)
+                    or (e.departureDate between cast(:departureDateStart as date) and cast(:departureDateEnd as date))
+                )
             """)
     List<Employee> filterByNameOrFunction(@Param("name") @Nullable String name, @Param("function") @Nullable String function,
-                                   @Param("sex") @Nullable Sex sex, @Param("entryDate") @Nullable Date entryDate,
-                                   Sort sort);
-
+                                          @Param("sex") @Nullable Sex sex,
+                                          @Param("entryDateStart") Date entryDateStart, @Param("entryDateEnd") Date entryDateEnd,
+                                          @Param("departureDateStart") Date departureDateStart, @Param("departureDateEnd") Date departureDateEnd,
+                                          Sort sort);
 
 }

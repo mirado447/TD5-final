@@ -37,7 +37,7 @@ public class LoginController {
             return "redirect:/login";
         }
         Employee employee = allByNameAndPasswordEquals.get(0);
-        session.setAttribute("AuthUsername", employee.getName());
+        session.setAttribute("AuthUsername", employee.getFirstName());
         session.setAttribute("AuthPassword", employee.getPassword());
         return "redirect:/";
     }

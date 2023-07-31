@@ -33,15 +33,31 @@
         <div>
             <form th:action="@{/filter}" method="post" th:objext="${filter}">
                 <label>
-                    <input type="text"  placeholder="name" th:field="*{filter.name}">
+                    <input type="text"  placeholder="name" th:field="*{filter.firstName}">
                 </label>
                 <label>
                     <input type="text" placeholder="Function" th:field="*{filter.function}">
                 </label>
-                <label>
-                    Entry date
-                    <input type="date" th:name="entryDate" th:field="*{filter.entryDate}">
-                </label>
+                <div>
+                    <label>
+                        Entry date start from
+                        <input type="date" th:name="entryDate" th:field="*{filter.entryDate}">
+                    </label>
+                    <label>
+                        Entry date end at
+                        <input type="date" th:name="entryDateEnd" th:field="*{filter.entryDateEnd}">
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Departure date start from
+                        <input type="date" th:name="departureDateStart" th:field="*{filter.departureDateStart}">
+                    </label>
+                    <label>
+                        Departure date end at
+                        <input type="date" th:name="departureDateEnd" th:field="*{filter.departureDateEnd}">
+                    </label>
+                </div>
                 <div class="form-group">
                     <label for="sex">Sex:</label>
                     <select class="form-control-sm" id="sex"  th:field="*{filter.sex}">
@@ -74,7 +90,7 @@
             <tr th:each="employee : ${employeeList}">
                 <td th:text="${employee.matriculate}"></td>
                 <td><img th:src="@{'/image?id='+${employee.id}}" alt="" width="100px" height="50px"></td>
-                <td th:text="${employee.name}"></td>
+                <td th:text="${employee.firstName}"></td>
                 <td>
                     <a th:href="@{/employee/{employeeId}(employeeId=${employee.id})}"
                        class="btn btn-success">Details</a>
