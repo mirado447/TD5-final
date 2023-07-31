@@ -27,6 +27,8 @@ public class Employee implements Serializable {
     private Long id;
     private String matriculate;
     private String name;
+    private String firstName;
+    private String lastName;
     private LocalDate birthDate;
     @Enumerated(EnumType.STRING)
     private Sex sex;
