@@ -22,21 +22,28 @@ import java.util.List;
 public class EmployeeManagerDao {
     private EntityManager entityManager;
 
-    public List<Employee> findByCriteria(String lastName, String firstName, Sex sex, String position, DateRange entranceRange, DateRange departureRange, Pageable pageable) {
+    public List<Employee> findByCriteria(String lastName, String firstName, String countryCode, Sex sex, String position, DateRange entranceRange, DateRange departureRange, Pageable pageable) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Employee> query = builder.createQuery(Employee.class);
         Root<Employee> root = query.from(Employee.class);
 
         List<Predicate> predicates = new ArrayList<>();
 
-        predicates.add(builder.or(
-                builder.like(builder.lower(root.get("lastName")), "%" + lastName.toLowerCase() + "%")
-        ));
-
-        predicates.add(builder.or(
-                builder.like(builder.lower(root.get("firstName")), "%" + firstName.toLowerCase() + "%")
-        ));
-
+        if (!firstName.isBlank()) {
+            predicates.add(builder.or(
+                    builder.like(builder.lower(root.get("lastName")), "%" + lastName.toLowerCase() + "%")
+            ));
+        }
+        if (!lastName.isBlank()) {
+            predicates.add(builder.or(
+                    builder.like(builder.lower(root.get("firstName")), "%" + firstName.toLowerCase() + "%")
+            ));
+        }
+        if (!countryCode.isBlank()) {
+            predicates.add(builder.or(
+                    builder.like(builder.lower(root.get("phones").get("value")), countryCode + ",%")
+            ));
+        }
         if (sex != null) {
             predicates.add(builder.or(
                     builder.equal(root.get("sex"), sex)
@@ -75,11 +82,17 @@ public class EmployeeManagerDao {
             ));
         }
 
-        predicates.add(builder.or(
-                builder.like(builder.lower(root.get("positions").get("name")), "%" + position.toLowerCase() + "%")
-        ));
+        if (!position.isBlank()) {
+            predicates.add(builder.or(
+                    builder.like(builder.lower(root.get("positions").get("name")), "%" + position.toLowerCase() + "%")
+            ));
+        }
 
-        query.where(predicates.toArray(Predicate[]::new))
+        if (predicates.size() == 0) {
+            predicates.add(builder.isNotNull(root.get("id")));
+        }
+
+        query.where(builder.or(predicates.toArray(Predicate[]::new)))
                 .orderBy(QueryUtils.toOrders(pageable.getSort(), root, builder));
 
         try {

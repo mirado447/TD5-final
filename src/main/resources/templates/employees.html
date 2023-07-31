@@ -23,68 +23,68 @@
     </div>
     <!--        filters-->
     <div class="container mt-3">
-        <form action="/server/employee/list/filters/set" class="row g-3" method="get">
-            <div class="col-4">
+        <form action="/employee/list" class="row g-3" th:object="${employeeFilters}" method="get">
+            <div class="col-md-4 col-12 col-sm-6">
                 <label for="firstName" class="form-label">First name</label>
-                <input type="text" th:value="*{session.firstNameFilter}" class="form-control" name="firstName"
-                       id="firstName">
+                <input type="text" th:field="*{firstName}" class="form-control" name="firstName" id="firstName"/>
             </div>
-            <div class="col-4">
+            <div class="col-md-4 col-12 col-sm-6">
                 <label for="lastName" class="form-label">Last name</label>
-                <input type="text" th:value="*{session.lastNameFilter}" name="lastName" class="form-control"
-                       id="lastName">
+                <input type="text" th:field="*{lastName}" name="lastName" class="form-control" id="lastName"/>
             </div>
-            <div class="col-4">
+            <div class="col-md-4 col-12 col-sm-6">
+                <label for="countryCode" class="form-label">Country Code</label>
+                <input type="text" th:field="*{countryCode}" name="countryCode" class="form-control" id="countryCode"/>
+            </div>
+            <div class="col-md-4 col-12 col-sm-6">
                 <label for="sex" class="form-label">Sex</label>
-                <select id="sex" th:value="*{session.sexFilter}" name="sex" class="form-select">
-                    <option selected value="">Chose your sex</option>
-                    <option th:each="sex : *{T(com.example.prog4.repository.entity.enums.Sex).values()}"
-                            th:value="*{sex}"
-                            th:text="*{sex}"></option>
+                <select id="sex" th:field="*{sex}" name="sex" class="form-select">
+                    <option selected th:value="${null}">Chose your sex</option>
+                    <option th:value="${sex}" th:text="${sex}"
+                            th:each="sex : ${T(com.example.prog4.repository.entity.enums.Sex).values()}"></option>
                 </select>
             </div>
-            <div class="col-4">
-                <label for="beginEntrance" class="form-label">Begin Entrance</label>
-                <input type="date" th:value="*{session.beginEntranceFilter}" name="beginEntrance" class="form-control"
-                       id="beginEntrance">
+            <div class="col-md-4 col-12 col-sm-6">
+                <label for="entrance.begin" class="form-label">Begin Entrance</label>
+                <input type="date" th:field="*{entrance.begin}" name="entrance.begin" class="form-control"
+                       id="entrance.begin">
             </div>
-            <div class="col-4">
-                <label for="endingEntrance" class="form-label">Begin Entrance</label>
-                <input type="date" th:value="*{session.endingEntranceFilter}" name="endingEntrance" class="form-control"
-                       id="endingEntrance">
+            <div class="col-md-4 col-12 col-sm-6">
+                <label for="entrance.end" class="form-label">Begin Entrance</label>
+                <input type="date" th:field="*{entrance.end}" name="entrance.end" class="form-control"
+                       id="entrance.end">
             </div>
-            <div class="col-4">
-                <label for="beginDeparture" class="form-label">Begin Entrance</label>
-                <input type="date" th:value="*{session.beginDepartureFilter}" name="beginDeparture" class="form-control"
-                       id="beginDeparture">
+            <div class="col-md-4 col-12 col-sm-6">
+                <label for="departure.begin" class="form-label">Begin Entrance</label>
+                <input type="date" th:field="*{departure.begin}" name="departure.begin" class="form-control"
+                       id="departure.begin">
             </div>
-            <div class="col-4">
-                <label for="endingDeparture" class="form-label">Begin Entrance</label>
-                <input type="date" th:value="*{session.endingDepartureFilter}" name="endingDeparture"
-                       class="form-control"
-                       id="endingDeparture">
+            <div class="col-md-4 col-12 col-sm-6">
+                <label for="departure.end" class="form-label">Begin Entrance</label>
+                <input type="date" th:field="*{departure.end}" name="departure.end"
+                       class="form-control" id="departure.end">
             </div>
-            <div class="col-4">
+            <div class="col-md-4 col-12 col-sm-6">
                 <label for="page" class="form-label">Page</label>
-                <input type="number" th:value="*{session.pageFilter}" min="1" name="page" class="form-control"
+                <input type="number" th:field="*{page}" min="1" name="page" class="form-control"
                        id="page">
             </div>
-            <div class="col-4">
+            <div class="col-md-4 col-12 col-sm-6">
                 <label for="perPage" class="form-label">Per page</label>
-                <input type="number" th:value="*{session.perPageFilter}" min="1" name="perPage" class="form-control"
+                <input type="number" th:field="*{perPage}" min="5" name="perPage" class="form-control"
                        id="perPage">
             </div>
-            <div class="col-4">
+            <div class="col-md-4 col-12 col-sm-6">
                 <label for="orderBy" class="form-label">OrderBy</label>
-                <select id="orderBy" th:value="*{session.orderByFilter}" name="orderBy" class="form-select">
-                    <option th:each="by : *{T(com.example.prog4.model.enums.EmployeeSortField).values()}"
-                            th:value="*{by}"
-                            th:text="*{by}"></option>
+                <select id="orderBy" th:field="*{orderBy}" name="orderBy" class="form-select">
+                    <option th:each="orderByEnum : ${T(com.example.prog4.model.enums.EmployeeSortField).values()}"
+                            th:value="${orderByEnum}"
+                            th:text="${orderByEnum}"></option>
                 </select>
             </div>
-            <div class="col-4">
+            <div class="col-md-4 col-12 col-sm-6">
                 <label for="orderDirection" class="form-label">orderDirection</label>
-                <select id="orderDirection" th:value="${session.orderDirectionFilter}" name="orderBy"
+                <select id="orderDirection" th:field="*{orderDirection}" name="orderBy"
                         class="form-select">
                     <option value="ASC">ASC</option>
                     <option value="DESC">DESC</option>
