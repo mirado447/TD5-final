@@ -72,7 +72,7 @@ public class EmployeeService {
                 csvPrinter.printRecord(
                         employee.getMatriculate(), employee.getName(), employee.getBirthDate(),
                         employee.getPrivateMail(), employee.getChildrens(), employee.getEntryDate(),
-                        employee.getCin(), employee.getAddress(), employee.getPhoneNumbers(),
+                        employee.getCin(), employee.getAddress(), employee.getPhones(),
                         employee.getCnaps(), employee.getFunction(),employee.getProfessionalCategory(),
                         employee.getSex());
             }

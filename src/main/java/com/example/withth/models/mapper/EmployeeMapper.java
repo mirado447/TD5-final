@@ -21,7 +21,7 @@ public class EmployeeMapper {
                 .entryDate(entity.getEntryDate().toString())
                 .sex(EmployeeModel.Sex.valueOf(String.valueOf(entity.getSex())))
                 .matriculate(entity.getMatriculate())
-                .phoneNumbers(entity.getPhoneNumbers())
+                .phoneNumbers(entity.getPhones())
                 .function(entity.getFunction())
                 .size(entity.getSize())
                 .name(entity.getName())

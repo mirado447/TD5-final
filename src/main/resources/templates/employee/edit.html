@@ -57,8 +57,8 @@
         <div class="form-group">
             <label for="phoneNumbers">Phone Numbers:</label>
             <ul>
-                <li th:each="phone : ${employee.phoneNumbers}">
-                    <input type="text" class="form-control" th:field="*{phoneNumbers[__${phoneStat.index}__].number}">
+                <li th:each="phone : ${employee.phones}">
+                    <input type="text" class="form-control" th:field="*{phones[__${phoneStat.index}__].number}">
                 </li>
             </ul>
         </div>

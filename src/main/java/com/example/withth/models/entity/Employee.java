@@ -10,6 +10,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,10 +33,6 @@ public class Employee implements Serializable {
     private String profilePicture;
     private byte[] content;
     private long size;
-    // TODO an employee can have many phone number
-    @OneToMany(cascade = CascadeType.ALL)
-    @ToString.Exclude
-    private List<Phone> phoneNumbers;
     private String address;
     private String privateMail;
     private String publicMail;
@@ -50,6 +47,9 @@ public class Employee implements Serializable {
     private String professionalCategory;
     private String cnaps;
     private String password;
+
+    @OneToMany(mappedBy = "employee", orphanRemoval = true)
+    private List<Phone> phones = new ArrayList<>();
 
     public String getMatriculate() {
         return "EMP" + this.id;

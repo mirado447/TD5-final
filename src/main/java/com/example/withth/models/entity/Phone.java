@@ -1,8 +1,6 @@
 package com.example.withth.models.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,4 +22,7 @@ public class Phone implements Serializable {
     @GeneratedValue()
     private Long id;
     private String number;
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 }
