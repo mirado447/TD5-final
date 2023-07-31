@@ -1,19 +1,13 @@
 package com.example.prog4.controller;
 
 import com.example.prog4.controller.mapper.EmployeeMapper;
-import com.example.prog4.controller.mapper.SexMapper;
 import com.example.prog4.controller.validator.EmployeeValidator;
 import com.example.prog4.model.Employee;
 import com.example.prog4.model.EmployeeFilter;
-import com.example.prog4.model.enums.EmployeeSortField;
-import com.example.prog4.model.utilities.DateRange;
-import com.example.prog4.model.utilities.Page;
-import com.example.prog4.model.utilities.PerPage;
 import com.example.prog4.service.CSVUtils;
 import com.example.prog4.service.EmployeeService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,9 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -36,11 +28,10 @@ public class EmployeeController {
     private EmployeeMapper employeeMapper;
     private EmployeeValidator employeeValidator;
     private EmployeeService employeeService;
-    private SexMapper sexMapper;
 
     @GetMapping("/list/csv")
     public ResponseEntity<byte[]> getCsv(HttpSession session) {
-        EmployeeFilter filters = (EmployeeFilter) session.getAttribute("employeeFilters");
+        EmployeeFilter filters = (EmployeeFilter) session.getAttribute("employeeFiltersSession");
         List<Employee> data = employeeService.getAll(filters).stream().map(employeeMapper::toView).toList();
 
         String csv = CSVUtils.convertToCSV(data);

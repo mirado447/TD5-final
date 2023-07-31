@@ -7,6 +7,7 @@ import com.example.prog4.model.EmployeeFilter;
 import com.example.prog4.service.EmployeeService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +29,9 @@ public class EmployeeViewController extends PopulateController {
             HttpSession session
     ) {
         model.addAttribute("employees", employeeService.getAll(filters).stream().map(employeeMapper::toView).toList())
-                .addAttribute("employeeFilters", filters);
-        session.setAttribute("employeeFilters", filters);
+                .addAttribute("employeeFilters", filters)
+                .addAttribute("directions", Sort.Direction.values());
+        session.setAttribute("employeeFiltersSession", filters);
 
         return "employees";
     }

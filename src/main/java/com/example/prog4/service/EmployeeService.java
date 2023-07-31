@@ -1,18 +1,14 @@
 package com.example.prog4.service;
 
 import com.example.prog4.model.EmployeeFilter;
-import com.example.prog4.model.enums.EmployeeSortField;
 import com.example.prog4.model.exception.NotFoundException;
-import com.example.prog4.model.utilities.DateRange;
 import com.example.prog4.repository.EmployeeRepository;
 import com.example.prog4.repository.dao.EmployeeManagerDao;
 import com.example.prog4.repository.entity.Employee;
-import com.example.prog4.repository.entity.enums.Sex;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,16 +25,8 @@ public class EmployeeService {
     }
 
     public List<Employee> getAll(EmployeeFilter filter) {
-        Sort sort = Sort.by(filter.getOrderBy().toString());
-
-        if (filter.getOrderDirection().isAscending()) {
-            sort.ascending();
-        } else {
-            sort.descending();
-        }
-
-        Pageable pageable = PageRequest.of(filter.getIntPage(), filter.getIntPerPage(), sort);
-        System.out.println(filter);
+        Sort sort = Sort.by(filter.getOrderDirection(), filter.getOrderBy().toString());
+        Pageable pageable = PageRequest.of(filter.getIntPage() - 1, filter.getIntPerPage(), sort);
         return employeeManagerDao.findByCriteria(
                 filter.getLastName(),
                 filter.getFirstName(),

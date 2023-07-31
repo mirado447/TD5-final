@@ -29,21 +29,15 @@ public class EmployeeManagerDao {
 
         List<Predicate> predicates = new ArrayList<>();
 
-        if (!firstName.isBlank()) {
-            predicates.add(builder.or(
-                    builder.like(builder.lower(root.get("lastName")), "%" + lastName.toLowerCase() + "%")
-            ));
-        }
-        if (!lastName.isBlank()) {
-            predicates.add(builder.or(
-                    builder.like(builder.lower(root.get("firstName")), "%" + firstName.toLowerCase() + "%")
-            ));
-        }
-        if (!countryCode.isBlank()) {
-            predicates.add(builder.or(
-                    builder.like(builder.lower(root.get("phones").get("value")), countryCode + ",%")
-            ));
-        }
+        predicates.add(builder.or(
+                builder.like(builder.lower(root.get("lastName")), "%" + lastName.toLowerCase() + "%")));
+
+        predicates.add(builder.or(
+                builder.like(builder.lower(root.get("firstName")), "%" + firstName.toLowerCase() + "%")));
+
+        predicates.add(builder.or(
+                builder.like(builder.lower(root.get("phones").get("value")), "%" + countryCode + ",%")));
+
         if (sex != null) {
             predicates.add(builder.or(
                     builder.equal(root.get("sex"), sex)
@@ -88,11 +82,7 @@ public class EmployeeManagerDao {
             ));
         }
 
-        if (predicates.size() == 0) {
-            predicates.add(builder.isNotNull(root.get("id")));
-        }
-
-        query.where(builder.or(predicates.toArray(Predicate[]::new)))
+        query.where(predicates.toArray(Predicate[]::new))
                 .orderBy(QueryUtils.toOrders(pageable.getSort(), root, builder));
 
         try {

@@ -45,22 +45,22 @@
                 </select>
             </div>
             <div class="col-md-4 col-12 col-sm-6">
-                <label for="entrance.begin" class="form-label">Begin Entrance</label>
+                <label for="entrance.begin" class="form-label">Entrance beginning date</label>
                 <input type="date" th:field="*{entrance.begin}" name="entrance.begin" class="form-control"
                        id="entrance.begin">
             </div>
             <div class="col-md-4 col-12 col-sm-6">
-                <label for="entrance.end" class="form-label">Begin Entrance</label>
+                <label for="entrance.end" class="form-label">Entrance ending date</label>
                 <input type="date" th:field="*{entrance.end}" name="entrance.end" class="form-control"
                        id="entrance.end">
             </div>
             <div class="col-md-4 col-12 col-sm-6">
-                <label for="departure.begin" class="form-label">Begin Entrance</label>
+                <label for="departure.begin" class="form-label">Departure beginning date</label>
                 <input type="date" th:field="*{departure.begin}" name="departure.begin" class="form-control"
                        id="departure.begin">
             </div>
             <div class="col-md-4 col-12 col-sm-6">
-                <label for="departure.end" class="form-label">Begin Entrance</label>
+                <label for="departure.end" class="form-label">Departure ending date</label>
                 <input type="date" th:field="*{departure.end}" name="departure.end"
                        class="form-control" id="departure.end">
             </div>
@@ -86,8 +86,7 @@
                 <label for="orderDirection" class="form-label">orderDirection</label>
                 <select id="orderDirection" th:field="*{orderDirection}" name="orderBy"
                         class="form-select">
-                    <option value="ASC">ASC</option>
-                    <option value="DESC">DESC</option>
+                    <option th:each="dir : ${directions}" th:value="${dir}" th:text="${dir}"></option>
                 </select>
             </div>
             <div class="my-3 col-12">
