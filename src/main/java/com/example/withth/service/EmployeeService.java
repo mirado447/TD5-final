@@ -5,6 +5,8 @@ import com.example.withth.models.entity.Employee;
 import com.example.withth.models.entity.Sex;
 import com.example.withth.repository.EmployeeRepository;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.springframework.data.domain.Sort;
@@ -19,14 +21,12 @@ import java.util.Optional;
 @Service
 public class EmployeeService {
     private final EmployeeRepository repository;
+    @Getter
+    @Setter
     private EmployeeFilter lastFilterUsed = new EmployeeFilter();
 
     public EmployeeService(EmployeeRepository repository) {
         this.repository = repository;
-    }
-
-    public EmployeeFilter getLastFilterUsed() {
-        return lastFilterUsed;
     }
 
     public List<Employee> getEmployees(){
@@ -53,7 +53,7 @@ public class EmployeeService {
 
 
 
-        return repository.filterByNameOrFunction(name, function, sexQuery, entryDate,sort);
+        return repository.filterByNameOrFunction(name, function, sex, entryDate,sort);
     }
 
     public void exportToCSV(HttpServletResponse response, List<Employee> employees) throws IOException {

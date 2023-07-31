@@ -93,8 +93,13 @@ public class EmployeeController {
     @GetMapping("/employee/export")
     public void exportToCSV(HttpServletResponse response) throws IOException {
         EmployeeFilter lastFilterUsed = service.getLastFilterUsed();
+        Sex sex;
+        if (lastFilterUsed.getSex() == null)
+            sex = null;
+        else sex = Sex.valueOf(lastFilterUsed.getSex());
+
         List<Employee> filteredEmployee = service.filter(
-                lastFilterUsed.getName(), lastFilterUsed.getFunction(), Sex.valueOf(lastFilterUsed.getSex()),
+                lastFilterUsed.getName(), lastFilterUsed.getFunction(), sex,
                 lastFilterUsed.getOrderBy(), lastFilterUsed.getEntryDate(),lastFilterUsed.getDirection()
         );
         service.exportToCSV(response, filteredEmployee);
