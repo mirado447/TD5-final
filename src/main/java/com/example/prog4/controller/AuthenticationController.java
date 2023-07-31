@@ -20,5 +20,11 @@ public class AuthenticationController {
         authService.authenticateUser(user, session.getId());
         return "redirect:/employee/list";
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        authService.removeSession(session.getId());
+        return "redirect:/login";
+    }
 }
 

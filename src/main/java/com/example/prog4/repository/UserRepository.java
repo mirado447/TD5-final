@@ -10,6 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
-    @Query(value = "select * from \"user\" u where u.username = :username", nativeQuery = true)
+    @Query(value = "select * from \"user\" u where u.username = :username limit 1", nativeQuery = true)
     Optional<User> findOneByUsername(@Param("username") String username);
 }
