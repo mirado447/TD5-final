@@ -5,16 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{/styles/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/styles/index.css}">
+    <script th:inline="javascript" th:src="@{/scripts/add-phone-script.js}" defer></script>
+    <script th:inline="javascript" th:src="@{/scripts/add-position-script.js}" defer></script>
     <script th:src="@{/scripts/bootstrap.bundle.min.js}" defer></script>
     <title>Create employee</title>
 </head>
 <body>
 <header th:replace="~{components/navbar.html :: navbar('Edit employee')}"></header>
 <div class="container py-5">
-    <form class="row g-3" th:object="${employee}" action="/employee/create" method="POST" enctype="multipart/form-data">
+    <form class="row g-3" th:object="${employee}" action="/server/employee/createOrUpdate" method="POST"
+          enctype="multipart/form-data">
         <div class="col-12 d-flex justify-content-start align-items-center">
             <img th:src="${employee.stringImage}" alt="no image">
         </div>
+        <input required id="id" name="id" th:field="*{id}" type="hidden" />
+        <input required id="registrationNumber" name="registrationNumber" th:field="*{registrationNumber}" type="hidden" />
         <div class="col-lg-4 col-md-6">
             <label for="lastName" class="form-label">Last name</label>
             <input required id="lastName" name="lastName" th:field="*{lastName}" type="text" class="form-control">
@@ -57,7 +62,7 @@
 
         <div class="col-lg-4 col-md-6">
             <label for="birthDate" class="form-label">Birthdate</label>
-            <input id="birthDate" name="birthDate" th:field="*{birthDate}"  type="date" class="form-control">
+            <input id="birthDate" name="birthDate" th:field="*{birthDate}" type="date" class="form-control">
         </div>
         <div class="col-lg-4 col-md-6">
             <label for="entranceDate" class="form-label">Entrance date</label>
@@ -86,10 +91,13 @@
             </select>
         </div>
         <div class="col-12 my-3"></div>
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <div id="phonesList" class="list-group">
                 <div class="input-group mb-3" th:each="phone, phoneStatus : *{phones}">
                     <input type="hidden" th:field="*{phones[__${phoneStatus.index}__].id}"/>
+                    <input class="form-control w-40" type="text"
+                           th:field="*{phones[__${phoneStatus.index}__].countryCode}"
+                           placeholder="Country code" required/>
                     <input class="form-control" type="text" th:field="*{phones[__${phoneStatus.index}__].value}"
                            required/>
                     <button type="button" class="btn-info btn-danger"
@@ -99,7 +107,7 @@
             </div>
             <button type="button" class="btn btn-info" th:onclick="addPhone()">Add Phone</button>
         </div>
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <div id="positionsList" class="list-group">
                 <div class="input-group mb-3" th:each="position, positionStatus : *{positions}">
                     <input type="hidden" th:field="*{positions[__${positionStatus.index}__].id}"/>
@@ -119,88 +127,8 @@
                 <button type="submit" class="btn btn-danger">Cancel</button>
             </a>
         </div>
-
-        <footer th:replace="~{components/navbar.html :: footer}"></footer>
-        <script th:inline="javascript">
-            function addPhone() {
-                const phonesList = document.querySelector("#phonesList");
-                const index = phonesList.children.length;
-
-                const newLi = document.createElement("div");
-                newLi.className = "input-group mb-3";
-
-                const idInput = document.createElement("input");
-                idInput.type = "hidden";
-                idInput.name = "phones[" + index + "].id";
-                newLi.appendChild(idInput);
-
-                const valueInput = document.createElement("input");
-                valueInput.type = "text";
-                valueInput.name = "phones[" + index + "].value";
-                valueInput.className = "form-control";
-                valueInput.required = true;
-                newLi.appendChild(valueInput);
-
-                const removeButton = document.createElement("button");
-                removeButton.type = "button";
-                removeButton.className = "btn btn-danger";
-                removeButton.innerText = "Remove";
-                removeButton.setAttribute("onclick", "removePhone(" + index + ")");
-                newLi.appendChild(removeButton);
-
-                phonesList.appendChild(newLi);
-            }
-
-            function removePhone(index) {
-                const phonesList = document.querySelector("#phonesList");
-                const phoneToRemove = phonesList.children[index];
-                if (phoneToRemove) {
-                    phonesList.removeChild(phoneToRemove);
-                }
-            }
-
-            function addPosition() {
-                const positionsList = document.querySelector("#positionsList");
-                const index = positionsList.children.length;
-
-                const newLi = document.createElement("div");
-                newLi.className = "input-group mb-3";
-
-                const idInput = document.createElement("input");
-                idInput.type = "hidden";
-                idInput.name = "positions[" + index + "].id";
-                newLi.appendChild(idInput);
-
-                const valueInput = document.createElement("input");
-                valueInput.type = "text";
-                valueInput.name = "positions[" + index + "].name";
-                valueInput.className = "form-control";
-                valueInput.required = true;
-                newLi.appendChild(valueInput);
-
-                const removeButton = document.createElement("button");
-                removeButton.type = "button";
-                removeButton.className = "btn btn-danger";
-                removeButton.innerText = "Remove";
-                removeButton.setAttribute("onclick", "removePosition(" + index + ")");
-                newLi.appendChild(removeButton);
-
-                positionsList.appendChild(newLi);
-            }
-
-            function removePosition(index) {
-                const positionsList = document.querySelector("#positionsList");
-                const positionToRemove = positionsList.children[index];
-                if (positionToRemove) {
-                    positionsList.removeChild(positionToRemove);
-                }
-            }
-        </script>
-
     </form>
-    <script>
-
-    </script>
 </div>
+<footer th:replace="~{components/navbar.html :: footer}"></footer>
 </body>
 </html>

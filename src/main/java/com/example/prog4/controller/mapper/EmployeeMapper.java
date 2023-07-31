@@ -2,7 +2,6 @@ package com.example.prog4.controller.mapper;
 
 import com.example.prog4.model.Employee;
 import com.example.prog4.model.exception.BadRequestException;
-import com.example.prog4.repository.PhoneRepository;
 import com.example.prog4.repository.PositionRepository;
 import com.example.prog4.repository.entity.Phone;
 import com.example.prog4.repository.entity.Position;
@@ -20,13 +19,12 @@ import java.util.Optional;
 @AllArgsConstructor
 @Transactional
 public class EmployeeMapper {
-    private PhoneRepository phoneRepository;
     private PositionRepository positionRepository;
+    private PhoneMapper phoneMapper;
 
     public com.example.prog4.repository.entity.Employee toDomain(Employee employee) {
         try {
             List<Position> positions = new ArrayList<>();
-
             employee.getPositions().forEach(position -> {
                 Optional<Position> position1 = positionRepository.findPositionByNameEquals(position.getName());
                 if (position1.isEmpty()) {
@@ -36,16 +34,7 @@ public class EmployeeMapper {
                 }
             });
 
-            List<Phone> phones = new ArrayList<>();
-
-            employee.getPhones().forEach(phone -> {
-                Optional<Phone> phone1 = phoneRepository.findOneByValue(phone.getValue());
-                if (phone1.isEmpty()) {
-                    phones.add(phoneRepository.save(phone));
-                } else {
-                    phones.add(phone1.get());
-                }
-            });
+            List<Phone> phones = employee.getPhones().stream().map((com.example.prog4.model.Phone fromView) -> phoneMapper.toDomain(fromView, employee.getId())).toList();
 
             com.example.prog4.repository.entity.Employee domainEmployee = com.example.prog4.repository.entity.Employee.builder()
                     .id(employee.getId())
@@ -104,7 +93,7 @@ public class EmployeeMapper {
                 .departureDate(employee.getDepartureDate())
                 .entranceDate(employee.getEntranceDate())
                 // lists
-                .phones(employee.getPhones())
+                .phones(employee.getPhones().stream().map(phoneMapper::toView).toList())
                 .positions(employee.getPositions())
                 .build();
     }

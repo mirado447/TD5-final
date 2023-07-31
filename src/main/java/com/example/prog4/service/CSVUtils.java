@@ -1,11 +1,10 @@
 package com.example.prog4.service;
 
 import com.example.prog4.model.Employee;
+import com.example.prog4.model.Phone;
 import com.example.prog4.model.exception.InternalServerErrorException;
-import com.example.prog4.repository.entity.Phone;
 import com.example.prog4.repository.entity.Position;
 import com.opencsv.CSVWriter;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.StringWriter;

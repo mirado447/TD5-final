@@ -1,6 +1,5 @@
 package com.example.prog4.model;
 
-import com.example.prog4.repository.entity.Phone;
 import com.example.prog4.repository.entity.Position;
 import com.example.prog4.repository.entity.enums.Csp;
 import com.example.prog4.repository.entity.enums.Sex;
@@ -8,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
@@ -36,8 +36,11 @@ public class Employee implements Serializable {
     private String professionalEmail;
     private String registrationNumber;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate birthDate;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate entranceDate;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate departureDate;
 
     private List<Position> positions;

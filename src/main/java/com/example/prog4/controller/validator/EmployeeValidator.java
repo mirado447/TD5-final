@@ -13,6 +13,7 @@ import static com.example.prog4.controller.validator.utils.StringValidator.isNot
 @Component
 @AllArgsConstructor
 public class EmployeeValidator {
+    private PhoneValidator phoneValidator;
     public void validate(Employee employee) {
         StringBuilder error = new StringBuilder();
 
@@ -27,8 +28,14 @@ public class EmployeeValidator {
         if (!isNotNullAndNotBlank(employee.getFirstName())) {
             error.append("First name is mandatory. ");
         }
-        if (employee.getPhones().isEmpty()) {
+        if (employee.getPhones() == null || employee.getPhones().isEmpty()) {
             error.append("At least one phone number is expected. ");
+        } else {
+            try {
+                employee.getPhones().forEach(phoneValidator::validate);
+            } catch (BadRequestException e){
+                error.append(e.getMessage());
+            }
         }
         if (!isNotNullAndNotBlank(employee.getAddress())) {
             error.append("Address is mandatory. ");
@@ -42,7 +49,7 @@ public class EmployeeValidator {
         if (employee.getCsp() == null) {
             error.append("Socio-professional category is mandatory. ");
         }
-        if (employee.getPositions().size() == 0) {
+        if (employee.getPositions() == null || employee.getPositions().size() == 0) {
             error.append("At least one position is expected. ");
         }
         if (employee.getEntranceDate() == null) {

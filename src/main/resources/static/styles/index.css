@@ -18,3 +18,11 @@ img.img-list {
     width: 70px;
     object-fit: cover;
 }
+
+.w-40 {
+    width: 40%;
+}
+
+.footer  {
+    margin-top: 10rem;
+}
