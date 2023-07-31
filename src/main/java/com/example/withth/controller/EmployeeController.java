@@ -20,7 +20,7 @@ import java.util.Objects;
 
 @Controller
 @AllArgsConstructor
-public class EmployeeController {
+public class EmployeeController extends AuthBaseController{
     private final EmployeeService service;
 
     @ModelAttribute("employeeList")
