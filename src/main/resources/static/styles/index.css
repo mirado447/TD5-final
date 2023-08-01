@@ -30,3 +30,9 @@ img.img-list {
 .footer  {
     margin-top: 10rem;
 }
+
+.show-fields {
+    border: none !important;
+    outline: none !important;
+    background: rgba(0, 0, 0, 0.1);
+}
