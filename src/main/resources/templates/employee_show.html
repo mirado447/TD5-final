@@ -75,13 +75,13 @@
     <div class="col-lg-4 col-md-6">
         <label for="phones" class="form-label">Phone</label>
         <div id="phones" th:each="phone : ${employee.phones}">
-            <p th:text="${phone.value}" class="p-2 text-white rounded-circle "></p>
+            <p th:text="${phone.countryCode} + ' ' +${phone.value}" class="form-control"></p>
         </div>
     </div>
     <div class="col-lg-4 col-md-6">
         <label for="position" class="form-label">Position</label>
         <div id="position" th:each="position : ${employee.positions}">
-            <p th:text="${position.name}" class="p-2 text-white rounded-circle "></p>
+            <p th:text="${position.name}" class="form-control"></p>
         </div>
     </div>
 </div>
