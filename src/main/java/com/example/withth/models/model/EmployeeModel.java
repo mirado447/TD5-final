@@ -1,11 +1,14 @@
 package com.example.withth.models.model;
 
 import com.example.withth.models.entity.Phone;
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
