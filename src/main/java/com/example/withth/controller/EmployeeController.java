@@ -3,9 +3,11 @@ package com.example.withth.controller;
 import com.example.withth.controller.request.EmployeeFilter;
 import com.example.withth.models.entity.CountryCode;
 import com.example.withth.models.entity.Employee;
+import com.example.withth.models.entity.Phone;
 import com.example.withth.models.entity.Sex;
 import com.example.withth.service.CountryCodeService;
 import com.example.withth.service.EmployeeService;
+import com.example.withth.service.PhoneService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.repository.query.Param;
@@ -25,6 +27,7 @@ import java.util.Objects;
 public class EmployeeController extends AuthBaseController{
     private final EmployeeService service;
     private final CountryCodeService countryCodeService;
+    private final PhoneService phoneService;
 
     @ModelAttribute("employeeList")
     public List<Employee> getEmployees() {
@@ -113,12 +116,43 @@ public class EmployeeController extends AuthBaseController{
     }
 
     @PostMapping(value = "/save")
-    public String save(@ModelAttribute Employee employee, @ModelAttribute("file") MultipartFile file) throws IOException {
+    public String save(@ModelAttribute Employee employee, @ModelAttribute("file") MultipartFile file, Model model) throws IOException {
         if (!file.isEmpty()) {
             employee.setProfilePicture(file.getOriginalFilename());
             employee.setContent(file.getBytes());
             employee.setSize(file.getSize());
         }
+        /* ensure that only one instance of country code with the specified content is stored */
+        List<Phone> mappedPhone = employee.getPhones().stream().map(phone -> {
+            CountryCode byContent = countryCodeService.findByContent(phone.getCountryCode());
+            if (byContent != null) {
+                phone.setCountryCode(byContent);
+            }
+            return phone;
+        }).toList();
+        employee.setPhones(mappedPhone);
+        // phone validation
+        for (int i = 0; i < mappedPhone.size(); i++) {
+            Phone phone = mappedPhone.get(i);
+            String completePhone = phone.getCountryCode().getContent()+phone.getNumber();
+            List<Phone> allPhoneNumber = phoneService.findAllPhoneNumber(phone.getCountryCode().getContent(), phone.getNumber());
+            if (!allPhoneNumber.isEmpty()){
+                model.addAttribute("error", "Phone number already exist");
+                model.addAttribute("employee", new Employee());
+                return "employee/employee-form";
+            }
+            if (phone.getNumber().length()!=10){
+                model.addAttribute("error", "A phone number must contain 10 characters");
+                model.addAttribute("employee", new Employee());
+                return "employee/employee-form";
+            }
+            if (completePhone.matches("\\d+")){
+                model.addAttribute("error", "A phone should be only numbers");
+                model.addAttribute("employee", new Employee());
+                return "employee/employee-form";
+            }
+        }
+
         service.save(employee);
         return "redirect:/";
     }

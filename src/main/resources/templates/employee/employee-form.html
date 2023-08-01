@@ -6,7 +6,6 @@
     <script>
         $(document).ready(function() {
             var index = $("#phoneNumbers li").length;
-
             $("#add-phone").click(function() {
                 // create new inputs
                 var idInput = '<input type="text" name="phones[' + index + '].id" hidden/>';
@@ -25,6 +24,9 @@
 <body>
 <div class="container" layout:fragment="content">
     <h2>Edit Employee Details</h2>
+    <div class="bg-danger">
+        <p th:text="${error}"></p>
+    </div>
     <form th:action="@{/save}" th:object="${employee}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" th:field="*{id}">
         <div class="form-group">

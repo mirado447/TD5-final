@@ -2,6 +2,25 @@
 <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout}" >
 <head>
     <title>Edit employee infos</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var index = $("#phoneNumbers li").length;
+
+            $("#add-phone").click(function() {
+                // create new inputs
+                var idInput = '<input type="text" name="phones[' + index + '].id" hidden/>';
+                var phoneNumberInput = '<input type="text" name="phones[' + index + '].number" placeholder="Phone number"/>';
+                var countryCodeInput = '<input type="text" name="phones[' + index + '].countryCode.content" placeholder="country code"/>';
+
+                $("#phoneNumbers").append(idInput)
+                $("#phoneNumbers").append(countryCodeInput);
+                $("#phoneNumbers").append(phoneNumberInput);
+                // increment the index
+                index++;
+            });
+        });
+    </script>
 </head>
 <body>
 <div class="container" layout:fragment="content">
@@ -66,6 +85,8 @@
             <label for="phoneNumbers">Phone Numbers:</label>
             <ul>
                 <li th:each="phone : ${employee.phones}">
+                    <input type="text" class="form-control" th:field="*{phones[__${phoneStat.index}__].id}" hidden>
+                    <input type="text" class="form-control" th:field="*{phones[__${phoneStat.index}__].countryCode.content}">
                     <input type="text" class="form-control" th:field="*{phones[__${phoneStat.index}__].number}">
                 </li>
             </ul>

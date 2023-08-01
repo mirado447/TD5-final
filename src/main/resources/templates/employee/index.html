@@ -91,6 +91,7 @@
                 <td th:text="${employee.matriculate}"></td>
                 <td><img th:src="@{'/image?id='+${employee.id}}" alt="" width="100px" height="50px"></td>
                 <td th:text="${employee.firstName}"></td>
+                <td th:text="${employee.entryDate}"></td>
                 <td>
                     <a th:href="@{/employee/{employeeId}(employeeId=${employee.id})}"
                        class="btn btn-success">Details</a>
