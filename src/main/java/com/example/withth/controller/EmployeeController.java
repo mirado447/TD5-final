@@ -1,8 +1,10 @@
 package com.example.withth.controller;
 
 import com.example.withth.controller.request.EmployeeFilter;
+import com.example.withth.models.entity.CountryCode;
 import com.example.withth.models.entity.Employee;
 import com.example.withth.models.entity.Sex;
+import com.example.withth.service.CountryCodeService;
 import com.example.withth.service.EmployeeService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -22,10 +24,15 @@ import java.util.Objects;
 @AllArgsConstructor
 public class EmployeeController extends AuthBaseController{
     private final EmployeeService service;
+    private final CountryCodeService countryCodeService;
 
     @ModelAttribute("employeeList")
     public List<Employee> getEmployees() {
         return service.getEmployees();
+    }
+    @ModelAttribute("countryCodes")
+    public List<CountryCode> getCountryCodes(){
+        return countryCodeService.findAll();
     }
 
     @ModelAttribute("sexList")
