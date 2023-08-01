@@ -18,8 +18,9 @@
         <div class="col-12 d-flex justify-content-start align-items-center">
             <img th:src="${employee.stringImage}" alt="no image">
         </div>
-        <input required id="id" name="id" th:field="*{id}" type="hidden" />
-        <input required id="registrationNumber" name="registrationNumber" th:field="*{registrationNumber}" type="hidden" />
+        <input required id="id" name="id" th:field="*{id}" type="hidden"/>
+        <input required id="registrationNumber" name="registrationNumber" th:field="*{registrationNumber}"
+               type="hidden"/>
         <div class="col-lg-4 col-md-6">
             <label for="lastName" class="form-label">Last name</label>
             <input required id="lastName" name="lastName" th:field="*{lastName}" type="text" class="form-control">
@@ -95,10 +96,11 @@
             <div id="phonesList" class="list-group">
                 <div class="input-group mb-3" th:each="phone, phoneStatus : *{phones}">
                     <input type="hidden" th:field="*{phones[__${phoneStatus.index}__].id}"/>
-                    <input class="form-control w-40" type="text"
+                    <input class="form-control w-40" type="number"
                            th:field="*{phones[__${phoneStatus.index}__].countryCode}"
                            placeholder="Country code" required/>
-                    <input class="form-control" type="text" th:field="*{phones[__${phoneStatus.index}__].value}"
+                    <input class="form-control" type="number"
+                           th:field="*{phones[__${phoneStatus.index}__].value}"
                            required/>
                     <button type="button" class="btn-info btn-danger"
                             th:onclick="'removePhone(' + ${phoneStatus.index} + ')'">Remove

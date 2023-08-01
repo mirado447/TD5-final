@@ -60,6 +60,6 @@ public class EmployeeViewController extends PopulateController {
 
     @GetMapping("/")
     public String home() {
-        return "index";
+        return "redirect:/employee/list";
     }
 }

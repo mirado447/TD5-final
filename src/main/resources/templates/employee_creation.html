@@ -88,10 +88,10 @@
             <div id="phonesList" class="list-group">
                 <div class="input-group mb-3" th:each="phone, phoneStatus : *{phones}">
                     <input type="hidden" th:field="*{phones[__${phoneStatus.index}__].id}"/>
-                    <input class="form-control w-40" type="text"
+                    <input class="form-control w-40" type="number"
                            th:field="*{phones[__${phoneStatus.index}__].countryCode}"
-                           placeholder="Country code" required/>
-                    <input class="form-control" type="text" th:field="*{phones[__${phoneStatus.index}__].value}"
+                           placeholder="Country code" pattern="^\+\d{3,4}$" required/>
+                    <input class="form-control" type="number" th:field="*{phones[__${phoneStatus.index}__].value}"
                            required/>
                     <button type="button" class="btn-info btn-danger"
                             th:onclick="'removePhone(' + ${phoneStatus.index} + ')'">Remove

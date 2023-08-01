@@ -16,10 +16,18 @@ function addPhone() {
     const idInput = createInput({type: "hidden", nam: `phones[${index}].id`});
     newLi.appendChild(idInput);
 
-    const countryCodeInput = createInput({name: `phones[${index}].countryCode`, className: "w-40", required: true})
+    const countryCodeInput = createInput({
+        name: `phones[${index}].countryCode`,
+        className: "w-40",
+        required: true,
+        type: "number",
+    })
     newLi.appendChild(countryCodeInput);
 
-    const valueInput = createInput({name: `phones[${index}].value`, required: true});
+    const valueInput = createInput({
+        name: `phones[${index}].value`, required: true,
+        type: "number"
+    });
     newLi.appendChild(valueInput);
 
 
