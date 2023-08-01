@@ -8,8 +8,8 @@
     <script th:src="@{/scripts/bootstrap.bundle.min.js}" defer></script>
 </head>
 <body>
-<header th:replace="~{components/navbar.html :: navbar('List of employees')}"></header>
-<div class="row text-center my-5">
+<header th:replace="~{components/navbar.html :: navbar('show / ' + ${eId})}"></header>
+<div class="container-fluid row text-center">
     <div class="col-12 d-flex justify-content-start align-items-center">
         <img th:src="${employee.stringImage}" alt="no image">
     </div>
