@@ -64,11 +64,11 @@
 
         <div class="form-group">
             <label for="phoneNumbers">Phone Numbers:</label>
-            <ul>
-                <li th:each="phone : ${employee.phones}">
-                    <input type="text" class="form-control" th:field="*{phones[__${phoneStat.index}__].number}">
+            <ol>
+                <li th:each="phone, stat : *{phones}">
+                    <input type="text" class="form-control" th:field="*{phones[__${stat.index}__].number}">
                 </li>
-            </ul>
+            </ol>
         </div>
 
         <div class="form-group">
