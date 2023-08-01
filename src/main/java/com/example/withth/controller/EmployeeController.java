@@ -107,7 +107,7 @@ public class EmployeeController extends AuthBaseController{
 
     @PostMapping(value = "/save")
     public String save(@ModelAttribute Employee employee, @ModelAttribute("file") MultipartFile file) throws IOException {
-        if (file != null) {
+        if (!file.isEmpty()) {
             employee.setProfilePicture(file.getOriginalFilename());
             employee.setContent(file.getBytes());
             employee.setSize(file.getSize());
@@ -119,7 +119,7 @@ public class EmployeeController extends AuthBaseController{
     @PostMapping(value = "/edit")
     public String updateEmployee(@ModelAttribute Employee employee, @ModelAttribute("file") MultipartFile file) throws IOException {
         byte[] content;
-        if (file == null) {
+        if (file.isEmpty()) {
             Employee oldEmployee = service.findById(employee.getId());
             content = oldEmployee.getContent();
         } else {
