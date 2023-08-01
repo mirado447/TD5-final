@@ -29,7 +29,7 @@ public class PhoneMapper {
             if (existPhone.isPresent() && !existPhone.get().getEmployee().getId().equals(employeeId)){
                 throw new BadRequestException("The phone " + fromView.getValue() + " already used by another employee.");
             }
-            return existPhone.get();
+            return phoneRepository.save(Phone.builder().id(fromView.getId()).value(valueFromView).build());
         }
     }
 

@@ -17,8 +17,8 @@ public class PhoneValidator {
         
         if (phone.getValue() == null) {
             error.append("Phone's number is mandatory. ");
-        } else if (phone.getValue().length() != 10) {
-            error.append("Phone's number length must be = 10. ");
+        } else if (phone.getValue().length() != 9) {
+            error.append("Phone's number length must be = 9. ");
         } else if (phone.getValue().matches("[^0-9]")) {
             error.append("Phone's number must only contains digits. ");
         }
