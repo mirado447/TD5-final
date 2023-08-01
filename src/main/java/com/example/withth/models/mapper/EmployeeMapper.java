@@ -24,7 +24,7 @@ public class EmployeeMapper {
                 .phoneNumbers(entity.getPhones())
                 .function(entity.getFunction())
                 .size(entity.getSize())
-                .name(entity.getName())
+                .name(entity.getFirstName())
                 .build();
     }
 }
