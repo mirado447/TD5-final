@@ -2,6 +2,7 @@ package com.example.withth.service;
 
 import com.example.withth.controller.request.EmployeeFilter;
 import com.example.withth.models.entity.Employee;
+import com.example.withth.models.entity.Phone;
 import com.example.withth.models.entity.Sex;
 import com.example.withth.repository.EmployeeRepository;
 import jakarta.servlet.http.HttpServletResponse;
@@ -34,6 +35,12 @@ public class EmployeeService {
     }
 
     public void save(Employee employee){
+        List<Phone> phoneLinkedToEmployee = employee.getPhones();
+        for (int i = 0; i < phoneLinkedToEmployee.size(); i++) {
+            Phone phone = phoneLinkedToEmployee.get(i);
+            phone.setEmployee(employee);
+        }
+        employee.setPhones(phoneLinkedToEmployee);
         repository.save(employee);
     }
 

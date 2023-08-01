@@ -19,8 +19,9 @@ import java.io.Serializable;
 @Builder
 public class Phone implements Serializable {
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
     private String number;
     @ManyToOne
     @JoinColumn(name = "country_code_id")
