@@ -20,6 +20,7 @@ public class CountryCode implements Serializable {
     private Long id;
     @Column(unique = true)
     private String content;
-    @OneToMany(mappedBy = "countryCode")
+    @OneToMany(mappedBy = "countryCode", cascade = CascadeType.PERSIST)
+    @ToString.Exclude
     private Collection<Phone> phone;
 }

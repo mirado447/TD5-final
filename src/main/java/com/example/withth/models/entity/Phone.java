@@ -23,7 +23,7 @@ public class Phone implements Serializable {
     private Long id;
 
     private String number;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "country_code_id")
     private CountryCode countryCode;
     @ManyToOne

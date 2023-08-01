@@ -50,7 +50,7 @@ public class Employee implements Serializable {
     private String cnaps;
     private String password;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Phone> phones = new ArrayList<>();
 
     public String getMatriculate() {

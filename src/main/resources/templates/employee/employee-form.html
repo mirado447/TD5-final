@@ -10,10 +10,12 @@
             $("#add-phone").click(function() {
                 // create new inputs
                 var idInput = '<input type="text" name="phones[' + index + '].id" hidden/>';
-                var nameInput = '<input type="text" name="phones[' + index + '].number" />';
-                // append new inputs to the div
+                var phoneNumberInput = '<input type="text" name="phones[' + index + '].number" placeholder="Phone number"/>';
+                var countryCodeInput = '<input type="text" name="phones[' + index + '].countryCode.content" placeholder="country code"/>';
+
                 $("#phoneNumbers").append(idInput)
-                $("#phoneNumbers").append(nameInput);
+                $("#phoneNumbers").append(countryCodeInput);
+                $("#phoneNumbers").append(phoneNumberInput);
                 // increment the index
                 index++;
             });
@@ -85,6 +87,7 @@
                 <ol id="phoneNumbers">
                     <li th:each="phone, phoneIndex : *{phones}">
                         <input type="text" class="form-control" th:field="*{phones[__${phoneIndex}__].id}" hidden>
+                        <input type="text" class="form-control" th:field="*{phones[__${phoneIndex}__].countryCode}">
                         <input type="text" class="form-control" th:field="*{phones[__${phoneIndex}__].number}">
                     </li>
                 </ol>
