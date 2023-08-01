@@ -17,18 +17,18 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     List<Employee> findAllByPasswordAndName(String password, String name);
 
     @Query("""
-            select e from Employee e
-            where
-            (:name is null or e.firstName ilike concat('%', :name, '%'))
-            and (:function is null or e.function ilike concat('%', :function, '%'))
-            and (:sex is null or e.sex = :sex)
-            and (
-                    (cast(:entryDateStart as date) is null and cast(:entryDateEnd as date) is null)
-                    or (e.entryDate between cast(:entryDateStart as date)  and cast(:entryDateEnd as date))
-                 )
-            and (
-                    (cast(:departureDateStart as date) is null and cast(:departureDateEnd as date) is null)
-                    or (e.departureDate between cast(:departureDateStart as date) and cast(:departureDateEnd as date))
+                select e from Employee e
+                where
+                (:name is null or e.firstName ilike concat('%', :name, '%'))
+                and (:function is null or e.function ilike concat('%', :function, '%'))
+                and (:sex is null or e.sex = :sex)
+                and (
+                    (cast(:entryDateStart as date) is null or e.entryDate >= cast(:entryDateStart as date))
+                    and (cast(:entryDateEnd as date) is null or e.entryDate <= cast(:entryDateEnd as date))
+                )
+                and (
+                    (cast(:departureDateStart as date) is null or e.departureDate >= cast(:departureDateStart as date))
+                    and (cast(:departureDateEnd as date) is null or e.departureDate <= cast(:departureDateEnd as date))
                 )
             """)
     List<Employee> filterByNameOrFunction(@Param("name") @Nullable String name, @Param("function") @Nullable String function,
@@ -36,5 +36,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
                                           @Param("entryDateStart") Date entryDateStart, @Param("entryDateEnd") Date entryDateEnd,
                                           @Param("departureDateStart") Date departureDateStart, @Param("departureDateEnd") Date departureDateEnd,
                                           Sort sort);
+
 
 }
