@@ -83,14 +83,14 @@
             <label for="phoneNumbers">
                 Phone Numbers:
                 <ol id="phoneNumbers">
-                    <li th:each="phone, stat : *{phones}">
-                        <input type="text" class="form-control" th:field="*{phones[__${stat.index}__].id}" hidden>
-                        <input type="text" class="form-control" th:field="*{phones[__${stat.index}__].number}">
+                    <li th:each="phone, phoneIndex : *{phones}">
+                        <input type="text" class="form-control" th:field="*{phones[__${phoneIndex}__].id}" hidden>
+                        <input type="text" class="form-control" th:field="*{phones[__${phoneIndex}__].number}">
                     </li>
                 </ol>
             </label>
 
-            <button type="button" id="add-phone">Add phone number</button>
+            <button type="button" id="add-phone">Add another phone number</button>
         </div>
 
         <div class="form-group">
