@@ -26,7 +26,7 @@ public class Phone implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "country_code_id")
     private CountryCode countryCode;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "employee_id")
     private Employee employee;
 }

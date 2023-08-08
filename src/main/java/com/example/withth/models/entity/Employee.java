@@ -50,8 +50,18 @@ public class Employee implements Serializable {
     private String cnaps;
     private String password;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "employee", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     private List<Phone> phones = new ArrayList<>();
+
+    public void addPhone(Phone phone){
+        if (!this.getPhones().contains(phone)){
+            this.getPhones().add(phone);
+            phone.setEmployee(this);
+        }
+    }
+    public void addAllPhones(List<Phone> phones){
+        phones.forEach(this::addPhone);
+    }
 
     public String getMatriculate() {
         return "EMP" + this.id;
