@@ -1,7 +1,7 @@
 package com.example.withth.repository.cnaps;
 
-import com.example.withth.models.employeeManagement.entity.Employee;
-import com.example.withth.models.employeeManagement.entity.Sex;
+import com.example.withth.models.cnaps.Employee;
+import com.example.withth.models.cnaps.Sex;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+public interface CnapsEmployeeRepository extends JpaRepository<Employee, Long> {
     List<Employee> findAllByPasswordAndName(String password, String name);
 
     @Query("""

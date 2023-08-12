@@ -36,10 +36,10 @@ public class CnapsConfig {
     @Bean(name = "cnapsDataSource")
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setPassword("com.example.withth.repository.cnaps");
+        dataSource.setDriverClassName(Objects.requireNonNull(env.getProperty("cnaps.datasource.driver-class-name")));
+        dataSource.setUrl(env.getProperty("cnaps.datasource.url"));
         dataSource.setUsername(env.getProperty("cnaps.datasource.username"));
         dataSource.setPassword(env.getProperty("cnaps.datasource.password"));
-        dataSource.setDriverClassName(Objects.requireNonNull(env.getProperty("cnaps.datasource.driver-class-name")));
         return dataSource;
     }
 

@@ -1,15 +1,11 @@
 package com.example.withth.models.cnaps;
 
-import com.example.withth.models.employeeManagement.entity.Phone;
-import com.example.withth.models.employeeManagement.entity.Sex;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
