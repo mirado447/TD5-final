@@ -1,7 +1,7 @@
-package com.example.withth.repository;
+package com.example.withth.repository.employeeManagement;
 
-import com.example.withth.models.entity.Employee;
-import com.example.withth.models.entity.Sex;
+import com.example.withth.models.employeeManagement.entity.Employee;
+import com.example.withth.models.employeeManagement.entity.Sex;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

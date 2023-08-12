@@ -1,9 +1,8 @@
 package com.example.withth.service;
 
-import com.example.withth.models.entity.Company;
-import com.example.withth.repository.CompanyRepository;
+import com.example.withth.models.employeeManagement.entity.Company;
+import com.example.withth.repository.employeeManagement.CompanyRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor

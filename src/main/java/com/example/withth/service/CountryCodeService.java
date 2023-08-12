@@ -1,7 +1,7 @@
 package com.example.withth.service;
 
-import com.example.withth.models.entity.CountryCode;
-import com.example.withth.repository.CountryCodeRepository;
+import com.example.withth.models.employeeManagement.entity.CountryCode;
+import com.example.withth.repository.employeeManagement.CountryCodeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

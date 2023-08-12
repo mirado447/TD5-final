@@ -1,10 +1,10 @@
 package com.example.withth.service;
 
 import com.example.withth.controller.request.EmployeeFilter;
-import com.example.withth.models.entity.Employee;
-import com.example.withth.models.entity.Phone;
-import com.example.withth.models.entity.Sex;
-import com.example.withth.repository.EmployeeRepository;
+import com.example.withth.models.employeeManagement.entity.Employee;
+import com.example.withth.models.employeeManagement.entity.Phone;
+import com.example.withth.models.employeeManagement.entity.Sex;
+import com.example.withth.repository.employeeManagement.EmployeeRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;

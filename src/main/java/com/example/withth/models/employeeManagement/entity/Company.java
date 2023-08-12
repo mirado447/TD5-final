@@ -1,4 +1,4 @@
-package com.example.withth.models.entity;
+package com.example.withth.models.employeeManagement.entity;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;

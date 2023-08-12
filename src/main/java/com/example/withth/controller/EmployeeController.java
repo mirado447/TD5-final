@@ -1,10 +1,10 @@
 package com.example.withth.controller;
 
 import com.example.withth.controller.request.EmployeeFilter;
-import com.example.withth.models.entity.CountryCode;
-import com.example.withth.models.entity.Employee;
-import com.example.withth.models.entity.Phone;
-import com.example.withth.models.entity.Sex;
+import com.example.withth.models.employeeManagement.entity.CountryCode;
+import com.example.withth.models.employeeManagement.entity.Employee;
+import com.example.withth.models.employeeManagement.entity.Phone;
+import com.example.withth.models.employeeManagement.entity.Sex;
 import com.example.withth.service.CountryCodeService;
 import com.example.withth.service.EmployeeService;
 import com.example.withth.service.PhoneService;
