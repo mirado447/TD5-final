@@ -1,12 +1,13 @@
 package com.example.withth.config;
 
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -16,7 +17,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
-import java.util.Objects;
 
 @Configuration
 @EnableTransactionManagement
@@ -34,13 +34,9 @@ public class CnapsConfig {
 
     @Primary
     @Bean(name = "cnapsDataSource")
+    @ConfigurationProperties(prefix = "cnaps.datasource")
     public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(Objects.requireNonNull(env.getProperty("cnaps.datasource.driver-class-name")));
-        dataSource.setUrl(env.getProperty("cnaps.datasource.url"));
-        dataSource.setUsername(env.getProperty("cnaps.datasource.username"));
-        dataSource.setPassword(env.getProperty("cnaps.datasource.password"));
-        return dataSource;
+        return DataSourceBuilder.create().build();
     }
 
     @Primary
