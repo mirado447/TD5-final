@@ -25,7 +25,7 @@ import java.util.HashMap;
         basePackages = {"com.example.withth.repository.cnaps"},
         transactionManagerRef = "cnapsTransactionManager"
 )
-public class CnapsConfig {
+public class CnapsConfig implements DBConfig{
     private final Environment env;
 
     public CnapsConfig(Environment env) {
@@ -35,12 +35,14 @@ public class CnapsConfig {
     @Primary
     @Bean(name = "cnapsDataSource")
     @ConfigurationProperties(prefix = "cnaps.datasource")
+    @Override
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
     }
 
     @Primary
     @Bean("cnapsEntityManagerFactory")
+    @Override
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
         var entityManager = new LocalContainerEntityManagerFactoryBean();
         entityManager.setDataSource(dataSource());
@@ -58,7 +60,8 @@ public class CnapsConfig {
 
     @Primary
     @Bean("cnapsTransactionManager")
-    public PlatformTransactionManager userTransactionManager() {
+    @Override
+    public PlatformTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
         return transactionManager;

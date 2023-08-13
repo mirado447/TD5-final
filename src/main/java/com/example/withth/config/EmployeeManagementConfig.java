@@ -24,7 +24,7 @@ import java.util.Objects;
         basePackages = {"com.example.withth.repository.employeeManagement"},
         transactionManagerRef = "employeeManagementTransactionManager"
 )
-public class EmployeeManagementConfig {
+public class EmployeeManagementConfig implements DBConfig{
     private final Environment env;
 
     public EmployeeManagementConfig(Environment env) {
@@ -58,7 +58,7 @@ public class EmployeeManagementConfig {
     }
 
     @Bean("employeeManagementTransactionManager")
-    public PlatformTransactionManager employeeTransactionManager() {
+    public PlatformTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
         return transactionManager;
