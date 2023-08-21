@@ -3,13 +3,15 @@ package com.example.withth.repository.implementation;
 import com.example.withth.models.employeeManagement.entity.Employee;
 import com.example.withth.models.employeeManagement.entity.Sex;
 import com.example.withth.repository.EmployeeRepository;
-import jakarta.transaction.Transactional;
+import com.example.withth.repository.cnaps.jpa.CnapsEmployeeRepository;
+import com.example.withth.repository.employeeManagement.LocalEmployeeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -19,12 +21,16 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     private final LocalEmployeeRepository localEmployeeJpaRepository;
 
     @Override
-    @Transactional
     public Employee findById(Long id) {
-        com.example.withth.models.cnaps.Employee cnapsEmployee = cnapsJpaEmployeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee Not found on cnaps db"));
-        Employee localEmployee = localEmployeeJpaRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee Not found on local db"));
-        localEmployee.setCnaps(cnapsEmployee.getCnaps());
+        Optional<com.example.withth.models.cnaps.Employee> cnapsEmployee = cnapsJpaEmployeeRepository.findById(id);
+        String cnaps = cnapsEmployee.map(com.example.withth.models.cnaps.Employee::getCnaps).orElse(null);
 
+        Employee localEmployee = localEmployeeJpaRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee Not found on local db"));
+        localEmployee.setCnaps(cnaps);
+
+        if (cnapsEmployee.isEmpty()) {
+            System.out.println("Not found " + localEmployee);
+        }
         return localEmployee;
     }
 
@@ -48,6 +54,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         );
 
         return mapToLocalEmployees(filteredEmployees, allCnapsEmployee);
+    }
+
+    @Override
+    public List<Employee> findAllByPasswordAndName(String password, String username) {
+        return localEmployeeJpaRepository.findAllByPasswordAndName(password, username);
     }
 
     /**
