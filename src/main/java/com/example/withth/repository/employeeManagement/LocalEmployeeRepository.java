@@ -11,7 +11,7 @@ import org.springframework.lang.Nullable;
 import java.util.Date;
 import java.util.List;
 
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+public interface LocalEmployeeRepository extends JpaRepository<Employee, Long> {
     List<Employee> findAllByPasswordAndName(String password, String name);
 
     @Query("""

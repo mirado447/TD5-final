@@ -12,12 +12,11 @@ import java.util.Date;
 import java.util.List;
 
 
-@AllArgsConstructor
 @Repository
+@AllArgsConstructor
 public class EmployeeRepositoryImpl implements EmployeeRepository {
-
-    private final com.example.withth.repository.cnaps.jpa.CnapsEmployeeRepository cnapsJpaEmployeeRepository;
-    private final com.example.withth.repository.employeeManagement.EmployeeRepository localEmployeeJpaRepository;
+    private final CnapsEmployeeRepository cnapsJpaEmployeeRepository;
+    private final LocalEmployeeRepository localEmployeeJpaRepository;
 
     @Override
     @Transactional
