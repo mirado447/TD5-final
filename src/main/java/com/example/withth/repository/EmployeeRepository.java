@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface EmployeeRepository {
-    public Employee findById(Long id);
+   Employee findById(Long id);
 
     List<Employee> findAll();
 
@@ -20,4 +20,6 @@ public interface EmployeeRepository {
             Date entryDateStart, Date entryDateEnd, Date departureDateStart,
             Date departureDateEnd, Sort sort
     );
+
+    List<Employee> findAllByPasswordAndName(String password, String username);
 }
