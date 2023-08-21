@@ -51,7 +51,7 @@ public class Employee implements Serializable {
     private String cnaps;
     private String password;
 
-    @OneToMany(mappedBy = "employee", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "employee", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<Phone> phones = new ArrayList<>();
 
