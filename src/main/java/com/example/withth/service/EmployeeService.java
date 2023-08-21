@@ -4,7 +4,7 @@ import com.example.withth.controller.request.EmployeeFilter;
 import com.example.withth.models.employeeManagement.entity.Employee;
 import com.example.withth.models.employeeManagement.entity.Phone;
 import com.example.withth.models.employeeManagement.entity.Sex;
-import com.example.withth.repository.employeeManagement.EmployeeRepository;
+import com.example.withth.repository.EmployeeRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -45,8 +44,7 @@ public class EmployeeService {
     }
 
     public Employee findById(Long id){
-        Optional<Employee> byId = repository.findById(id);
-        return byId.orElseGet(Employee::new);
+        return repository.findById(id);
     }
 
     public List<Employee> filter(String name, String function, Sex sex, String orderBy, Date entryDateStart, String direction, Date entryDateEnd, Date departureDateStart, Date departureDateEnd){
