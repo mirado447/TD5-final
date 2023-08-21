@@ -47,10 +47,12 @@ public class Employee implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date departureDate;
     private String professionalCategory;
+    @Column(insertable = false, updatable = false)
     private String cnaps;
     private String password;
 
     @OneToMany(mappedBy = "employee", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @ToString.Exclude
     private List<Phone> phones = new ArrayList<>();
 
     public void addPhone(Phone phone){
