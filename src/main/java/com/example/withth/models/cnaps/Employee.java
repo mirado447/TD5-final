@@ -42,9 +42,6 @@ public class Employee implements Serializable {
     private String professionalCategory;
     private String cnaps;
     private String password;
-
-    public String getMatriculate() {
-        return "EMP" + this.id;
-    }
+    private String endToEndId;
 }
 
