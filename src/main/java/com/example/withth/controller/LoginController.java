@@ -2,7 +2,7 @@ package com.example.withth.controller;
 
 import com.example.withth.controller.request.LoginDetails;
 import com.example.withth.models.employeeManagement.entity.Employee;
-import com.example.withth.repository.employeeManagement.EmployeeRepository;
+import com.example.withth.repository.EmployeeRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

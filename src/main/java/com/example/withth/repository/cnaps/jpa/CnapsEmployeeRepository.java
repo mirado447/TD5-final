@@ -7,15 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.lang.Nullable;
-import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
-@Repository
 public interface CnapsEmployeeRepository extends JpaRepository<Employee, Long> {
-    List<Employee> findAllByPasswordAndName(String password, String name);
-
+    Optional<Employee> findByEndToEndId(Long id);
     @Query("""
                 select e from Employee e
                 where

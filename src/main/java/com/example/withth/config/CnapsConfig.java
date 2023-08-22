@@ -52,6 +52,7 @@ public class CnapsConfig implements DBConfig{
         HashMap<String, Object> properties = new HashMap<>();
         properties.put("hibernate.hbm2ddl.auto", env.getProperty("cnaps.jpa.hibernate.ddl-auto"));
         properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
+        properties.put("spring.jpa.show-sql", env.getProperty("cnaps.jpa.show-sql"));
 
         entityManager.setJpaPropertyMap(properties);
         entityManager.setPackagesToScan("com.example.withth.models.cnaps");

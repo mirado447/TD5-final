@@ -42,6 +42,6 @@ public class Employee implements Serializable {
     private String professionalCategory;
     private String cnaps;
     private String password;
-    private String endToEndId;
+    private Long endToEndId;
 }
 
