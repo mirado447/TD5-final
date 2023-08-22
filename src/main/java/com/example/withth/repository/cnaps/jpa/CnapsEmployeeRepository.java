@@ -10,10 +10,10 @@ import org.springframework.lang.Nullable;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface CnapsEmployeeRepository extends JpaRepository<Employee, Long> {
-    List<Employee> findAllByPasswordAndName(String password, String name);
-
+    Optional<Employee> findByEndToEndId(Long id);
     @Query("""
                 select e from Employee e
                 where

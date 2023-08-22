@@ -6,6 +6,7 @@ import com.example.withth.repository.EmployeeRepository;
 import com.example.withth.repository.cnaps.jpa.CnapsEmployeeRepository;
 import com.example.withth.repository.employeeManagement.LocalEmployeeRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
@@ -16,20 +17,21 @@ import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
+@Slf4j
 public class EmployeeRepositoryImpl implements EmployeeRepository {
     private final CnapsEmployeeRepository cnapsJpaEmployeeRepository;
     private final LocalEmployeeRepository localEmployeeJpaRepository;
 
     @Override
     public Employee findById(Long id) {
-        Optional<com.example.withth.models.cnaps.Employee> cnapsEmployee = cnapsJpaEmployeeRepository.findById(id);
+        Optional<com.example.withth.models.cnaps.Employee> cnapsEmployee = cnapsJpaEmployeeRepository.findByEndToEndId(id);
         String cnaps = cnapsEmployee.map(com.example.withth.models.cnaps.Employee::getCnaps).orElse(null);
 
         Employee localEmployee = localEmployeeJpaRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee Not found on local db"));
         localEmployee.setCnaps(cnaps);
 
         if (cnapsEmployee.isEmpty()) {
-            System.out.println("Not found " + localEmployee);
+            log.info("Not found " + localEmployee);
         }
         return localEmployee;
     }
@@ -64,14 +66,14 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     /**
      * Replace the cnaps number of each local employees to the cnaps number from cnaps db
      * <p>
-     * Fixme: To retrieve the cnaps number of an employee i use the employee id.
+     * To retrieve the cnaps number of an employee I use the employee id and the end_to_end_id.
      */
     private static List<Employee> mapToLocalEmployees(List<Employee> localEmployees, List<com.example.withth.models.cnaps.Employee> allCnapsEmployee) {
         return localEmployees.stream()
                 .map(employee -> {
                     List<com.example.withth.models.cnaps.Employee> list = allCnapsEmployee.stream()
                             // cnaps number identification
-                            .filter(employee1 -> employee1.getId().equals(employee.getId())).toList();
+                            .filter(employee1 -> employee1.getEndToEndId().equals(employee.getId())).toList();
 
                     if (list.isEmpty())
                         employee.setCnaps(null);
