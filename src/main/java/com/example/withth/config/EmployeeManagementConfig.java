@@ -51,6 +51,7 @@ public class EmployeeManagementConfig implements DBConfig{
         HashMap<String, Object> properties = new HashMap<>();
         properties.put("hibernate.hbm2ddl.auto", env.getProperty("employeeManagement.jpa.hibernate.ddl-auto"));
         properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
+        properties.put("spring.jpa.show-sql", env.getProperty("employeeManagement.jpa.show-sql"));
 
         entityManager.setJpaPropertyMap(properties);
         entityManager.setPackagesToScan("com.example.withth.models.employeeManagement");
