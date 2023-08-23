@@ -1,8 +1,7 @@
-package com.example.withth.repository.implementation;
+package com.example.withth.repository;
 
 import com.example.withth.models.employeeManagement.entity.Employee;
 import com.example.withth.models.employeeManagement.entity.Sex;
-import com.example.withth.repository.EmployeeRepository;
 import com.example.withth.repository.cnaps.jpa.CnapsEmployeeRepository;
 import com.example.withth.repository.employeeManagement.LocalEmployeeRepository;
 import lombok.AllArgsConstructor;
@@ -13,13 +12,11 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
-
 
 @Repository
 @AllArgsConstructor
 @Slf4j
-public class EmployeeRepositoryImpl implements EmployeeRepository {
+public class CnapsEmployeeConnector implements EmployeeConnectorRepository{
     private final CnapsEmployeeRepository cnapsJpaEmployeeRepository;
     private final LocalEmployeeRepository localEmployeeJpaRepository;
 
@@ -32,7 +29,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         localEmployee.setCnaps(cnaps);
 
         if (cnapsEmployee.isEmpty()) {
-            log.info("Not found " + localEmployee);
+            log.info("No cnaps account found for: " + localEmployee);
         }
         return localEmployee;
     }

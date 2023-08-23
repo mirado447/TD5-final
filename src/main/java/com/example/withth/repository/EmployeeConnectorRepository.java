@@ -8,7 +8,7 @@ import org.springframework.data.domain.Sort;
 import java.util.Date;
 import java.util.List;
 
-public interface EmployeeRepository {
+public interface EmployeeConnectorRepository {
    Employee findById(Long id);
 
     List<Employee> findAll();

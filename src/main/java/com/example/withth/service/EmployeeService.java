@@ -4,7 +4,7 @@ import com.example.withth.controller.request.EmployeeFilter;
 import com.example.withth.models.employeeManagement.entity.Employee;
 import com.example.withth.models.employeeManagement.entity.Phone;
 import com.example.withth.models.employeeManagement.entity.Sex;
-import com.example.withth.repository.EmployeeRepository;
+import com.example.withth.repository.EmployeeConnectorRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,12 +20,12 @@ import java.util.List;
 
 @Service
 public class EmployeeService {
-    private final EmployeeRepository repository;
+    private final EmployeeConnectorRepository repository;
     @Getter
     @Setter
     private EmployeeFilter lastFilterUsed = new EmployeeFilter();
 
-    public EmployeeService(EmployeeRepository repository) {
+    public EmployeeService(EmployeeConnectorRepository repository) {
         this.repository = repository;
     }
 

@@ -1,14 +1,14 @@
 package com.example.withth.repository.mapper;
 
 import com.example.withth.models.employeeManagement.entity.Employee;
-import com.example.withth.repository.EmployeeRepository;
+import com.example.withth.repository.EmployeeConnectorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
 public class CnapsMapper {
-    private final EmployeeRepository employeeRepository;
+    private final EmployeeConnectorRepository employeeRepository;
 
     public Employee toDomainEmployeeEntity(com.example.withth.models.cnaps.Employee cnapsEmployee) {
         return Employee.builder()
