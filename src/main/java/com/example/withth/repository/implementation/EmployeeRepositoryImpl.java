@@ -70,16 +70,16 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
      */
     private static List<Employee> mapToLocalEmployees(List<Employee> localEmployees, List<com.example.withth.models.cnaps.Employee> allCnapsEmployee) {
         return localEmployees.stream()
-                .map(employee -> {
-                    List<com.example.withth.models.cnaps.Employee> list = allCnapsEmployee.stream()
+                .map(localEmployee -> {
+                    List<com.example.withth.models.cnaps.Employee> matchingCnapsEmployee = allCnapsEmployee.stream()
                             // cnaps number identification
-                            .filter(employee1 -> employee1.getEndToEndId().equals(employee.getId())).toList();
+                            .filter(employee1 -> employee1.getEndToEndId().equals(localEmployee.getId())).toList();
 
-                    if (list.isEmpty())
-                        employee.setCnaps(null);
+                    if (matchingCnapsEmployee.isEmpty())
+                        localEmployee.setCnaps(null);
                     else
-                        employee.setCnaps(list.get(0).getCnaps());
-                    return employee;
+                        localEmployee.setCnaps(matchingCnapsEmployee.get(0).getCnaps());
+                    return localEmployee;
                 }).toList();
     }
 }
