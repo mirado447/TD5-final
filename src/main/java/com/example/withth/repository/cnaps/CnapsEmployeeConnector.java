@@ -1,16 +1,13 @@
 package com.example.withth.repository.cnaps;
 
 import com.example.withth.models.employeeManagement.entity.Employee;
-import com.example.withth.models.employeeManagement.entity.Sex;
 import com.example.withth.repository.EmployeeConnectorRepository;
 import com.example.withth.repository.employeeManagement.jpa.LocalEmployeeRepository;
 import com.example.withth.repository.mapper.CnapsMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,20 +43,5 @@ public class CnapsEmployeeConnector implements EmployeeConnectorRepository {
     @Override
     public void save(Employee employee) {
         throw new RuntimeException("Cnaps connector is read only!");
-    }
-
-    @Override
-    public List<Employee> filterByNameOrFunction(String name, String function, Sex sex, Date entryDateStart, Date entryDateEnd, Date departureDateStart, Date departureDateEnd, Sort sort) {
-        List<com.example.withth.models.cnaps.Employee> allCnapsEmployee = cnapsJpaEmployeeRepository.findAll();
-        List<Employee> filteredEmployees = localEmployeeJpaRepository.filterByNameOrFunction(
-                name, function, sex, entryDateStart, entryDateEnd, departureDateStart, departureDateEnd, sort
-        );
-
-        return mapper.mapToLocalEmployees(filteredEmployees, allCnapsEmployee);
-    }
-
-    @Override
-    public List<Employee> findAllByPasswordAndName(String password, String username) {
-        return localEmployeeJpaRepository.findAllByPasswordAndName(password, username);
     }
 }
