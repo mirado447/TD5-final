@@ -4,6 +4,7 @@ import com.example.withth.models.employeeManagement.entity.Employee;
 import com.example.withth.models.employeeManagement.entity.Sex;
 import com.example.withth.repository.cnaps.jpa.CnapsEmployeeRepository;
 import com.example.withth.repository.employeeManagement.LocalEmployeeRepository;
+import com.example.withth.repository.mapper.CnapsMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class CnapsEmployeeConnector implements EmployeeConnectorRepository{
     private final CnapsEmployeeRepository cnapsJpaEmployeeRepository;
     private final LocalEmployeeRepository localEmployeeJpaRepository;
+    private final CnapsMapper mapper;
 
     @Override
     public Employee findById(Long id) {
@@ -38,7 +40,7 @@ public class CnapsEmployeeConnector implements EmployeeConnectorRepository{
     public List<Employee> findAll() {
         List<com.example.withth.models.cnaps.Employee> allCnapsEmployee = cnapsJpaEmployeeRepository.findAll();
         List<Employee> localEmployees = localEmployeeJpaRepository.findAll();
-        return mapToLocalEmployees(localEmployees, allCnapsEmployee);
+        return mapper.mapToLocalEmployees(localEmployees, allCnapsEmployee);
     }
 
     @Override
@@ -53,33 +55,11 @@ public class CnapsEmployeeConnector implements EmployeeConnectorRepository{
                 name, function, sex, entryDateStart, entryDateEnd, departureDateStart, departureDateEnd, sort
         );
 
-        return mapToLocalEmployees(filteredEmployees, allCnapsEmployee);
+        return mapper.mapToLocalEmployees(filteredEmployees, allCnapsEmployee);
     }
 
     @Override
     public List<Employee> findAllByPasswordAndName(String password, String username) {
         return localEmployeeJpaRepository.findAllByPasswordAndName(password, username);
-    }
-
-    /**
-     * Replace the cnaps number of each local employees to the cnaps number from cnaps db
-     * <p>
-     * To retrieve the cnaps number of an employee I use the employee id and the end_to_end_id.
-     */
-    private static List<Employee> mapToLocalEmployees(List<Employee> localEmployees, List<com.example.withth.models.cnaps.Employee> allCnapsEmployee) {
-        return localEmployees.stream()
-                .map(employee -> allCnapsEmployee.stream()
-                        .filter(employee1 -> employee1.getEndToEndId().equals(employee.getId()))
-                        .findFirst()
-                        .map(cnapsEmployee -> {
-                            employee.setCnaps(cnapsEmployee.getCnaps());
-                            return employee;
-                        })
-                        .orElseGet(() -> {
-                            employee.setCnaps(null);
-                            return employee;
-                        })
-                )
-                .toList();
     }
 }

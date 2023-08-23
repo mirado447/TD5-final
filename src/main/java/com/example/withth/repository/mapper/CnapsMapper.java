@@ -5,10 +5,34 @@ import com.example.withth.repository.EmployeeConnectorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Component
 public class CnapsMapper {
     private final EmployeeConnectorRepository employeeRepository;
+
+    /**
+     * Replace the cnaps number of each local employees to the cnaps number from cnaps db
+     * <p>
+     * To retrieve the cnaps number of an employee I use the employee id and the end_to_end_id.
+     */
+    public List<Employee> mapToLocalEmployees(List<Employee> localEmployees, List<com.example.withth.models.cnaps.Employee> allCnapsEmployee) {
+        return localEmployees.stream()
+                .map(employee -> allCnapsEmployee.stream()
+                        .filter(employee1 -> employee1.getEndToEndId().equals(employee.getId()))
+                        .findFirst()
+                        .map(cnapsEmployee -> {
+                            employee.setCnaps(cnapsEmployee.getCnaps());
+                            return employee;
+                        })
+                        .orElseGet(() -> {
+                            employee.setCnaps(null);
+                            return employee;
+                        })
+                )
+                .toList();
+    }
 
     public Employee toDomainEmployeeEntity(com.example.withth.models.cnaps.Employee cnapsEmployee) {
         return Employee.builder()
