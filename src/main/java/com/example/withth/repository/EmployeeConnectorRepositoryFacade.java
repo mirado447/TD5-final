@@ -1,8 +1,7 @@
-package com.example.withth.repository.implementation;
+package com.example.withth.repository;
 
 import com.example.withth.models.employeeManagement.entity.Employee;
 import com.example.withth.repository.cnaps.CnapsEmployeeConnector;
-import com.example.withth.repository.EmployeeConnectorRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
