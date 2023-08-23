@@ -3,7 +3,7 @@ package com.example.withth.repository.cnaps;
 import com.example.withth.models.employeeManagement.entity.Employee;
 import com.example.withth.models.employeeManagement.entity.Sex;
 import com.example.withth.repository.EmployeeConnectorRepository;
-import com.example.withth.repository.employeeManagement.LocalEmployeeRepository;
+import com.example.withth.repository.employeeManagement.jpa.LocalEmployeeRepository;
 import com.example.withth.repository.mapper.CnapsMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +45,7 @@ public class CnapsEmployeeConnector implements EmployeeConnectorRepository {
 
     @Override
     public void save(Employee employee) {
-        localEmployeeJpaRepository.save(employee);
+        throw new RuntimeException("Cnaps connector is read only!");
     }
 
     @Override

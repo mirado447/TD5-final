@@ -1,7 +1,7 @@
 package com.example.withth.service;
 
 import com.example.withth.models.employeeManagement.entity.Phone;
-import com.example.withth.repository.employeeManagement.PhoneRepository;
+import com.example.withth.repository.employeeManagement.jpa.PhoneRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

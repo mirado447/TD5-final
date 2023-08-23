@@ -1,4 +1,4 @@
-package com.example.withth.repository.employeeManagement;
+package com.example.withth.repository.employeeManagement.jpa;
 
 import com.example.withth.models.employeeManagement.entity.CountryCode;
 import org.springframework.data.jpa.repository.JpaRepository;
