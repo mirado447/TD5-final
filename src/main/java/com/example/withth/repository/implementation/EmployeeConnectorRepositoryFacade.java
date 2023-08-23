@@ -2,6 +2,7 @@ package com.example.withth.repository.implementation;
 
 import com.example.withth.models.employeeManagement.entity.Employee;
 import com.example.withth.models.employeeManagement.entity.Sex;
+import com.example.withth.repository.CnapsEmployeeConnector;
 import com.example.withth.repository.EmployeeConnectorRepository;
 import com.example.withth.repository.cnaps.jpa.CnapsEmployeeRepository;
 import com.example.withth.repository.employeeManagement.LocalEmployeeRepository;
@@ -21,33 +22,42 @@ import java.util.Optional;
 @Primary
 @Slf4j
 public class EmployeeConnectorRepositoryFacade implements EmployeeConnectorRepository {
+    private final CnapsEmployeeConnector cnapsEmployeeConnector;
 
-    private EmployeeConnectorRepository getEmployeeConnectorRepository(){
-        return null;
+    private EmployeeConnectorRepository getEmployeeConnectorRepository() {
+        return this.cnapsEmployeeConnector;
     }
 
     @Override
     public Employee findById(Long id) {
-        return null;
+        return getEmployeeConnectorRepository().findById(id);
     }
 
     @Override
     public List<Employee> findAll() {
-        return null;
+        return getEmployeeConnectorRepository().findAll();
     }
 
     @Override
     public void save(Employee employee) {
-
+        getEmployeeConnectorRepository().save(employee);
     }
 
     @Override
-    public List<Employee> filterByNameOrFunction(String name, String function, Sex sex, Date entryDateStart, Date entryDateEnd, Date departureDateStart, Date departureDateEnd, Sort sort) {
-        return null;
+    public List<Employee> filterByNameOrFunction(
+            String name, String function, Sex sex,
+            Date entryDateStart, Date entryDateEnd,
+            Date departureDateStart, Date departureDateEnd, Sort sort
+    ) {
+        return getEmployeeConnectorRepository().filterByNameOrFunction(
+                name, function, sex,
+                entryDateStart, entryDateEnd, departureDateStart,
+                departureDateEnd, sort
+        );
     }
 
     @Override
     public List<Employee> findAllByPasswordAndName(String password, String username) {
-        return null;
+        return getEmployeeConnectorRepository().findAllByPasswordAndName(password, username);
     }
 }
