@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 
 @Repository
@@ -70,16 +71,18 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
      */
     private static List<Employee> mapToLocalEmployees(List<Employee> localEmployees, List<com.example.withth.models.cnaps.Employee> allCnapsEmployee) {
         return localEmployees.stream()
-                .map(employee -> {
-                    List<com.example.withth.models.cnaps.Employee> list = allCnapsEmployee.stream()
-                            // cnaps number identification
-                            .filter(employee1 -> employee1.getEndToEndId().equals(employee.getId())).toList();
-
-                    if (list.isEmpty())
-                        employee.setCnaps(null);
-                    else
-                        employee.setCnaps(list.get(0).getCnaps());
-                    return employee;
-                }).toList();
+                .map(employee -> allCnapsEmployee.stream()
+                        .filter(employee1 -> employee1.getEndToEndId().equals(employee.getId()))
+                        .findFirst()
+                        .map(cnapsEmployee -> {
+                            employee.setCnaps(cnapsEmployee.getCnaps());
+                            return employee;
+                        })
+                        .orElseGet(() -> {
+                            employee.setCnaps(null);
+                            return employee;
+                        })
+                )
+                .toList();
     }
 }
