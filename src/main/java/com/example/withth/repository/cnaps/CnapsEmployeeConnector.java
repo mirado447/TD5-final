@@ -1,8 +1,8 @@
-package com.example.withth.repository;
+package com.example.withth.repository.cnaps;
 
 import com.example.withth.models.employeeManagement.entity.Employee;
 import com.example.withth.models.employeeManagement.entity.Sex;
-import com.example.withth.repository.cnaps.jpa.CnapsEmployeeRepository;
+import com.example.withth.repository.EmployeeConnectorRepository;
 import com.example.withth.repository.employeeManagement.LocalEmployeeRepository;
 import com.example.withth.repository.mapper.CnapsMapper;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.Optional;
 @Repository
 @AllArgsConstructor
 @Slf4j
-public class CnapsEmployeeConnector implements EmployeeConnectorRepository{
+public class CnapsEmployeeConnector implements EmployeeConnectorRepository {
     private final CnapsEmployeeRepository cnapsJpaEmployeeRepository;
     private final LocalEmployeeRepository localEmployeeJpaRepository;
     private final CnapsMapper mapper;

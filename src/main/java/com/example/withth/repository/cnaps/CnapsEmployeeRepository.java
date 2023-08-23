@@ -1,4 +1,4 @@
-package com.example.withth.repository.cnaps.jpa;
+package com.example.withth.repository.cnaps;
 
 import com.example.withth.models.cnaps.Employee;
 import com.example.withth.models.cnaps.Sex;

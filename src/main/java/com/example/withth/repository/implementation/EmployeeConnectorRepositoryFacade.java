@@ -2,10 +2,8 @@ package com.example.withth.repository.implementation;
 
 import com.example.withth.models.employeeManagement.entity.Employee;
 import com.example.withth.models.employeeManagement.entity.Sex;
-import com.example.withth.repository.CnapsEmployeeConnector;
+import com.example.withth.repository.cnaps.CnapsEmployeeConnector;
 import com.example.withth.repository.EmployeeConnectorRepository;
-import com.example.withth.repository.cnaps.jpa.CnapsEmployeeRepository;
-import com.example.withth.repository.employeeManagement.LocalEmployeeRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 
 @Repository
