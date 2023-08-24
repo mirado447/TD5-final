@@ -14,10 +14,14 @@ import java.util.Optional;
 @Repository
 @AllArgsConstructor
 @Slf4j
+
+/*
+ * To identify if a cnaps is associated with an employee we compare the employee
+ * id with the end_to_end_id
+ * */
 public class CnapsEmployeeConnector implements EmployeeConnectorRepository {
     private final CnapsEmployeeRepository cnapsJpaEmployeeRepository;
     private final LocalEmployeeRepository localEmployeeJpaRepository;
-    private final CnapsMapper mapper;
 
     @Override
     public Employee findById(Long id) {
@@ -37,11 +41,34 @@ public class CnapsEmployeeConnector implements EmployeeConnectorRepository {
     public List<Employee> findAll() {
         List<com.example.withth.models.cnaps.Employee> allCnapsEmployee = cnapsJpaEmployeeRepository.findAll();
         List<Employee> localEmployees = localEmployeeJpaRepository.findAll();
-        return mapper.mapToLocalEmployees(localEmployees, allCnapsEmployee);
+        return this.mapToLocalEmployees(localEmployees, allCnapsEmployee);
     }
 
     @Override
     public void save(Employee employee) {
         throw new RuntimeException("Cnaps connector is read only!");
+    }
+
+
+    /**
+     * Replace the cnaps number of each local employees to the cnaps number from cnaps db
+     * <p>
+     * To retrieve the cnaps number of an employee I use the employee id and the end_to_end_id.
+     */
+    public List<Employee> mapToLocalEmployees(List<Employee> localEmployees, List<com.example.withth.models.cnaps.Employee> allCnapsEmployee) {
+        return localEmployees.stream()
+                .map(employee -> allCnapsEmployee.stream()
+                        .filter(employee1 -> employee1.getEndToEndId().equals(employee.getId()))
+                        .findFirst()
+                        .map(cnapsEmployee -> {
+                            employee.setCnaps(cnapsEmployee.getCnaps());
+                            return employee;
+                        })
+                        .orElseGet(() -> {
+                            employee.setCnaps(null);
+                            return employee;
+                        })
+                )
+                .toList();
     }
 }
