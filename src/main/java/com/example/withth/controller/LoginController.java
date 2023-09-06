@@ -2,8 +2,10 @@ package com.example.withth.controller;
 
 import com.example.withth.controller.request.LoginDetails;
 import com.example.withth.models.employeeManagement.entity.Employee;
-import com.example.withth.repository.EmployeeRepository;
+import com.example.withth.repository.employeeManagement.jpa.LocalEmployeeRepository;
+import com.example.withth.service.EmployeeService;
 import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,12 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 public class LoginController {
-    private final EmployeeRepository repository;
-
-    public LoginController(EmployeeRepository repository) {
-        this.repository = repository;
-    }
+    private final EmployeeService employeeService;
 
     @GetMapping("/login")
     public String login() {
@@ -32,7 +31,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(@ModelAttribute LoginDetails loginDetails, HttpSession session) {
-        List<Employee> allByNameAndPasswordEquals = repository.findAllByPasswordAndName(loginDetails.getPassword(), loginDetails.getUsername());
+        List<Employee> allByNameAndPasswordEquals = employeeService.findAllByPasswordAndName(loginDetails.getPassword(), loginDetails.getUsername());
         if (allByNameAndPasswordEquals.isEmpty()){
             return "redirect:/login";
         }

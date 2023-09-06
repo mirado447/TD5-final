@@ -1,25 +1,24 @@
-package com.example.withth.repository.implementation;
+package com.example.withth.repository.cnaps;
 
 import com.example.withth.models.employeeManagement.entity.Employee;
-import com.example.withth.models.employeeManagement.entity.Sex;
-import com.example.withth.repository.EmployeeRepository;
-import com.example.withth.repository.cnaps.jpa.CnapsEmployeeRepository;
-import com.example.withth.repository.employeeManagement.LocalEmployeeRepository;
+import com.example.withth.repository.EmployeeConnectorRepository;
+import com.example.withth.repository.employeeManagement.jpa.LocalEmployeeRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
-
 
 @Repository
 @AllArgsConstructor
 @Slf4j
-public class EmployeeRepositoryImpl implements EmployeeRepository {
+
+/*
+ * To identify if a cnaps is associated with an employee we compare the employee
+ * id with the end_to_end_id
+ * */
+public class CnapsEmployeeConnector implements EmployeeConnectorRepository {
     private final CnapsEmployeeRepository cnapsJpaEmployeeRepository;
     private final LocalEmployeeRepository localEmployeeJpaRepository;
 
@@ -32,7 +31,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         localEmployee.setCnaps(cnaps);
 
         if (cnapsEmployee.isEmpty()) {
-            log.info("Not found " + localEmployee);
+            log.info("No cnaps account found for: " + localEmployee);
         }
         return localEmployee;
     }
@@ -41,35 +40,21 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     public List<Employee> findAll() {
         List<com.example.withth.models.cnaps.Employee> allCnapsEmployee = cnapsJpaEmployeeRepository.findAll();
         List<Employee> localEmployees = localEmployeeJpaRepository.findAll();
-        return mapToLocalEmployees(localEmployees, allCnapsEmployee);
+        return this.mapToLocalEmployees(localEmployees, allCnapsEmployee);
     }
 
     @Override
     public void save(Employee employee) {
-        localEmployeeJpaRepository.save(employee);
+        throw new RuntimeException("Cnaps connector is read only!");
     }
 
-    @Override
-    public List<Employee> filterByNameOrFunction(String name, String function, Sex sex, Date entryDateStart, Date entryDateEnd, Date departureDateStart, Date departureDateEnd, Sort sort) {
-        List<com.example.withth.models.cnaps.Employee> allCnapsEmployee = cnapsJpaEmployeeRepository.findAll();
-        List<Employee> filteredEmployees = localEmployeeJpaRepository.filterByNameOrFunction(
-                name, function, sex, entryDateStart, entryDateEnd, departureDateStart, departureDateEnd, sort
-        );
-
-        return mapToLocalEmployees(filteredEmployees, allCnapsEmployee);
-    }
-
-    @Override
-    public List<Employee> findAllByPasswordAndName(String password, String username) {
-        return localEmployeeJpaRepository.findAllByPasswordAndName(password, username);
-    }
 
     /**
      * Replace the cnaps number of each local employees to the cnaps number from cnaps db
      * <p>
      * To retrieve the cnaps number of an employee I use the employee id and the end_to_end_id.
      */
-    private static List<Employee> mapToLocalEmployees(List<Employee> localEmployees, List<com.example.withth.models.cnaps.Employee> allCnapsEmployee) {
+    public List<Employee> mapToLocalEmployees(List<Employee> localEmployees, List<com.example.withth.models.cnaps.Employee> allCnapsEmployee) {
         return localEmployees.stream()
                 .map(employee -> allCnapsEmployee.stream()
                         .filter(employee1 -> employee1.getEndToEndId().equals(employee.getId()))

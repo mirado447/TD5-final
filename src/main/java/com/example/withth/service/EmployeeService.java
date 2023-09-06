@@ -4,7 +4,8 @@ import com.example.withth.controller.request.EmployeeFilter;
 import com.example.withth.models.employeeManagement.entity.Employee;
 import com.example.withth.models.employeeManagement.entity.Phone;
 import com.example.withth.models.employeeManagement.entity.Sex;
-import com.example.withth.repository.EmployeeRepository;
+import com.example.withth.repository.EmployeeConnectorRepository;
+import com.example.withth.repository.employeeManagement.jpa.LocalEmployeeRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,13 +21,15 @@ import java.util.List;
 
 @Service
 public class EmployeeService {
-    private final EmployeeRepository repository;
+    private final EmployeeConnectorRepository repository;
+    private final LocalEmployeeRepository localEmployeeRepository;
     @Getter
     @Setter
     private EmployeeFilter lastFilterUsed = new EmployeeFilter();
 
-    public EmployeeService(EmployeeRepository repository) {
+    public EmployeeService(EmployeeConnectorRepository repository, LocalEmployeeRepository localEmployeeRepository) {
         this.repository = repository;
+        this.localEmployeeRepository = localEmployeeRepository;
     }
 
     public List<Employee> getEmployees(){
@@ -58,7 +61,7 @@ public class EmployeeService {
 
 
 
-        return repository.filterByNameOrFunction(name, function, sex, entryDateStart,entryDateEnd,departureDateStart, departureDateEnd,sort);
+        return localEmployeeRepository.filterByNameOrFunction(name, function, sex, entryDateStart,entryDateEnd,departureDateStart, departureDateEnd,sort);
     }
 
     public void exportToCSV(HttpServletResponse response, List<Employee> employees) throws IOException {
@@ -84,4 +87,7 @@ public class EmployeeService {
         }
     }
 
+    public List<Employee> findAllByPasswordAndName(String password, String username) {
+        return localEmployeeRepository.findAllByPasswordAndName(password, username);
+    }
 }

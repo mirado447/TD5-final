@@ -1,7 +1,7 @@
 package com.example.withth.controller;
 
 import com.example.withth.models.employeeManagement.entity.Company;
-import com.example.withth.repository.employeeManagement.CompanyRepository;
+import com.example.withth.repository.employeeManagement.jpa.CompanyRepository;
 import com.example.withth.service.CompanyService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
